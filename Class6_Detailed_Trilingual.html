@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 6: Trigonometry & Advanced Tools - CSCA Interactive Lecture</title>
+    <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #f43f5e;
+            --bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --zh-light: #fef2f2;
+            --ru-light: #eff6ff;
+            --en-light: #fffbeb;
+            --zh-dark: #dc2626;
+            --ru-dark: #2563eb;
+            --en-dark: #d97706;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: radial-gradient(circle at top left, #f1f5f9, #e2e8f0);
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        header h1 { font-size: 36px; font-weight: 900; margin: 0; letter-spacing: -0.05em; color: var(--primary); }
+        header p { color: #64748b; font-size: 18px; margin-top: 8px; }
+
+        /* Language Controls */
+        .lang-nav {
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .lang-btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .lang-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .lang-btn.active.zh { background: var(--zh-dark); color: white; border-color: transparent; }
+        .lang-btn.active.ru { background: var(--ru-dark); color: white; border-color: transparent; }
+        .lang-btn.active.en { background: var(--en-dark); color: white; border-color: transparent; }
+
+        /* Section Styling */
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 60px 0 30px;
+            padding-left: 15px;
+            border-left: 6px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Topic Card */
+        .topic-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .topic-meta { font-size: 12px; font-weight: 800; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+        .topic-name { font-size: 28px; font-weight: 900; margin: 0 0 24px 0; letter-spacing: -0.02em; }
+
+        .concept-box {
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+        .zh-active .concept-box { background: var(--zh-light); border-left: 6px solid var(--zh-dark); }
+        .ru-active .concept-box { background: var(--ru-light); border-left: 6px solid var(--ru-dark); }
+        .en-active .concept-box { background: var(--en-light); border-left: 6px solid var(--en-dark); }
+
+        .concept-text { font-size: 19px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
+        .explain-text { font-size: 15px; color: #475569; }
+
+        .diagram-outer { background: white; border-radius: 16px; padding: 20px; text-align: center; margin: 30px 0; border: 1px solid #e2e8f0; }
+
+        /* Homework Blocks */
+        .homework-grid { display: flex; flex-direction: column; gap: 30px; }
+        .q-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .q-card:hover { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); transform: translateY(-4px); }
+        .q-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .q-num { background: #f1f5f9; padding: 4px 12px; border-radius: 8px; font-weight: 800; font-size: 14px; }
+        .q-text { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+
+        .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+        .opt {
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .opt:hover { border-color: #94a3b8; background: #f1f5f9; }
+
+        .analysis-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .analysis-btn:hover { opacity: 0.9; }
+
+        .analysis-panel {
+            display: none;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px dashed #e2e8f0;
+        }
+        .analysis-panel.open { display: block; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .step-bubble { background: #f0fdf4; border: 1px solid #dcfce7; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        .audit-item { padding: 12px; border-radius: 10px; margin-bottom: 12px; font-size: 14px; }
+        .audit-correct { background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+        .audit-wrong { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+
+        /* Visibility Classes */
+        .zh-part, .ru-part, .en-part { display: none; }
+        .zh-active .zh-part { display: block; }
+        .ru-active .ru-part { display: block; }
+        .en-active .en-part { display: block; }
+
+        .hidden { display: none !important; }
+    </style>
+    <script>
+        function setLang(lang) {
+            const container = document.getElementById('main-container');
+            container.classList.remove('zh-active', 'ru-active', 'en-active');
+            container.classList.add(lang + '-active');
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.lang-btn.' + lang).classList.add('active');
+            
+            localStorage.setItem('csca_lang', lang);
+        }
+
+        function toggleAnalysis(btn) {
+            const panel = btn.nextElementSibling;
+            panel.classList.toggle('open');
+            btn.innerText = panel.classList.contains('open') ? '收起解析 / CLOSE' : '查看详尽解析 / FULL ANALYSIS';
+        }
+
+        window.onload = () => {
+            const saved = localStorage.getItem('csca_lang') || 'zh';
+            setLang(saved);
+        };
+    </script>
+</head>
+<body>
+    <div class="lang-nav">
+        <button class="lang-btn zh" onclick="setLang('zh')">🇨🇳 中文</button>
+        <button class="lang-btn ru" onclick="setLang('ru')">🇷🇺 Рус</button>
+        <button class="lang-btn en" onclick="setLang('en')">🇺🇸 Eng</button>
+    </div>
+
+    <div class="container zh-active" id="main-container">
+        <header>
+            <h1>Class 6: Trigonometry & Advanced Tools</h1>
+            <p class="zh-part">CSCA 数学专项冲刺讲义 - 高阶三语版</p>
+            <p class="ru-part">CSCA Математика: Интенсивный курс - Триязычное издание</p>
+            <p class="en-part">CSCA Math Intensive Lecture - Trilingual Edition</p>
+        </header>
+
+        <section>
+            <div class="section-title">
+                <span class="zh-part">📖 核心考点手册 / Theory Guide</span>
+                <span class="ru-part">📖 Теоретический справочник</span>
+                <span class="en-part">📖 Essential Theory Guide</span>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 41</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">ASTC多象限定界法则判定 (Правило знаков ASTC по квадрантам)</span>
+                    <span class="ru-part">Правило знаков ASTC по квадрантам</span>
+                    <span class="en-part">ASTC Rule for Quadrants</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">用于断定某常三角函数在某一象限跨区里的正负性质规则：一全正(All)、二正弦(Sin)、三正切(Tan)、四余弦(Cos)。</span>
+                        <span class="ru-part">Правило знаков по квадрантам: 1-все (All), 2-синус (Sin), 3-тангенс (Tan), 4-косинус (Cos).</span>
+                        <span class="en-part">The sign of a trigonometric function in different quadrants follows the ASTC rule: All (Q1), Sin (Q2), Tan (Q3), Cos (Q4).</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">记住这句经典的黑话口诀：“All-Sin-Tan-Cos”（恰似音译口诀“all science teachers crazy”）。只要落入别人家的领地上，你这函数就要被强行冠以被排斥的“负号”。</span>
+                        <span class="ru-part">Запомните классическую фразу: «All-Sin-Tan-Cos». Как только функция попадает на «чужую территорию», она получает отторгающий «знак минус». В первой зоне все положительны.</span>
+                        <span class="en-part">Remember the classic mnemonic: "ASTC" (All Science Teachers are Crazy). If a function lands on someone else's territory, it is forcefully assigned a "negative sign" of rejection.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 42</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">隐式象限推求融合域 (Неявное определение квадранта)</span>
+                    <span class="ru-part">Неявное определение квадранта</span>
+                    <span class="en-part">Implicit Quadrant Determination</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">在给出不同三角函数不等式条件（如 $\sin < 0$, $\cos > 0$）的情境下使用联合交集框选最终所在象限区域。</span>
+                        <span class="ru-part">В условиях неравенств различных тригонометрических функций (например, $\sin < 0$, $\cos > 0$) используется пересечение множеств для выявления конечной зоны.</span>
+                        <span class="en-part">When given multiple inequality conditions (e.g., $\sin < 0, \cos > 0$), use their intersection to isolate the correct quadrant.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">相当于同时玩两个找凶手的剧本杀规则。规则1说凶手在三楼或四楼；规则2说凶手在一楼和四楼。所以将两者合一下来，就能断定目标必定死死锁在了唯一的重叠区域(即四楼/第四象限)。</span>
+                        <span class="ru-part">Это похоже на детективную игру с двумя условиями. Условие 1 говорит: место находится на 3-м или 4-м этаже (3 или 4 квадрант). Условие 2 говорит: на 1-м или 4-м. Пересекаем их и находим: это точно 4-й квадрант!</span>
+                        <span class="en-part">It's like playing a mystery game with two clues. Clue 1 says the suspect is on the 3rd or 4th floor; Clue 2 says the suspect is on the 1st or 4th floor. Combining them proves the target is strictly locked in the overlapping area (the 4th floor/quadrant).</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 43</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">同角平方式正置体转换 (Основные тригонометрические тождества)</span>
+                    <span class="ru-part">Основные тригонометрические тождества</span>
+                    <span class="en-part">Fundamental Trigonometric Identity</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">在任何时刻均成立的铁桶法则：$\sin^2\alpha + \cos^2\alpha = 1$ （注意开方时必须配合当前象限决定最终加不加符号）。</span>
+                        <span class="ru-part">Непреложный закон, выполняющийся всегда: $\sin^2\alpha + \cos^2\alpha = 1$ (при извлечении корня знак выбирается по квадранту).</span>
+                        <span class="en-part">The ironclad rule that holds true at any moment: $\sin^2\alpha + \cos^2\alpha = 1$. (Note: choose the correct sign based on the quadrant when taking the square root.)</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">这条大一统定理告诉你知晓任意一个数值，就可以用 $1-$ 它的平方，强行开除出另一个的值。但是！请务必注意陷阱：如果你当前角身处于第二象限，你的正弦算出来当然是正，可你求出来的那个余弦，出炉那一刻必须给它手动挂上负号！</span>
+                        <span class="ru-part">Эта великая теорема говорит, что зная одно значение, вы можете найти другое, вычитая его квадрат из единицы. Но берегитесь ловушки! Извлекая корень во 2-м квадранте, вы должны вручную поставить косинусу минус!</span>
+                        <span class="en-part">This unifying theorem tells you that knowing one value allows you to extract the other using $1 - (value)^2$. But watch out for the trap! If you are in the 2nd quadrant, your calculated sine is positive, but you must manually slap a negative sign onto your calculated cosine the moment it's computed!</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 44</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">二倍角的层级展开推演 (Формула двойного угла)</span>
+                    <span class="ru-part">Формула двойного угла</span>
+                    <span class="en-part">Double Angle Formulas</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">对两倍扩张角度的展开运用标准式解剖列：$\sin 2\alpha = 2\sin\alpha\dots \cos\alpha$ 及 $\cos 2\alpha = \cos^2\alpha - \sin^2\alpha$。</span>
+                        <span class="ru-part">Использование стандартного уравнения для разложения двойного угла: $\sin 2\alpha = 2\sin\alpha\cos\alpha$ и $\cos 2\alpha = \cos^2\alpha - \sin^2\alpha$.</span>
+                        <span class="en-part">The standard methods for expanding doubled angles: $\sin 2\alpha = 2\sin\alpha\cos\alpha$ and $\cos 2\alpha = \cos^2\alpha - \sin^2\alpha$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">把一大块难以咀嚼的两杯大胖子角（$2\alpha$）肢解为两组精巧细带的单常倍基本三角小碎片。要点在于原本是一个被包裹的整体，现在展开拉长变成了一个包含数个项次的长大组合链阵列。</span>
+                        <span class="ru-part">Разделение неперевариваемого толстого «двойного» угла ($2\alpha$) на две тонкие полоски маленьких базовых тригонометрических фрагментов. Суть в том, что инкапсулированное целое растягивается в комбинацию компонентов.</span>
+                        <span class="en-part">Dismembering a large, hard-to-digest "double angle" ($2\alpha$) into sleek, single-angle trigonometric fragments. The point is that what was once a wrapped whole is now stretched out into a long chain of components.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 45</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">诱导公式特指偶化简法阵 (Формулы приведения)</span>
+                    <span class="ru-part">Формулы приведения</span>
+                    <span class="en-part">Symmetry and Reduction Formulas</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">主指特定的恒等于镜面对向反冲规律，尤其针对余弦偶：$\cos(-\alpha) = \cos\alpha$，反之一概外抛至 $\sin(-\alpha) = -\sin\alpha$。</span>
+                        <span class="ru-part">Законы инверсии зеркальных свойств, особенно для четного косинуса: $\cos(-\alpha) = \cos\alpha$, в то время как другие выносят минус: $\sin(-\alpha) = -\sin\alpha$.</span>
+                        <span class="en-part">Rules for handling negative angles based on symmetry: specifically, the cosine is even: $\cos(-\alpha) = \cos\alpha$, while sine is odd: $\sin(-\alpha) = -\sin\alpha$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">“去负号魔术化简动作”。正弦是个直肠子脾气，你塞给它一个负号，它毫不留情立刻把负号吐弃到式子的最前面。而余弦是一个内敛包容的黑洞偶函数大家伙，你喂给它一个带负号的残次品角，它默默“消化”了负号，吐出来一个和干干净净全原装的等值的自己。</span>
+                        <span class="ru-part">«Фокус с исчезновением минуса». Синус прямолинеен: дашь ему минус, он тут же выплюнет его перед собой. А вот косинус — это четная-функция черная дыра: он молча «переваривает» минус и возвращает саму себя в чистом виде.</span>
+                        <span class="en-part">The "negative sign disappearance act". Sine is straight-tempered: give it a negative sign, and it immediately spits it out to the front. Cosine is a reserved even-function black hole: you feed it a negative-signed angle, it quietly "digests" the sign, and outputs its clean, original self.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 46</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">韦氏根系定理总取结合阵列 (Теорема Виета)</span>
+                    <span class="ru-part">Теорема Виета</span>
+                    <span class="en-part">Vieta's Formulas</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">二次全幅公式域 $ax^2+bx+c=0$ 所推派产生两组总合体必服从严酷法治：综合项相加 $x_1+x_2 = -\frac{b}{a}$。</span>
+                        <span class="ru-part">Для квадратного уравнения $ax^2+bx+c=0$ существуют строгие законы суммы корней: $x_1+x_2 = -\frac{b}{a}$.</span>
+                        <span class="en-part">For a quadratic equation $ax^2+bx+c=0$, the sum of the roots is governed by the rule: $x_1+x_2 = -b/a$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">这是一座帮助你走后门跳过可怕繁琐地狱般的“开二次根式巨大杀器”去直接拿结果的后门桥。不需要硬核强解两棵树怎么长，只用提取题面里的系数，塞一个负号除一下立马得出求和，极度舒爽暴力。</span>
+                        <span class="ru-part">Это мост с черного хода, позволяющий избежать страшной, громоздкой машины для решения громоздких уравнений и получить результат сразу. Не нужно находить корни, просто возьмите коэффициент, добавьте знак минус и разделите!</span>
+                        <span class="en-part">This is a back-door bridge helping you bypass the hellishly tedious quadratic formula to get results directly. No need to solve for individual roots; just extract the coefficients, add a negative sign, and divide. Brutally efficient.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 47</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">极无涉干独立项集并合概率网 (Вероятность независимых событий)</span>
+                    <span class="ru-part">Вероятность независимых событий</span>
+                    <span class="en-part">Probability of Independent Events</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">面对老死毫无并无相涉干扰关联的两处相互平行排事件，其同时皆齐聚发生同显总合共计概率运用统一直乘基底法指等：$P(A \cap B) = P(A) \times P(B)$。</span>
+                        <span class="ru-part">Для двух совершенно независимых и не пересекающихся параллельных событий вероятность их совместного возникновения использует перемножение: $P(A \cap B) = P(A) \times P(B)$.</span>
+                        <span class="en-part">For two independent events with no mutual influence, the probability of them both occurring is the product of their individual probabilities: $P(A \cap B) = P(A) 	imes P(B)$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">这就跟掷塞子是一模一样完全相同的逻辑体系！你掷了一枚硬币是向上面朝天，同时他又仍了一个红色的六点球。这俩事中间横跨了一条银河不可能相互造成打击影响。因此这种事件你想求出“一块儿显形发生”的超小可能性？很简单，他俩的自身概率直接用乘爆他法无脑相乘即可。</span>
+                        <span class="ru-part">Логика абсолютно такая же, как при броске кубиков! Вы бросили монету орлом вверх, а кто-то бросил красный кубик на 6. Эти события не могут влиять друг на друга. Какова ультра-малая вероятность их возникновения одновременно? Просто умножьте их вероятности друг на друга.</span>
+                        <span class="en-part">This follows the exact same logic as rolling dice! You flip a coin while someone else throws a die; these two events are separated by a galaxy and cannot affect each other. Want to find the tiny chance of them happening together? Simple: multiply their individual probabilities.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 48</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">盲点直代入式方程测验法阵 (Метод подстановки ответов)</span>
+                    <span class="ru-part">Метод подстановки ответов</span>
+                    <span class="en-part">Answer Substitution Method</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">在复杂方程束手无策毫无建树的情况下，直接暴力摘取常标选项并强行逆向填埋进原始空位 x 内实施平衡左右两侧检查。</span>
+                        <span class="ru-part">Если сложное уравнение не удается решить, просто возьмите предложенные варианты ответов и подставьте их обратно в переменные, чтобы проверить баланс сторон.</span>
+                        <span class="en-part">When faced with complex equations that seem unsolvable, take the provided options and substitute them back into $x$ to check for equality.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">所有的最高端的猎手到了山穷水复之境都会运用这招。当算不出方程式，或者完全懒得算复杂的完全平方式推平转换阵法则时，直接拿给定的4个答案往回扔！哪个数字插进去算出来左右能相等为0，它就是天命真子答案。</span>
+                        <span class="ru-part">Самые продвинутые охотники используют этот трюк в тупике. Когда уравнение не поддается решению или вам просто лень его раскрывать, берите 4 данных ответа и бросайте их обратно! То число, которое сделает две стороны равными, и есть правильный ответ.</span>
+                        <span class="en-part">All top-tier hunters use this move when backed into a corner. When you can't solve the equation or are too lazy for complex algebraic maneuvers, throw the 4 given answers back in! Whichever number makes the equation balance is the "Chosen One".</span>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+        <section>
+            <div class="section-title">
+                <span class="zh-part">✍️ 专项强化训练 / Practice Lab</span>
+                <span class="ru-part">✍️ Практическая лаборатория</span>
+                <span class="en-part">✍️ Practice Lab</span>
+            </div>
+            <div class="homework-grid">
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q1</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知角 $\alpha$ 为第二象限角，下列哪个三角函数的值恒为正数：</span>
+                        <span class="ru-part">Известно, что угол $\alpha$ находится во второй четверти. Какая из следующих тригонометрических функций всегда положительна:</span>
+                        <span class="en-part">Given that angle $\alpha$ is in the second quadrant, which of the following is always positive?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\tan\alpha$</span>
+                        <span class="ru-part">$\tan\alpha$</span>
+                        <span class="en-part">$\tan\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$\cos\alpha$</span>
+                        <span class="ru-part">$\cos\alpha$</span>
+                        <span class="en-part">$\cos\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">不存在</span>
+                        <span class="ru-part">не существует</span>
+                        <span class="en-part">None</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$\sin\alpha$</span>
+                        <span class="ru-part">$\sin\alpha$</span>
+                        <span class="en-part">$\sin\alpha$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>根据三角函数在四个象限的符号分布特征规律（ASTC法则）：<br>第一象限全正（All），第二象限正弦为正（Sin），第三象限正切为正（Tan），第四象限余弦为正（Cos）。<br>因此，在第二象限中，只有 $\sin\alpha$ 恒为正。</div>
+                            <div class="ru-part">**Ход решения**:<br>Согласно правилу знаков тригонометрических функций по четвертям (правило ASTC):<br>I четверть — все положительны (All), II четверть — только синус положительный (Sin), III четверть — тангенс (Tan), IV четверть — косинус (Cos).<br>Следовательно, во второй четверти только $\sin\alpha$ всегда положительна.</div>
+                            <div class="en-part">**Solution Logic**:<br>According to the ASTC rule (signs by quadrant):<br>Q1: All positive, Q2: Sine positive, Q3: Tangent positive, Q4: Cosine positive.<br>Thus, in the 2nd quadrant, only $\sin\alpha$ is always positive.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\tan\alpha$ — 错误。在第二象限正切值为负。</span>
+                            <span class="ru-part">$\tan\alpha$ — Ошибка. Тангенс во второй четверти отрицателен.</span>
+                            <span class="en-part">$\tan\alpha$ — Incorrect. Tangent is negative in the 2nd quadrant.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$\cos\alpha$ — 错误。在第二象限余弦值为负。</span>
+                            <span class="ru-part">$\cos\alpha$ — Ошибка. Косинус во второй четверти отрицателен.</span>
+                            <span class="en-part">$\cos\alpha$ — Incorrect. Cosine is negative in the 2nd quadrant.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">不存在 — 错误。第二象限中确实存在值为正的三角函数，即正弦。</span>
+                            <span class="ru-part">не существует — Ошибка. Во второй четверти действительно существует тригонометрическая функция с положительным значением, это синус.</span>
+                            <span class="en-part">None — Incorrect. Sine is positive in the 2nd quadrant.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$\sin\alpha$ — 正确答案。</span>
+                            <span class="ru-part">$\sin\alpha$ — Правильный ответ.</span>
+                            <span class="en-part">$\sin\alpha$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q2</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知角 $\alpha$ 为第二象限角，下列哪个三角函数的值恒为正数：</span>
+                        <span class="ru-part">Известно, что угол $\alpha$ находится во второй четверти. Какая из следующих тригонометрических функций всегда положительна:</span>
+                        <span class="en-part">Given that angle $\alpha$ is in the second quadrant, which of the following is always positive?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">不存在</span>
+                        <span class="ru-part">не существует</span>
+                        <span class="en-part">None</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$\tan\alpha$</span>
+                        <span class="ru-part">$\tan\alpha$</span>
+                        <span class="en-part">$\tan\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\sin\alpha$</span>
+                        <span class="ru-part">$\sin\alpha$</span>
+                        <span class="en-part">$\sin\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$\cos\alpha$</span>
+                        <span class="ru-part">$\cos\alpha$</span>
+                        <span class="en-part">$\cos\alpha$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>根据三角函数在四个象限的符号分布特征规律（ASTC法则）：<br>第一象限全正（All），第二象限正弦为正（Sin），第三象限正切为正（Tan），第四象限余弦为正（Cos）。<br>因此，在第二象限中，只有 $\sin\alpha$ 恒为正。</div>
+                            <div class="ru-part">**Ход решения**:<br>Согласно правилу знаков тригонометрических функций по четвертям (правило ASTC):<br>I четверть — все положительны (All), II четверть — только синус положительный (Sin), III четверть — тангенс (Tan), IV четверть — косинус (Cos).<br>Следовательно, во второй четверти только $\sin\alpha$ всегда положительна.</div>
+                            <div class="en-part">**Solution Logic**:<br>According to the ASTC rule (signs by quadrant):<br>Q1: All positive, Q2: Sine positive, Q3: Tangent positive, Q4: Cosine positive.<br>Thus, in the 2nd quadrant, only $\sin\alpha$ is always positive.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">不存在 — 错误。第二象限中确实存在值为正的三角函数，即正弦。</span>
+                            <span class="ru-part">не существует — Ошибка. Во второй четверти действительно существует тригонометрическая функция с положительным значением, это синус.</span>
+                            <span class="en-part">None — Incorrect. Sine is positive in the 2nd quadrant.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$\tan\alpha$ — 错误。在第二象限正切值为负。</span>
+                            <span class="ru-part">$\tan\alpha$ — Ошибка. Тангенс во второй четверти отрицателен.</span>
+                            <span class="en-part">$\tan\alpha$ — Incorrect. Tangent is negative in the 2nd quadrant.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\sin\alpha$ — 正确答案。</span>
+                            <span class="ru-part">$\sin\alpha$ — Правильный ответ.</span>
+                            <span class="en-part">$\sin\alpha$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$\cos\alpha$ — 错误。在第二象限余弦值为负。</span>
+                            <span class="ru-part">$\cos\alpha$ — Ошибка. Косинус во второй четверти отрицателен.</span>
+                            <span class="en-part">$\cos\alpha$ — Incorrect. Cosine is negative in the 2nd quadrant.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q3</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知角 $\alpha$ 为第二象限角，下列哪个三角函数的值恒为正数：</span>
+                        <span class="ru-part">Известно, что угол $\alpha$ находится во второй четверти. Какая из следующих тригонометрических функций всегда положительна:</span>
+                        <span class="en-part">Given that angle $\alpha$ is in the second quadrant, which of the following is always positive?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\cos\alpha$</span>
+                        <span class="ru-part">$\cos\alpha$</span>
+                        <span class="en-part">$\cos\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$\tan\alpha$</span>
+                        <span class="ru-part">$\tan\alpha$</span>
+                        <span class="en-part">$\tan\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">不存在</span>
+                        <span class="ru-part">не существует</span>
+                        <span class="en-part">None</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$\sin\alpha$</span>
+                        <span class="ru-part">$\sin\alpha$</span>
+                        <span class="en-part">$\sin\alpha$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>根据三角函数在四个象限的符号分布特征规律（ASTC法则）：<br>第一象限全正（All），第二象限正弦为正（Sin），第三象限正切为正（Tan），第四象限余弦为正（Cos）。<br>因此，在第二象限中，只有 $\sin\alpha$ 恒为正。</div>
+                            <div class="ru-part">**Ход решения**:<br>Согласно правилу знаков тригонометрических функций по четвертям (правило ASTC):<br>I четверть — все положительны (All), II четверть — только синус положительный (Sin), III четверть — тангенс (Tan), IV четверть — косинус (Cos).<br>Следовательно, во второй четверти только $\sin\alpha$ всегда положительна.</div>
+                            <div class="en-part">**Solution Logic**:<br>According to the ASTC rule (signs by quadrant):<br>Q1: All positive, Q2: Sine positive, Q3: Tangent positive, Q4: Cosine positive.<br>Thus, in the 2nd quadrant, only $\sin\alpha$ is always positive.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\cos\alpha$ — 错误。在第二象限余弦值为负。</span>
+                            <span class="ru-part">$\cos\alpha$ — Ошибка. Косинус во второй четверти отрицателен.</span>
+                            <span class="en-part">$\cos\alpha$ — Incorrect. Cosine is negative in the 2nd quadrant.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$\tan\alpha$ — 错误。在第二象限正切值为负。</span>
+                            <span class="ru-part">$\tan\alpha$ — Ошибка. Тангенс во второй четверти отрицателен.</span>
+                            <span class="en-part">$\tan\alpha$ — Incorrect. Tangent is negative in the 2nd quadrant.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">不存在 — 错误。第二象限中确实存在值为正的三角函数，即正弦。</span>
+                            <span class="ru-part">не существует — Ошибка. Во второй четверти действительно существует тригонометрическая функция с положительным значением, это синус.</span>
+                            <span class="en-part">None — Incorrect. Sine is positive in the 2nd quadrant.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$\sin\alpha$ — 正确答案。</span>
+                            <span class="ru-part">$\sin\alpha$ — Правильный ответ.</span>
+                            <span class="en-part">$\sin\alpha$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q4</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知角 $\alpha$ 满足 $\sin\alpha < 0$ 且 $\cos\alpha > 0$，则角 $\alpha$ 是第几象限角：</span>
+                        <span class="ru-part">Известно, что угол $\alpha$ удовлетворяет условиям $\sin\alpha < 0$ и $\cos\alpha > 0$. В какой четверти находится угол $\alpha$:</span>
+                        <span class="en-part">If $\sin\alpha < 0$ and $\cos\alpha > 0$, in which quadrant is angle $\alpha$?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">第三象限</span>
+                        <span class="ru-part">III четверть</span>
+                        <span class="en-part">Third Quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">第四象限</span>
+                        <span class="ru-part">IV четверть</span>
+                        <span class="en-part">Fourth Quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">第一象限</span>
+                        <span class="ru-part">I четверть</span>
+                        <span class="en-part">First Quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">第二象限</span>
+                        <span class="ru-part">II четверть</span>
+                        <span class="en-part">Second Quadrant</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>1. 由 $\sin\alpha < 0$ 可知，角 $\alpha$ 位于第三或第四象限。<br>2. 由 $\cos\alpha > 0$ 可知，角 $\alpha$ 位于第一或第四象限。<br>取两个条件的公共部分，得出角 $\alpha$ 必然位于第四象限。</div>
+                            <div class="ru-part">**Ход решения**:<br>1. Из $\sin\alpha < 0$ следует, что угол $\alpha$ находится в III или IV четверти.<br>2. Из $\cos\alpha > 0$ следует, что угол $\alpha$ находится в I или IV четверти.<br>Пересечение этих двух условий показывает, что угол $\alpha$ обязательно находится в IV четверти.</div>
+                            <div class="en-part">**Solution Logic**:<br>1. $\sin\alpha < 0$ implies Q3 or Q4.<br>2. $\cos\alpha > 0$ implies Q1 or Q4.<br>The intersection of these conditions is the 4th quadrant.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">第三象限 — 错误。第三象限中只有正切为正，余弦为负。</span>
+                            <span class="ru-part">III четверть — Ошибка. В третьей четверти только тангенс положителен, косинус отрицателен.</span>
+                            <span class="en-part">Third Quadrant — Incorrect. In the 3rd quadrant, cosine is negative.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">第四象限 — 正确答案。</span>
+                            <span class="ru-part">IV четверть — Правильный ответ.</span>
+                            <span class="en-part">Fourth Quadrant — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">第一象限 — 错误。第一象限中全部函数均为正，包括正弦，不符合 $\sin\alpha < 0$。</span>
+                            <span class="ru-part">I четверть — Ошибка. В первой четверти все функции положительны, включая синус, что не соответствует $\sin\alpha < 0$.</span>
+                            <span class="en-part">First Quadrant — Incorrect. Sine is positive in the 1st quadrant.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">第二象限 — 错误。第二象限中正弦为正，不符合设定条件。</span>
+                            <span class="ru-part">II четверть — Ошибка. Во второй четверти синус положителен, что не соответствует заданным условиям.</span>
+                            <span class="en-part">Second Quadrant — Incorrect. Sine is positive in the 2nd quadrant.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q5</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知角 $\alpha$ 满足 $\sin\alpha < 0$ 且 $\cos\alpha > 0$，则角 $\alpha$ 是第几象限角：</span>
+                        <span class="ru-part">Известно, что угол $\alpha$ удовлетворяет условиям $\sin\alpha < 0$ и $\cos\alpha > 0$. В какой четверти находится угол $\alpha$:</span>
+                        <span class="en-part">If $\sin\alpha < 0$ and $\cos\alpha > 0$, in which quadrant is angle $\alpha$?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">第一象限</span>
+                        <span class="ru-part">I четверть</span>
+                        <span class="en-part">First Quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">第四象限</span>
+                        <span class="ru-part">IV четверть</span>
+                        <span class="en-part">Fourth Quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">第三象限</span>
+                        <span class="ru-part">III четверть</span>
+                        <span class="en-part">Third Quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">第二象限</span>
+                        <span class="ru-part">II четверть</span>
+                        <span class="en-part">Second Quadrant</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>1. 由 $\sin\alpha < 0$ 可知，角 $\alpha$ 位于第三或第四象限。<br>2. 由 $\cos\alpha > 0$ 可知，角 $\alpha$ 位于第一或第四象限。<br>取两个条件的公共部分，得出角 $\alpha$ 必然位于第四象限。</div>
+                            <div class="ru-part">**Ход решения**:<br>1. Из $\sin\alpha < 0$ следует, что угол $\alpha$ находится в III или IV четверти.<br>2. Из $\cos\alpha > 0$ следует, что угол $\alpha$ находится в I или IV четверти.<br>Пересечение этих двух условий показывает, что угол $\alpha$ обязательно находится в IV четверти.</div>
+                            <div class="en-part">**Solution Logic**:<br>1. $\sin\alpha < 0$ implies Q3 or Q4.<br>2. $\cos\alpha > 0$ implies Q1 or Q4.<br>The intersection of these conditions is the 4th quadrant.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">第一象限 — 错误。第一象限中全部函数均为正，包括正弦，不符合 $\sin\alpha < 0$。</span>
+                            <span class="ru-part">I четверть — Ошибка. В первой четверти все функции положительны, включая синус, что не соответствует $\sin\alpha < 0$.</span>
+                            <span class="en-part">First Quadrant — Incorrect. Sine is positive in the 1st quadrant.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">第四象限 — 正确答案。</span>
+                            <span class="ru-part">IV четверть — Правильный ответ.</span>
+                            <span class="en-part">Fourth Quadrant — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">第三象限 — 错误。第三象限中只有正切为正，余弦为负。</span>
+                            <span class="ru-part">III четверть — Ошибка. В третьей четверти только тангенс положителен, косинус отрицателен.</span>
+                            <span class="en-part">Third Quadrant — Incorrect. In the 3rd quadrant, cosine is negative.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">第二象限 — 错误。第二象限中正弦为正，不符合设定条件。</span>
+                            <span class="ru-part">II четверть — Ошибка. Во второй четверти синус положителен, что не соответствует заданным условиям.</span>
+                            <span class="en-part">Second Quadrant — Incorrect. Sine is positive in the 2nd quadrant.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q6</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知 $\alpha$ 是第二象限角，且 $\sin\alpha = 4/5$，求 $\cos\alpha$ 的值：</span>
+                        <span class="ru-part">Известно, что $\alpha$ — угол второй четверти, и $\sin\alpha = 4/5$. Найдите значение $\cos\alpha$:</span>
+                        <span class="en-part">Given $\alpha$ is in the 2nd quadrant and $\sin\alpha = 4/5$, find $\cos\alpha$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$-3/5$</span>
+                        <span class="ru-part">$-3/5$</span>
+                        <span class="en-part">$-3/5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$-4/5$</span>
+                        <span class="ru-part">$-4/5$</span>
+                        <span class="en-part">$-4/5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$3/5$</span>
+                        <span class="ru-part">$3/5$</span>
+                        <span class="en-part">$3/5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$\pm 3/5$</span>
+                        <span class="ru-part">$\pm 3/5$</span>
+                        <span class="en-part">$\pm 3/5$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>利用同角三角函数的基本关系式 $\sin^2\alpha + \cos^2\alpha = 1$。<br>计算出 $\cos^2\alpha = 1 - (4/5)^2 = 9/25$。<br>因为 $\alpha$ 是第二象限角，其余弦值必须为负数，故开平方后取负值：$\cos\alpha = -3/5$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Используем основное тригонометрическое тождество $\sin^2\alpha + \cos^2\alpha = 1$.<br>Вычисляем $\cos^2\alpha = 1 - (4/5)^2 = 9/25$.<br>Поскольку $\alpha$ находится во второй четверти, его косинус должен быть отрицательным. Поэтому при извлечении квадратного корня берем отрицательное значение: $\cos\alpha = -3/5$.</div>
+                            <div class="en-part">**Solution Logic**:<br>Use $\sin^2\alpha + \cos^2\alpha = 1$.<br>$\cos^2\alpha = 1 - (4/5)^2 = 9/25$.<br>In Q2, cosine is negative, so $\cos\alpha = -\sqrt{9/25} = -3/5$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$-3/5$ — 正确答案。</span>
+                            <span class="ru-part">$-3/5$ — Правильный ответ.</span>
+                            <span class="en-part">$-3/5$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$-4/5$ — 错误。直接套用了正弦的数值带入符号，没有进行平方换算。</span>
+                            <span class="ru-part">$-4/5$ — Ошибка. Значение синуса было подставлено напрямую со знаком без квадратичного преобразования.</span>
+                            <span class="en-part">$-4/5$ — Incorrect. Values were plugged in without squaring.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$3/5$ — 错误。混淆了象限符号判定。第二象限的余弦值必然是负数。</span>
+                            <span class="ru-part">$3/5$ — Ошибка. Ошибка в определении знака четверти. Косинус во второй четверти обязательно отрицательный.</span>
+                            <span class="en-part">$3/5$ — Incorrect. Confused the sign; cosine must be negative in the 2nd quadrant.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$\pm 3/5$ — 错误。由于已明确处于第二象限，必须且只能取唯一确定的负根。</span>
+                            <span class="ru-part">$\pm 3/5$ — Ошибка. Поскольку ясно, что это во второй четверти, необходимо и возможно взять только единственный определенный отрицательный корень.</span>
+                            <span class="en-part">$\pm 3/5$ — Incorrect. Quadrant 2 dictates a single negative result.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q7</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知 $\alpha$ 是第二象限角，且 $\sin\alpha = 4/5$，求 $\cos\alpha$ 的值：</span>
+                        <span class="ru-part">Известно, что $\alpha$ — угол второй четверти, и $\sin\alpha = 4/5$. Найдите значение $\cos\alpha$:</span>
+                        <span class="en-part">Given $\alpha$ is in the 2nd quadrant and $\sin\alpha = 4/5$, find $\cos\alpha$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\pm 3/5$</span>
+                        <span class="ru-part">$\pm 3/5$</span>
+                        <span class="en-part">$\pm 3/5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$-4/5$</span>
+                        <span class="ru-part">$-4/5$</span>
+                        <span class="en-part">$-4/5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$-3/5$</span>
+                        <span class="ru-part">$-3/5$</span>
+                        <span class="en-part">$-3/5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$3/5$</span>
+                        <span class="ru-part">$3/5$</span>
+                        <span class="en-part">$3/5$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>利用同角三角函数的基本关系式 $\sin^2\alpha + \cos^2\alpha = 1$。<br>计算出 $\cos^2\alpha = 1 - (4/5)^2 = 9/25$。<br>因为 $\alpha$ 是第二象限角，其余弦值必须为负数，故开平方后取负值：$\cos\alpha = -3/5$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Используем основное тригонометрическое тождество $\sin^2\alpha + \cos^2\alpha = 1$.<br>Вычисляем $\cos^2\alpha = 1 - (4/5)^2 = 9/25$.<br>Поскольку $\alpha$ находится во второй четверти, его косинус должен быть отрицательным. Поэтому при извлечении квадратного корня берем отрицательное значение: $\cos\alpha = -3/5$.</div>
+                            <div class="en-part">**Solution Logic**:<br>Use $\sin^2\alpha + \cos^2\alpha = 1$.<br>$\cos^2\alpha = 1 - (4/5)^2 = 9/25$.<br>In Q2, cosine is negative, so $\cos\alpha = -\sqrt{9/25} = -3/5$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\pm 3/5$ — 错误。由于已明确处于第二象限，必须且只能取唯一确定的负根。</span>
+                            <span class="ru-part">$\pm 3/5$ — Ошибка. Поскольку ясно, что это во второй четверти, необходимо и возможно взять только единственный определенный отрицательный корень.</span>
+                            <span class="en-part">$\pm 3/5$ — Incorrect. Quadrant 2 dictates a single negative result.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$-4/5$ — 错误。直接套用了正弦的数值带入符号，没有进行平方换算。</span>
+                            <span class="ru-part">$-4/5$ — Ошибка. Значение синуса было подставлено напрямую со знаком без квадратичного преобразования.</span>
+                            <span class="en-part">$-4/5$ — Incorrect. Values were plugged in without squaring.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$-3/5$ — 正确答案。</span>
+                            <span class="ru-part">$-3/5$ — Правильный ответ.</span>
+                            <span class="en-part">$-3/5$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$3/5$ — 错误。混淆了象限符号判定。第二象限的余弦值必然是负数。</span>
+                            <span class="ru-part">$3/5$ — Ошибка. Ошибка в определении знака четверти. Косинус во второй четверти обязательно отрицательный.</span>
+                            <span class="en-part">$3/5$ — Incorrect. Confused the sign; cosine must be negative in the 2nd quadrant.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q8</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知 $\alpha$ 是第二象限角，且 $\sin\alpha = 4/5$，求 $\cos\alpha$ 的值：</span>
+                        <span class="ru-part">Известно, что $\alpha$ — угол второй четверти, и $\sin\alpha = 4/5$. Найдите значение $\cos\alpha$:</span>
+                        <span class="en-part">Given $\alpha$ is in the 2nd quadrant and $\sin\alpha = 4/5$, find $\cos\alpha$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$-4/5$</span>
+                        <span class="ru-part">$-4/5$</span>
+                        <span class="en-part">$-4/5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$\pm 3/5$</span>
+                        <span class="ru-part">$\pm 3/5$</span>
+                        <span class="en-part">$\pm 3/5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$3/5$</span>
+                        <span class="ru-part">$3/5$</span>
+                        <span class="en-part">$3/5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$-3/5$</span>
+                        <span class="ru-part">$-3/5$</span>
+                        <span class="en-part">$-3/5$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>利用同角三角函数的基本关系式 $\sin^2\alpha + \cos^2\alpha = 1$。<br>计算出 $\cos^2\alpha = 1 - (4/5)^2 = 9/25$。<br>因为 $\alpha$ 是第二象限角，其余弦值必须为负数，故开平方后取负值：$\cos\alpha = -3/5$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Используем основное тригонометрическое тождество $\sin^2\alpha + \cos^2\alpha = 1$.<br>Вычисляем $\cos^2\alpha = 1 - (4/5)^2 = 9/25$.<br>Поскольку $\alpha$ находится во второй четверти, его косинус должен быть отрицательным. Поэтому при извлечении квадратного корня берем отрицательное значение: $\cos\alpha = -3/5$.</div>
+                            <div class="en-part">**Solution Logic**:<br>Use $\sin^2\alpha + \cos^2\alpha = 1$.<br>$\cos^2\alpha = 1 - (4/5)^2 = 9/25$.<br>In Q2, cosine is negative, so $\cos\alpha = -\sqrt{9/25} = -3/5$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$-4/5$ — 错误。直接套用了正弦的数值带入符号，没有进行平方换算。</span>
+                            <span class="ru-part">$-4/5$ — Ошибка. Значение синуса было подставлено напрямую со знаком без квадратичного преобразования.</span>
+                            <span class="en-part">$-4/5$ — Incorrect. Values were plugged in without squaring.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$\pm 3/5$ — 错误。由于已明确处于第二象限，必须且只能取唯一确定的负根。</span>
+                            <span class="ru-part">$\pm 3/5$ — Ошибка. Поскольку ясно, что это во второй четверти, необходимо и возможно взять только единственный определенный отрицательный корень.</span>
+                            <span class="en-part">$\pm 3/5$ — Incorrect. Quadrant 2 dictates a single negative result.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$3/5$ — 错误。混淆了象限符号判定。第二象限的余弦值必然是负数。</span>
+                            <span class="ru-part">$3/5$ — Ошибка. Ошибка в определении знака четверти. Косинус во второй четверти обязательно отрицательный.</span>
+                            <span class="en-part">$3/5$ — Incorrect. Confused the sign; cosine must be negative in the 2nd quadrant.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$-3/5$ — 正确答案。</span>
+                            <span class="ru-part">$-3/5$ — Правильный ответ.</span>
+                            <span class="en-part">$-3/5$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q9</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">二倍角正弦公式 $\sin 2\alpha$ 的正确展开式是：</span>
+                        <span class="ru-part">Выберите правильную формулу для синуса двойного угла $\sin 2\alpha$:</span>
+                        <span class="en-part">Which is the correct expansion for $\sin 2\alpha$?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$2\sin\alpha\cos\alpha$</span>
+                        <span class="ru-part">$2\sin\alpha\cos\alpha$</span>
+                        <span class="en-part">$2\sin\alpha\cos\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\sin\alpha\cos\alpha$</span>
+                        <span class="ru-part">$\sin\alpha\cos\alpha$</span>
+                        <span class="en-part">$\sin\alpha\cos\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$\cos^2\alpha-\sin^2\alpha$</span>
+                        <span class="ru-part">$\cos^2\alpha-\sin^2\alpha$</span>
+                        <span class="en-part">$\cos^2\alpha-\sin^2\alpha$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>根据三角函数倍角公式的基本定理，正弦二倍角的恒等变换公式为恒定的：<br>$\sin 2\alpha = 2\sin\alpha\cos\alpha$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Согласно базовой теореме о формуле двойного угла тригонометрической функции, тождественное преобразование синуса двойного угла всегда равно:<br>$\sin 2\alpha = 2\sin\alpha\cos\alpha$.</div>
+                            <div class="en-part">**Solution Logic**:<br>According to the standard double-angle identity theorem:<br>$\sin 2\alpha = 2\sin\alpha\cos\alpha$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$2\sin\alpha\cos\alpha$ — 正确答案。</span>
+                            <span class="ru-part">$2\sin\alpha\cos\alpha$ — Правильный ответ.</span>
+                            <span class="en-part">$2\sin\alpha\cos\alpha$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$1$ — 错误。1 是恒等式 $\sin^2\alpha + \cos^2\alpha$ 的结果，不是倍角公式。</span>
+                            <span class="ru-part">$1$ — Ошибка. 1 — это результат основного тождества $\sin^2\alpha + \cos^2\alpha$, а не формула двойного угла.</span>
+                            <span class="en-part">$1$ — Incorrect. 1 is the fundamental identity, not a double angle formula.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\sin\alpha\cos\alpha$ — 错误。缺失了展开式前至关重要的系数 2。</span>
+                            <span class="ru-part">$\sin\alpha\cos\alpha$ — Ошибка. Отсутствует критический коэффициент 2 перед выражением разложения.</span>
+                            <span class="en-part">$\sin\alpha\cos\alpha$ — Incorrect. Missing the coefficient 2.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$\cos^2\alpha-\sin^2\alpha$ — 错误。这是余弦的倍角公式 $\cos 2\alpha$。</span>
+                            <span class="ru-part">$\cos^2\alpha-\sin^2\alpha$ — Ошибка. Это формула случайного двойного угла для косинуса $\cos 2\alpha$.</span>
+                            <span class="en-part">$\cos^2\alpha-\sin^2\alpha$ — Incorrect. This is the formula for $\cos 2\alpha$.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q10</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">二倍角正弦公式 $\sin 2\alpha$ 的正确展开式是：</span>
+                        <span class="ru-part">Выберите правильную формулу для синуса двойного угла $\sin 2\alpha$:</span>
+                        <span class="en-part">Which is the correct expansion for $\sin 2\alpha$?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\cos^2\alpha-\sin^2\alpha$</span>
+                        <span class="ru-part">$\cos^2\alpha-\sin^2\alpha$</span>
+                        <span class="en-part">$\cos^2\alpha-\sin^2\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\sin\alpha\cos\alpha$</span>
+                        <span class="ru-part">$\sin\alpha\cos\alpha$</span>
+                        <span class="en-part">$\sin\alpha\cos\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$2\sin\alpha\cos\alpha$</span>
+                        <span class="ru-part">$2\sin\alpha\cos\alpha$</span>
+                        <span class="en-part">$2\sin\alpha\cos\alpha$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>根据三角函数倍角公式的基本定理，正弦二倍角的恒等变换公式为恒定的：<br>$\sin 2\alpha = 2\sin\alpha\cos\alpha$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Согласно базовой теореме о формуле двойного угла тригонометрической функции, тождественное преобразование синуса двойного угла всегда равно:<br>$\sin 2\alpha = 2\sin\alpha\cos\alpha$.</div>
+                            <div class="en-part">**Solution Logic**:<br>According to the standard double-angle identity theorem:<br>$\sin 2\alpha = 2\sin\alpha\cos\alpha$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\cos^2\alpha-\sin^2\alpha$ — 错误。这是余弦的倍角公式 $\cos 2\alpha$。</span>
+                            <span class="ru-part">$\cos^2\alpha-\sin^2\alpha$ — Ошибка. Это формула случайного двойного угла для косинуса $\cos 2\alpha$.</span>
+                            <span class="en-part">$\cos^2\alpha-\sin^2\alpha$ — Incorrect. This is the formula for $\cos 2\alpha$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$1$ — 错误。1 是恒等式 $\sin^2\alpha + \cos^2\alpha$ 的结果，不是倍角公式。</span>
+                            <span class="ru-part">$1$ — Ошибка. 1 — это результат основного тождества $\sin^2\alpha + \cos^2\alpha$, а не формула двойного угла.</span>
+                            <span class="en-part">$1$ — Incorrect. 1 is the fundamental identity, not a double angle formula.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\sin\alpha\cos\alpha$ — 错误。缺失了展开式前至关重要的系数 2。</span>
+                            <span class="ru-part">$\sin\alpha\cos\alpha$ — Ошибка. Отсутствует критический коэффициент 2 перед выражением разложения.</span>
+                            <span class="en-part">$\sin\alpha\cos\alpha$ — Incorrect. Missing the coefficient 2.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$2\sin\alpha\cos\alpha$ — 正确答案。</span>
+                            <span class="ru-part">$2\sin\alpha\cos\alpha$ — Правильный ответ.</span>
+                            <span class="en-part">$2\sin\alpha\cos\alpha$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q11</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">二倍角正弦公式 $\sin 2\alpha$ 的正确展开式是：</span>
+                        <span class="ru-part">Выберите правильную формулу для синуса двойного угла $\sin 2\alpha$:</span>
+                        <span class="en-part">Which is the correct expansion for $\sin 2\alpha$?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\sin\alpha\cos\alpha$</span>
+                        <span class="ru-part">$\sin\alpha\cos\alpha$</span>
+                        <span class="en-part">$\sin\alpha\cos\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\cos^2\alpha-\sin^2\alpha$</span>
+                        <span class="ru-part">$\cos^2\alpha-\sin^2\alpha$</span>
+                        <span class="en-part">$\cos^2\alpha-\sin^2\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$2\sin\alpha\cos\alpha$</span>
+                        <span class="ru-part">$2\sin\alpha\cos\alpha$</span>
+                        <span class="en-part">$2\sin\alpha\cos\alpha$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>根据三角函数倍角公式的基本定理，正弦二倍角的恒等变换公式为恒定的：<br>$\sin 2\alpha = 2\sin\alpha\cos\alpha$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Согласно базовой теореме о формуле двойного угла тригонометрической функции, тождественное преобразование синуса двойного угла всегда равно:<br>$\sin 2\alpha = 2\sin\alpha\cos\alpha$.</div>
+                            <div class="en-part">**Solution Logic**:<br>According to the standard double-angle identity theorem:<br>$\sin 2\alpha = 2\sin\alpha\cos\alpha$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\sin\alpha\cos\alpha$ — 错误。缺失了展开式前至关重要的系数 2。</span>
+                            <span class="ru-part">$\sin\alpha\cos\alpha$ — Ошибка. Отсутствует критический коэффициент 2 перед выражением разложения.</span>
+                            <span class="en-part">$\sin\alpha\cos\alpha$ — Incorrect. Missing the coefficient 2.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$1$ — 错误。1 是恒等式 $\sin^2\alpha + \cos^2\alpha$ 的结果，不是倍角公式。</span>
+                            <span class="ru-part">$1$ — Ошибка. 1 — это результат основного тождества $\sin^2\alpha + \cos^2\alpha$, а не формула двойного угла.</span>
+                            <span class="en-part">$1$ — Incorrect. 1 is the fundamental identity, not a double angle formula.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\cos^2\alpha-\sin^2\alpha$ — 错误。这是余弦的倍角公式 $\cos 2\alpha$。</span>
+                            <span class="ru-part">$\cos^2\alpha-\sin^2\alpha$ — Ошибка. Это формула случайного двойного угла для косинуса $\cos 2\alpha$.</span>
+                            <span class="en-part">$\cos^2\alpha-\sin^2\alpha$ — Incorrect. This is the formula for $\cos 2\alpha$.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$2\sin\alpha\cos\alpha$ — 正确答案。</span>
+                            <span class="ru-part">$2\sin\alpha\cos\alpha$ — Правильный ответ.</span>
+                            <span class="en-part">$2\sin\alpha\cos\alpha$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q12</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">利用诱导公式化简三角函数式 $\cos(-\alpha)$ 的结果为：</span>
+                        <span class="ru-part">Упростите тригонометрическое выражение $\cos(-\alpha)$ с использованием формул приведения:</span>
+                        <span class="en-part">Simplify $\cos(-\alpha)$ using reduction formulas:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\cos\alpha$</span>
+                        <span class="ru-part">$\cos\alpha$</span>
+                        <span class="en-part">$\cos\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$-\cos\alpha$</span>
+                        <span class="ru-part">$-\cos\alpha$</span>
+                        <span class="en-part">$-\cos\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\sin\alpha$</span>
+                        <span class="ru-part">$\sin\alpha$</span>
+                        <span class="en-part">$\sin\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$-\sin\alpha$</span>
+                        <span class="ru-part">$-\sin\alpha$</span>
+                        <span class="en-part">$-\sin\alpha$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>余弦函数是偶函数，其图像关于 y 轴对称。<br>所以对任意角 $\alpha$，都有 $\cos(-\alpha) = \cos\alpha$，负号被直接消除。</div>
+                            <div class="ru-part">**Ход решения**:<br>Функция косинуса является четной, её график симметричен относительно оси y.<br>Следовательно, для любого угла $\alpha$ выполняется $\cos(-\alpha) = \cos\alpha$, отрицательный знак просто исчезает.</div>
+                            <div class="en-part">**Solution Logic**:<br>Cosine is an even function ($f(-x)=f(x)$).<br>Therefore, $\cos(-\alpha) = \cos\alpha$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\cos\alpha$ — 正确答案。</span>
+                            <span class="ru-part">$\cos\alpha$ — Правильный ответ.</span>
+                            <span class="en-part">$\cos\alpha$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$-\cos\alpha$ — 错误。余弦是偶函数，负号被自身消除而不是外提。</span>
+                            <span class="ru-part">$-\cos\alpha$ — Ошибка. Косинус — четная функция, отрицательный знак устраняется сам собой, а не выносится наружу.</span>
+                            <span class="en-part">$-\cos\alpha$ — Incorrect. Cosine is an even function; the negative sign is eliminated, not brought out.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\sin\alpha$ — 错误。诱导公式中自变量不含 $90^\circ$ 的奇数倍时，函数名（sin/cos）保持不变。</span>
+                            <span class="ru-part">$\sin\alpha$ — Ошибка. При использовании формул приведения, если аргумент не содержит нечетное кратное $90^\circ$, имя функции (sin/cos) не меняется.</span>
+                            <span class="en-part">$\sin\alpha$ — Incorrect. The identity $\cos(-\alpha)=\cos\alpha$ does not change the function to sine.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$-\sin\alpha$ — 错误。发生了函数名的误换以及符号错误。</span>
+                            <span class="ru-part">$-\sin\alpha$ — Ошибка. Произошло неверное изменение имени функции, а также ошибка в знаке.</span>
+                            <span class="en-part">$-\sin\alpha$ — Incorrect. Wrong function name and wrong sign.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q13</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">利用诱导公式化简三角函数式 $\cos(-\alpha)$ 的结果为：</span>
+                        <span class="ru-part">Упростите тригонометрическое выражение $\cos(-\alpha)$ с использованием формул приведения:</span>
+                        <span class="en-part">Simplify $\cos(-\alpha)$ using reduction formulas:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\cos\alpha$</span>
+                        <span class="ru-part">$\cos\alpha$</span>
+                        <span class="en-part">$\cos\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$-\cos\alpha$</span>
+                        <span class="ru-part">$-\cos\alpha$</span>
+                        <span class="en-part">$-\cos\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\sin\alpha$</span>
+                        <span class="ru-part">$\sin\alpha$</span>
+                        <span class="en-part">$\sin\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$-\sin\alpha$</span>
+                        <span class="ru-part">$-\sin\alpha$</span>
+                        <span class="en-part">$-\sin\alpha$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>余弦函数是偶函数，其图像关于 y 轴对称。<br>所以对任意角 $\alpha$，都有 $\cos(-\alpha) = \cos\alpha$，负号被直接消除。</div>
+                            <div class="ru-part">**Ход решения**:<br>Функция косинуса является четной, её график симметричен относительно оси y.<br>Следовательно, для любого угла $\alpha$ выполняется $\cos(-\alpha) = \cos\alpha$, отрицательный знак просто исчезает.</div>
+                            <div class="en-part">**Solution Logic**:<br>Cosine is an even function ($f(-x)=f(x)$).<br>Therefore, $\cos(-\alpha) = \cos\alpha$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\cos\alpha$ — 正确答案。</span>
+                            <span class="ru-part">$\cos\alpha$ — Правильный ответ.</span>
+                            <span class="en-part">$\cos\alpha$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$-\cos\alpha$ — 错误。余弦是偶函数，负号被自身消除而不是外提。</span>
+                            <span class="ru-part">$-\cos\alpha$ — Ошибка. Косинус — четная функция, отрицательный знак устраняется сам собой, а не выносится наружу.</span>
+                            <span class="en-part">$-\cos\alpha$ — Incorrect. Cosine is an even function; the negative sign is eliminated, not brought out.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\sin\alpha$ — 错误。诱导公式中自变量不含 $90^\circ$ 的奇数倍时，函数名（sin/cos）保持不变。</span>
+                            <span class="ru-part">$\sin\alpha$ — Ошибка. При использовании формул приведения, если аргумент не содержит нечетное кратное $90^\circ$, имя функции (sin/cos) не меняется.</span>
+                            <span class="en-part">$\sin\alpha$ — Incorrect. The identity $\cos(-\alpha)=\cos\alpha$ does not change the function to sine.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$-\sin\alpha$ — 错误。发生了函数名的误换以及符号错误。</span>
+                            <span class="ru-part">$-\sin\alpha$ — Ошибка. Произошло неверное изменение имени функции, а также ошибка в знаке.</span>
+                            <span class="en-part">$-\sin\alpha$ — Incorrect. Wrong function name and wrong sign.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q14</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">利用诱导公式化简三角函数式 $\cos(-\alpha)$ 的结果为：</span>
+                        <span class="ru-part">Упростите тригонометрическое выражение $\cos(-\alpha)$ с использованием формул приведения:</span>
+                        <span class="en-part">Simplify $\cos(-\alpha)$ using reduction formulas:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\sin\alpha$</span>
+                        <span class="ru-part">$\sin\alpha$</span>
+                        <span class="en-part">$\sin\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$-\cos\alpha$</span>
+                        <span class="ru-part">$-\cos\alpha$</span>
+                        <span class="en-part">$-\cos\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\cos\alpha$</span>
+                        <span class="ru-part">$\cos\alpha$</span>
+                        <span class="en-part">$\cos\alpha$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$-\sin\alpha$</span>
+                        <span class="ru-part">$-\sin\alpha$</span>
+                        <span class="en-part">$-\sin\alpha$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>余弦函数是偶函数，其图像关于 y 轴对称。<br>所以对任意角 $\alpha$，都有 $\cos(-\alpha) = \cos\alpha$，负号被直接消除。</div>
+                            <div class="ru-part">**Ход решения**:<br>Функция косинуса является четной, её график симметричен относительно оси y.<br>Следовательно, для любого угла $\alpha$ выполняется $\cos(-\alpha) = \cos\alpha$, отрицательный знак просто исчезает.</div>
+                            <div class="en-part">**Solution Logic**:<br>Cosine is an even function ($f(-x)=f(x)$).<br>Therefore, $\cos(-\alpha) = \cos\alpha$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\sin\alpha$ — 错误。诱导公式中自变量不含 $90^\circ$ 的奇数倍时，函数名（sin/cos）保持不变。</span>
+                            <span class="ru-part">$\sin\alpha$ — Ошибка. При использовании формул приведения, если аргумент не содержит нечетное кратное $90^\circ$, имя функции (sin/cos) не меняется.</span>
+                            <span class="en-part">$\sin\alpha$ — Incorrect. The identity $\cos(-\alpha)=\cos\alpha$ does not change the function to sine.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$-\cos\alpha$ — 错误。余弦是偶函数，负号被自身消除而不是外提。</span>
+                            <span class="ru-part">$-\cos\alpha$ — Ошибка. Косинус — четная функция, отрицательный знак устраняется сам собой, а не выносится наружу.</span>
+                            <span class="en-part">$-\cos\alpha$ — Incorrect. Cosine is an even function; the negative sign is eliminated, not brought out.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\cos\alpha$ — 正确答案。</span>
+                            <span class="ru-part">$\cos\alpha$ — Правильный ответ.</span>
+                            <span class="en-part">$\cos\alpha$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$-\sin\alpha$ — 错误。发生了函数名的误换以及符号错误。</span>
+                            <span class="ru-part">$-\sin\alpha$ — Ошибка. Произошло неверное изменение имени функции, а также ошибка в знаке.</span>
+                            <span class="en-part">$-\sin\alpha$ — Incorrect. Wrong function name and wrong sign.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q15</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知一元二次方程 $x^2-6x+2=0$ 的两个根分别为 $x_1$ 和 $x_2$，请不通过解方程，直接求出两根之和 $x_1 + x_2$ 的值：</span>
+                        <span class="ru-part">Известно, что уравнение $x^2-6x+2=0$ имеет два корня $x_1$ и $x_2$. Найдите сумму корней $x_1 + x_2$, не решая само уравнение:</span>
+                        <span class="en-part">Find the sum of the roots $x_1 + x_2$ for the equation $x^2-6x+2=0$ without solving it:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$-2$</span>
+                        <span class="ru-part">$-2$</span>
+                        <span class="en-part">$-2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$-6$</span>
+                        <span class="ru-part">$-6$</span>
+                        <span class="en-part">$-6$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$6$</span>
+                        <span class="ru-part">$6$</span>
+                        <span class="en-part">$6$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$2$</span>
+                        <span class="ru-part">$2$</span>
+                        <span class="en-part">$2$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>应用韦达定理（Vieta's formulas）：对于一元二次方程 $ax^2+bx+c=0$，两根之和始终满足 $x_1+x_2 = -b/a$。<br>提取题干方程系数：$a=1, b=-6$。<br>代入公式得到：$x_1+x_2 = -(-6)/1 = 6$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Применяем теорему Виета: для квадратного уравнения $ax^2+bx+c=0$ сумма двух корней всегда удовлетворяет $x_1+x_2 = -b/a$.<br>Извлекаем коэффициенты данного уравнения: $a=1, b=-6$.<br>Подставляя в формулу, получаем: $x_1+x_2 = -(-6)/1 = 6$.</div>
+                            <div class="en-part">**Solution Logic**:<br>Apply Vieta's formulas: for $ax^2+bx+c=0$, sum $= -b/a$.<br>Coefficients: $a=1, b=-6$.<br>Sum $= -(-6)/1 = 6$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$-2$ — 错误。这是因公式运用错误或记忆混淆求出的带错误符号的根的积。</span>
+                            <span class="ru-part">$-2$ — Ошибка. Это произведение корней с ошибочным знаком из-за неправильного применения формулы или путаницы в памяти.</span>
+                            <span class="en-part">$-2$ — Incorrect. Mistaken product calculation.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$-6$ — 错误。韦达定理对应 $x_1+x_2=-b/a$，此处遗漏了公式自带的负号。</span>
+                            <span class="ru-part">$-6$ — Ошибка. Теорема Виета гласит, что $x_1+x_2=-b/a$, здесь упущен знак минус из самой формулы.</span>
+                            <span class="en-part">$-6$ — Incorrect. Vieta's formula is $-b/a$; the negative sign was missed.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$6$ — 正确答案。</span>
+                            <span class="ru-part">$6$ — Правильный ответ.</span>
+                            <span class="en-part">$6$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$2$ — 错误。这是两根之积（c/a）的结果。</span>
+                            <span class="ru-part">$2$ — Ошибка. Это результат произведения корней (c/a).</span>
+                            <span class="en-part">$2$ — Incorrect. This is the product of the roots ($c/a$).</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q16</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知一元二次方程 $x^2-6x+2=0$ 的两个根分别为 $x_1$ 和 $x_2$，请不通过解方程，直接求出两根之和 $x_1 + x_2$ 的值：</span>
+                        <span class="ru-part">Известно, что уравнение $x^2-6x+2=0$ имеет два корня $x_1$ и $x_2$. Найдите сумму корней $x_1 + x_2$, не решая само уравнение:</span>
+                        <span class="en-part">Find the sum of the roots $x_1 + x_2$ for the equation $x^2-6x+2=0$ without solving it:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$6$</span>
+                        <span class="ru-part">$6$</span>
+                        <span class="en-part">$6$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$2$</span>
+                        <span class="ru-part">$2$</span>
+                        <span class="en-part">$2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$-2$</span>
+                        <span class="ru-part">$-2$</span>
+                        <span class="en-part">$-2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$-6$</span>
+                        <span class="ru-part">$-6$</span>
+                        <span class="en-part">$-6$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>应用韦达定理（Vieta's formulas）：对于一元二次方程 $ax^2+bx+c=0$，两根之和始终满足 $x_1+x_2 = -b/a$。<br>提取题干方程系数：$a=1, b=-6$。<br>代入公式得到：$x_1+x_2 = -(-6)/1 = 6$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Применяем теорему Виета: для квадратного уравнения $ax^2+bx+c=0$ сумма двух корней всегда удовлетворяет $x_1+x_2 = -b/a$.<br>Извлекаем коэффициенты данного уравнения: $a=1, b=-6$.<br>Подставляя в формулу, получаем: $x_1+x_2 = -(-6)/1 = 6$.</div>
+                            <div class="en-part">**Solution Logic**:<br>Apply Vieta's formulas: for $ax^2+bx+c=0$, sum $= -b/a$.<br>Coefficients: $a=1, b=-6$.<br>Sum $= -(-6)/1 = 6$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$6$ — 正确答案。</span>
+                            <span class="ru-part">$6$ — Правильный ответ.</span>
+                            <span class="en-part">$6$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$2$ — 错误。这是两根之积（c/a）的结果。</span>
+                            <span class="ru-part">$2$ — Ошибка. Это результат произведения корней (c/a).</span>
+                            <span class="en-part">$2$ — Incorrect. This is the product of the roots ($c/a$).</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$-2$ — 错误。这是因公式运用错误或记忆混淆求出的带错误符号的根的积。</span>
+                            <span class="ru-part">$-2$ — Ошибка. Это произведение корней с ошибочным знаком из-за неправильного применения формулы или путаницы в памяти.</span>
+                            <span class="en-part">$-2$ — Incorrect. Mistaken product calculation.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$-6$ — 错误。韦达定理对应 $x_1+x_2=-b/a$，此处遗漏了公式自带的负号。</span>
+                            <span class="ru-part">$-6$ — Ошибка. Теорема Виета гласит, что $x_1+x_2=-b/a$, здесь упущен знак минус из самой формулы.</span>
+                            <span class="en-part">$-6$ — Incorrect. Vieta's formula is $-b/a$; the negative sign was missed.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q17</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">若事件 A 与事件 B 是相互独立事件，且已知概率 $P(A)=0.5, P(B)=0.2$。求两事件同时发生的概率 $P(AB)$：</span>
+                        <span class="ru-part">Если события A и B являются независимыми событиями, и известны вероятности $P(A)=0.5, P(B)=0.2$. Найдите вероятность одновременного наступления событий $P(AB)$:</span>
+                        <span class="en-part">If events A and B are independent with $P(A)=0.5$ and $P(B)=0.2$, find $P(A \cap B)$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$0.7$</span>
+                        <span class="ru-part">$0.7$</span>
+                        <span class="en-part">$0.7$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$0.3$</span>
+                        <span class="ru-part">$0.3$</span>
+                        <span class="en-part">$0.3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$0.1$</span>
+                        <span class="ru-part">$0.1$</span>
+                        <span class="en-part">$0.1$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>根据相互独立事件的概率法则，两个独立事件同时发生的概率等于它们各自发生概率的乘积。<br>即公式 $P(AB) = P(A) \times P(B)$。<br>代入数值计算：$0.5 \times 0.2 = 0.1$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Согласно закону вероятности независимых событий, вероятность одновременного наступления двух независимых событий равна произведению вероятностей их наступления.<br>То есть формула: $P(AB) = P(A) \times P(B)$.<br>Подставляем значения: $0.5 \times 0.2 = 0.1$.</div>
+                            <div class="en-part">**Solution Logic**:<br>For independent events, the probability of both occurring is the product of their individual probabilities:<br>$P(A \cap B) = P(A) 	imes P(B) = 0.5 	imes 0.2 = 0.1$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$0$ — 错误。0 代表这两个事件为互斥事件永不同时发生，并非独立事件。</span>
+                            <span class="ru-part">$0$ — Ошибка. 0 означает, что эти события взаимоисключающие и никогда не происходят одновременно; это не относится к независимым событиям.</span>
+                            <span class="en-part">$0$ — Incorrect. Zero implies mutually exclusive events, not independence.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$0.7$ — 错误。把两者的概率进行了相加，违反了独立事件相交应用乘法。</span>
+                            <span class="ru-part">$0.7$ — Ошибка. Вероятности были сложены, что нарушает правило использования умножения для пересечения независимых событий.</span>
+                            <span class="en-part">$0.7$ — Incorrect. Probabilities were added, but independence for intersection requires multiplication.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$0.3$ — 错误。错误地进行了随意减法。</span>
+                            <span class="ru-part">$0.3$ — Ошибка. Ошибочно выполнено случайное вычитание.</span>
+                            <span class="en-part">$0.3$ — Incorrect. Arbitrary subtraction performed.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$0.1$ — 正确答案。</span>
+                            <span class="ru-part">$0.1$ — Правильный ответ.</span>
+                            <span class="en-part">$0.1$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q18</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">若事件 A 与事件 B 是相互独立事件，且已知概率 $P(A)=0.5, P(B)=0.2$。求两事件同时发生的概率 $P(AB)$：</span>
+                        <span class="ru-part">Если события A и B являются независимыми событиями, и известны вероятности $P(A)=0.5, P(B)=0.2$. Найдите вероятность одновременного наступления событий $P(AB)$:</span>
+                        <span class="en-part">If events A and B are independent with $P(A)=0.5$ and $P(B)=0.2$, find $P(A \cap B)$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$0.1$</span>
+                        <span class="ru-part">$0.1$</span>
+                        <span class="en-part">$0.1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$0.3$</span>
+                        <span class="ru-part">$0.3$</span>
+                        <span class="en-part">$0.3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$0.7$</span>
+                        <span class="ru-part">$0.7$</span>
+                        <span class="en-part">$0.7$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>根据相互独立事件的概率法则，两个独立事件同时发生的概率等于它们各自发生概率的乘积。<br>即公式 $P(AB) = P(A) \times P(B)$。<br>代入数值计算：$0.5 \times 0.2 = 0.1$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Согласно закону вероятности независимых событий, вероятность одновременного наступления двух независимых событий равна произведению вероятностей их наступления.<br>То есть формула: $P(AB) = P(A) \times P(B)$.<br>Подставляем значения: $0.5 \times 0.2 = 0.1$.</div>
+                            <div class="en-part">**Solution Logic**:<br>For independent events, the probability of both occurring is the product of their individual probabilities:<br>$P(A \cap B) = P(A) 	imes P(B) = 0.5 	imes 0.2 = 0.1$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$0.1$ — 正确答案。</span>
+                            <span class="ru-part">$0.1$ — Правильный ответ.</span>
+                            <span class="en-part">$0.1$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$0.3$ — 错误。错误地进行了随意减法。</span>
+                            <span class="ru-part">$0.3$ — Ошибка. Ошибочно выполнено случайное вычитание.</span>
+                            <span class="en-part">$0.3$ — Incorrect. Arbitrary subtraction performed.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$0$ — 错误。0 代表这两个事件为互斥事件永不同时发生，并非独立事件。</span>
+                            <span class="ru-part">$0$ — Ошибка. 0 означает, что эти события взаимоисключающие и никогда не происходят одновременно; это не относится к независимым событиям.</span>
+                            <span class="en-part">$0$ — Incorrect. Zero implies mutually exclusive events, not independence.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$0.7$ — 错误。把两者的概率进行了相加，违反了独立事件相交应用乘法。</span>
+                            <span class="ru-part">$0.7$ — Ошибка. Вероятности были сложены, что нарушает правило использования умножения для пересечения независимых событий.</span>
+                            <span class="en-part">$0.7$ — Incorrect. Probabilities were added, but independence for intersection requires multiplication.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q19</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">试求解完全平方方程 $(x-4)^2 = 0$ 的唯一根：</span>
+                        <span class="ru-part">Решите уравнение полного квадрата $(x-4)^2 = 0$:</span>
+                        <span class="en-part">Find the root for the equation $(x-4)^2 = 0$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$-4$</span>
+                        <span class="ru-part">$-4$</span>
+                        <span class="en-part">$-4$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$4$</span>
+                        <span class="ru-part">$4$</span>
+                        <span class="en-part">$4$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>解该完全平方方程。当 $(x-4)^2 = 0$ 时，内部代数项必须为 0，即 $x-4=0$。<br>解得最终答案：$x=4$。<br>也可以将选项依次代入方程进行快速测试（代入法），只有 $x=4$ 时等式成立。</div>
+                            <div class="ru-part">**Ход решения**:<br>Решим уравнение полного квадрата. Когда $(x-4)^2 = 0$, внутреннее алгебраическое выражение должно быть равно 0, то есть $x-4=0$.<br>Окончательный ответ: $x=4$.<br>Также можно подставить предложенные варианты в уравнение для быстрой проверки. Равенство соблюдается только при $x=4$.</div>
+                            <div class="en-part">**Solution Logic**:<br>If $(x-4)^2 = 0$, then $x-4=0 \Rightarrow x=4$.<br>Alternatively, substitute options: only $x=4$ yields $0=0$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$0$ — 错误。将0代入方程并不能使等号成立。 $(0-a)^2 = a^2 \neq 0$。</span>
+                            <span class="ru-part">$0$ — Ошибка. Подстановка 0 в уравнение не делает его верным. $(0-a)^2 = a^2 \neq 0$.</span>
+                            <span class="en-part">$0$ — Incorrect. Substituting 0 results in $a^2 \neq 0$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$-4$ — 错误。$-4$ 会将内部值扩增后平方，得 0 之外的正数而非 0。</span>
+                            <span class="ru-part">$-4$ — Ошибка. $-{a}$ увеличит внутреннее значение, а затем оно будет возведено в квадрат, получая положительное число вместо 0.</span>
+                            <span class="en-part">$-4$ — Incorrect. Substituting $-a$ results in $(-2a)^2 
+eq 0$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$1$ — 错误。代入1不等式不平衡。</span>
+                            <span class="ru-part">$1$ — Ошибка. Подстановка 1 не делает равенство верным.</span>
+                            <span class="en-part">$1$ — Incorrect. Substitution fails to satisfy the equation.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$4$ — 正确答案。</span>
+                            <span class="ru-part">$4$ — Правильный ответ.</span>
+                            <span class="en-part">$4$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q20</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">试求解完全平方方程 $(x-3)^2 = 0$ 的唯一根：</span>
+                        <span class="ru-part">Решите уравнение полного квадрата $(x-3)^2 = 0$:</span>
+                        <span class="en-part">Find the root for the equation $(x-3)^2 = 0$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$3$</span>
+                        <span class="ru-part">$3$</span>
+                        <span class="en-part">$3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$-3$</span>
+                        <span class="ru-part">$-3$</span>
+                        <span class="en-part">$-3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>解该完全平方方程。当 $(x-3)^2 = 0$ 时，内部代数项必须为 0，即 $x-3=0$。<br>解得最终答案：$x=3$。<br>也可以将选项依次代入方程进行快速测试（代入法），只有 $x=3$ 时等式成立。</div>
+                            <div class="ru-part">**Ход решения**:<br>Решим уравнение полного квадрата. Когда $(x-3)^2 = 0$, внутреннее алгебраическое выражение должно быть равно 0, то есть $x-3=0$.<br>Окончательный ответ: $x=3$.<br>Также можно подставить предложенные варианты в уравнение для быстрой проверки. Равенство соблюдается только при $x=3$.</div>
+                            <div class="en-part">**Solution Logic**:<br>If $(x-3)^2 = 0$, then $x-3=0 \Rightarrow x=3$.<br>Alternatively, substitute options: only $x=3$ yields $0=0$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$0$ — 错误。将0代入方程并不能使等号成立。 $(0-a)^2 = a^2 \neq 0$。</span>
+                            <span class="ru-part">$0$ — Ошибка. Подстановка 0 в уравнение не делает его верным. $(0-a)^2 = a^2 \neq 0$.</span>
+                            <span class="en-part">$0$ — Incorrect. Substituting 0 results in $a^2 \neq 0$.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$3$ — 正确答案。</span>
+                            <span class="ru-part">$3$ — Правильный ответ.</span>
+                            <span class="en-part">$3$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$-3$ — 错误。$-3$ 会将内部值扩增后平方，得 0 之外的正数而非 0。</span>
+                            <span class="ru-part">$-3$ — Ошибка. $-{a}$ увеличит внутреннее значение, а затем оно будет возведено в квадрат, получая положительное число вместо 0.</span>
+                            <span class="en-part">$-3$ — Incorrect. Substituting $-a$ results in $(-2a)^2 
+eq 0$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$1$ — 错误。代入1不等式不平衡。</span>
+                            <span class="ru-part">$1$ — Ошибка. Подстановка 1 не делает равенство верным.</span>
+                            <span class="en-part">$1$ — Incorrect. Substitution fails to satisfy the equation.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+    </div>
+</body>
+</html>

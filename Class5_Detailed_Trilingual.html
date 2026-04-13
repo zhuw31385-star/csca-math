@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 5: Conics & Vectors - CSCA Interactive Lecture</title>
+    <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #f43f5e;
+            --bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --zh-light: #fef2f2;
+            --ru-light: #eff6ff;
+            --en-light: #fffbeb;
+            --zh-dark: #dc2626;
+            --ru-dark: #2563eb;
+            --en-dark: #d97706;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: radial-gradient(circle at top left, #f1f5f9, #e2e8f0);
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        header h1 { font-size: 36px; font-weight: 900; margin: 0; letter-spacing: -0.05em; color: var(--primary); }
+        header p { color: #64748b; font-size: 18px; margin-top: 8px; }
+
+        /* Language Controls */
+        .lang-nav {
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .lang-btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .lang-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .lang-btn.active.zh { background: var(--zh-dark); color: white; border-color: transparent; }
+        .lang-btn.active.ru { background: var(--ru-dark); color: white; border-color: transparent; }
+        .lang-btn.active.en { background: var(--en-dark); color: white; border-color: transparent; }
+
+        /* Section Styling */
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 60px 0 30px;
+            padding-left: 15px;
+            border-left: 6px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Topic Card */
+        .topic-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .topic-meta { font-size: 12px; font-weight: 800; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+        .topic-name { font-size: 28px; font-weight: 900; margin: 0 0 24px 0; letter-spacing: -0.02em; }
+
+        .concept-box {
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+        .zh-active .concept-box { background: var(--zh-light); border-left: 6px solid var(--zh-dark); }
+        .ru-active .concept-box { background: var(--ru-light); border-left: 6px solid var(--ru-dark); }
+        .en-active .concept-box { background: var(--en-light); border-left: 6px solid var(--en-dark); }
+
+        .concept-text { font-size: 19px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
+        .explain-text { font-size: 15px; color: #475569; }
+
+        .diagram-outer { background: white; border-radius: 16px; padding: 20px; text-align: center; margin: 30px 0; border: 1px solid #e2e8f0; }
+
+        /* Homework Blocks */
+        .homework-grid { display: flex; flex-direction: column; gap: 30px; }
+        .q-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .q-card:hover { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); transform: translateY(-4px); }
+        .q-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .q-num { background: #f1f5f9; padding: 4px 12px; border-radius: 8px; font-weight: 800; font-size: 14px; }
+        .q-text { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+
+        .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+        .opt {
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .opt:hover { border-color: #94a3b8; background: #f1f5f9; }
+
+        .analysis-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .analysis-btn:hover { opacity: 0.9; }
+
+        .analysis-panel {
+            display: none;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px dashed #e2e8f0;
+        }
+        .analysis-panel.open { display: block; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .step-bubble { background: #f0fdf4; border: 1px solid #dcfce7; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        .audit-item { padding: 12px; border-radius: 10px; margin-bottom: 12px; font-size: 14px; }
+        .audit-correct { background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+        .audit-wrong { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+
+        /* Visibility Classes */
+        .zh-part, .ru-part, .en-part { display: none; }
+        .zh-active .zh-part { display: block; }
+        .ru-active .ru-part { display: block; }
+        .en-active .en-part { display: block; }
+
+        .hidden { display: none !important; }
+    </style>
+    <script>
+        function setLang(lang) {
+            const container = document.getElementById('main-container');
+            container.classList.remove('zh-active', 'ru-active', 'en-active');
+            container.classList.add(lang + '-active');
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.lang-btn.' + lang).classList.add('active');
+            
+            localStorage.setItem('csca_lang', lang);
+        }
+
+        function toggleAnalysis(btn) {
+            const panel = btn.nextElementSibling;
+            panel.classList.toggle('open');
+            btn.innerText = panel.classList.contains('open') ? '收起解析 / CLOSE' : '查看详尽解析 / FULL ANALYSIS';
+        }
+
+        window.onload = () => {
+            const saved = localStorage.getItem('csca_lang') || 'zh';
+            setLang(saved);
+        };
+    </script>
+</head>
+<body>
+    <div class="lang-nav">
+        <button class="lang-btn zh" onclick="setLang('zh')">🇨🇳 中文</button>
+        <button class="lang-btn ru" onclick="setLang('ru')">🇷🇺 Рус</button>
+        <button class="lang-btn en" onclick="setLang('en')">🇺🇸 Eng</button>
+    </div>
+
+    <div class="container zh-active" id="main-container">
+        <header>
+            <h1>Class 5: Conics & Vectors</h1>
+            <p class="zh-part">CSCA 数学专项冲刺讲义 - 高阶三语版</p>
+            <p class="ru-part">CSCA Математика: Интенсивный курс - Триязычное издание</p>
+            <p class="en-part">CSCA Math Intensive Lecture - Trilingual Edition</p>
+        </header>
+
+        <section>
+            <div class="section-title">
+                <span class="zh-part">📖 核心考点手册 / Theory Guide</span>
+                <span class="ru-part">📖 Теоретический справочник</span>
+                <span class="en-part">📖 Essential Theory Guide</span>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 33</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">圆的几何中心反取 (Нахождение геометрического центра окружности)</span>
+                    <span class="ru-part">Нахождение геометрического центра окружности</span>
+                    <span class="en-part">Finding the Center of a Circle</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">在圆标准方程式 $(x-a)^2 + (y-b)^2 = r^2$ 中，圆心参数提取必须执行内部置号相反逆倒规则操作。即得出定核圆心落于 $(a, b)$。</span>
+                        <span class="ru-part">В уравнении окружности $(x-a)^2 + (y-b)^2 = r^2$ параметры центра извлекаются с инверсией знака. Ядро/центр находится в точке $(a, b)$.</span>
+                        <span class="en-part">In the standard form equation $(x-a)^2 + (y-b)^2 = r^2$, the coordinates of the center are $(a, b)$. Remember to invert the signs inside the parentheses.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">注意里面的陷阱！由于公式框架本身是带有“减号”的（代表相对距离差）。当你看到括号里写着 $(x-2)^2$，那圆心横坐标实际上是 $+2$ 而不是 $-2$。看到加号就反转写负值！</span>
+                        <span class="ru-part">Остерегайтесь ловушек! Поскольку сама формула содержит «минус» (обозначая относительное расстояние), если вы видите $(x-2)^2$, координата x центра на самом деле равна $+2$. Всегда меняйте знак!</span>
+                        <span class="en-part">Beware of the trap! Because the formula framework itself contains a "minus sign" (representing relative distance), when you see $(x-2)^2$ in the parentheses, the center's x-coordinate is actually $+2$, not $-2$. If you see a plus, flip it to negative!</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 34</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">提取圆半径测极 (Вычисление радиуса окружности)</span>
+                    <span class="ru-part">Вычисление радиуса окружности</span>
+                    <span class="en-part">Calculating the Radius of a Circle</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">等价恒等于方程串等式最后侧的那一堆常量非代表直轴常径长，它指向的是展开向全开之面体对应的 $r^2$ 。</span>
+                        <span class="ru-part">Константа в конце уравнения не является радиусом; она определяет квадрат радиуса $r^2$.</span>
+                        <span class="en-part">In the equation $(x-a)^2 + (y-b)^2 = R$, the radius $r$ is the square root of the constant term $R$: $r = \sqrt{R}$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">在圆的表达式里，在等号最右边耀武扬威的那个数字，比如 25，并不是你想象中的半径是 25！它是经历过变身的平方体。真正的核心线段半径，必须对它实行开平方根降维打击，结果是 5。</span>
+                        <span class="ru-part">В уравнении окружности число справа от знака равенства, например 25, не является радиусом! Это квадратный параметр. Чтобы получить истинный радиус, нужно извлечь квадратный корень, получив 5.</span>
+                        <span class="en-part">In a circle's expression, the number strutting on the far right of the equal sign—say, 25—isn't actually the radius! It's the squared version. For the true core radius, you must strike it with a square root "de-dimensioning" blow; the result is 5.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 35</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">抛物准线法则 (Директриса параболы)</span>
+                    <span class="ru-part">Директриса параболы</span>
+                    <span class="en-part">Parabola Directrix Rule</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">对于向着某一坐标轴平向张口的右型 $y^2 = 2px$ 抛物基线体系，其焦线距离常数对应的准线方程被限制锁定在 $x = -p/2$。</span>
+                        <span class="ru-part">Для параболы $y^2 = 2px$, открывающейся вправо, уравнение её директрисы фиксируется на уровне $x = -p/2$.</span>
+                        <span class="en-part">For a parabola $y^2 = 2px$ that opens to the right, the equation of its directrix is $x = -p/2$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">如果抛物线向右张开了一个大口，它实际上就像一个放大镜碗口。在这只碗口的背后，存在一堵距离其底端正好相等（$p/2$）的无形“准线”高墙。口向右开，墙就躲在左边的负坐标区域里。</span>
+                        <span class="ru-part">Если парабола открывается вправо, как чаша, то позади этой чаши возникает невидимая стена «директрисы» на равном фокусном расстоянии ($p/2$). Так как чаша смотрит вправо, стена прячется слева в отрицательной зоне.</span>
+                        <span class="en-part">If a parabola opens wide to the right, it's essentially like the bowl of a magnifying glass. Behind this bowl, there exists an invisible "directrix" wall at exactly the same distance ($p/2$) from the base. If the mouth opens right, the wall hides in the negative coordinate realm to the left.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 36</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">椭圆双焦距同构特性 (Свойства фокусов эллипса)</span>
+                    <span class="ru-part">Свойства фокусов эллипса</span>
+                    <span class="en-part">Focal Properties of Ellipse</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">针对长扁形椭圆封闭阵列，核心界域任何边界取点到内在孕育的双焦点构联距离和恒常固守常量：$2a$ （长向贯穿轴全距）。</span>
+                        <span class="ru-part">Для эллипса сумма расстояний от любой точки на его границе до двух внутренних фокусов является постоянной и равной длине большой оси: $2a$.</span>
+                        <span class="en-part">For any point on an ellipse, the sum of its distances to the two foci is a constant equal to the length of the major axis: $2a$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">想象你用一段没有弹性的绳子，两端用图钉钉在纸上（这两个钉子就是双焦点）。你用笔顶紧绳子画出一个大圈，就是椭圆。这长长绳子的总长，恰好等于整个椭圆最长横向跨度 $2a$。</span>
+                        <span class="ru-part">Представьте себе неупругую веревку, два конца которой прикреплены булавками (это фокусы). Натянув веревку карандашом, вы нарисуете эллипс. Общая длина этой веревки точно равна общей длине самой длинной оси эллипса $2a$.</span>
+                        <span class="en-part">Imagine using a non-elastic string with both ends pinned to paper (these pins are the foci). Use a pen to pull the string tight and draw a big loop: that's an ellipse. The total length of this string is exactly equal to the ellipse's longest horizontal span, $2a$.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 37</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">双曲线理论换算 (Вычисления в гиперболе)</span>
+                    <span class="ru-part">Вычисления в гиперболе</span>
+                    <span class="en-part">Hyperbola Calculations</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">由于双曲线展现极度拉扯向外的开豁态势，其恒定内部勾股架构约束等式反转为：$c^2 = a^2 + b^2$。</span>
+                        <span class="ru-part">Поскольку гипербола экстремально вытянута наружу, её внутреннее уравнение Пифагора инвертируется: $c^2 = a^2 + b^2$.</span>
+                        <span class="en-part">Because a hyperbola exhibits an outwardly stretching configuration, its internal focal relationship is reversed compared to an ellipse: $c^2 = a^2 + b^2$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">千万不能跟椭圆搞混！椭圆是内部收敛的圈圈，所以在椭圆里是 $a$ (最长半轴) 最大($a^2=b^2+c^2$)。但双曲线是往界外爆开的无限曲线，它跑的最远的是交点焦距 $c$，所以此时 $c$ 成了三角形的巨无霸斜边！这就等于要把他们两者加起来求 $c$哦。</span>
+                        <span class="ru-part">Никогда не путайте с эллипсом! В эллипсе $a$ (главная полуось) самая большая. Но гипербола расходится бесконечно наружу, самым большим является фокусное расстояние $c$, поэтому $c$ становится гипотенузой! Вы должны сложить их, чтобы найти $c$.</span>
+                        <span class="en-part">Don't confuse it with an ellipse! An ellipse is a closed loop, so in an ellipse $a$ (major semi-axis) is the largest ($a^2=b^2+c^2$). But a hyperbola is an infinite curve exploding outward; its farthest reach is the focal distance $c$. Thus, $c$ becomes the "giant hypotenuse"! You must sum the squares of $a$ and $b$ to find $c$.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 38</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">平面向量加和运算 (Сложение плоских векторов)</span>
+                    <span class="ru-part">Сложение плоских векторов</span>
+                    <span class="en-part">Vector Addition in a Plane</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">执行双重或多维独立特征数组并联组加时应奉行同组单列合项法：$\vec{a} + \vec{b} = (x_1+x_2, y_1+y_2)$。</span>
+                        <span class="ru-part">При сложении двумерных векторов используется принцип покомпонентного сложения: $\vec{a} + \vec{b} = (x_1+x_2, y_1+y_2)$.</span>
+                        <span class="en-part">When performing addition on multi-dimensional feature arrays (vectors), add corresponding components: $\vec{a} + \vec{b} = (x_1+x_2, y_1+y_2)$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">向量加法就像在玩角色扮演的“叠buff”游戏。你不能把防御力(x坐标)和攻击力(y坐标)混在一起加！防御只跟防御合成，攻击只与攻击合并。x与x同组连合，y与y进行加减。</span>
+                        <span class="ru-part">Сложение векторов напоминает наложение улучшений в ролевой игре. Вы не можете складывать защиту (координата x) с атакой (координата y)! Защита суммируется только с защитой, а атака с атакой.</span>
+                        <span class="en-part">Vector addition is like stacking buffs in an RPG. You can't mix defense (x-coordinate) with attack power (y-coordinate)! Defense only combines with defense, and attack only with attack. Add x with x, and y with y.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 39</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">向量共线衍生平移法则 (Коллинеарность векторов)</span>
+                    <span class="ru-part">Коллинеарность векторов</span>
+                    <span class="en-part">Collinearity and Proportionality</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">处于空间共线平行的两大向量在代数值列上的核心规约是坐标成比列扩张属性：$x_1/x_2 = y_1/y_2$。</span>
+                        <span class="ru-part">Основное условие коллинеарности и параллельности двух векторов в пространстве: их координаты должны быть пропорциональны: $x_1/x_2 = y_1/y_2$.</span>
+                        <span class="en-part">Two collinear vectors satisfy the property that their coordinates are proportional: $x_1/x_2 = y_1/y_2 = \lambda$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">如果两个向量指着同一条无限延长线（不管方向正向反向），那么其中一个必定可以通过“整体放大镜”放大（或缩小）变成另外一个。如果它的 x 被放大了 3 倍，那么抱歉，为了保持同一直线束属性，它的 y 也必须强行放大 3 倍！</span>
+                        <span class="ru-part">Если два вектора лежат на параллельных прямых, один обязательно должен быть масштабированной версией другого. Если x увеличить в 3 раза, то для сохранения параллельности y также должно быть увеличено в 3 раза!</span>
+                        <span class="en-part">If two vectors point along the same infinite line (regardless of direction), one must be a scaled version of the other. If its x-component is magnified by 3, then to maintain the same direction, its y-component must also be magnified by 3!</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 40</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">特殊三角函数映射值基库 (Значения тригонометрических функций специфичных углов)</span>
+                    <span class="ru-part">Значения тригонометрических функций специфичных углов</span>
+                    <span class="en-part">Values of Special Trigonometric Functions</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">牢记基准角度恒定向值，例如 $\sin 30^\circ = 1/2,  \cos 60^\circ = 1/2,  \tan 45^\circ = 1$。</span>
+                        <span class="ru-part">Запомните фиксированные значения для основных углов, например, $\sin 30^\circ = 1/2, \cos 60^\circ = 1/2, \tan 45^\circ = 1$.</span>
+                        <span class="en-part">Memorize the trigonometric values for standard angles, such as $\sin 30^\circ = 1/2, \cos 60^\circ = 1/2, \tan 45^\circ = 1$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">这是三角函数里没有讨价还价余地的“乘法口诀表”。在三十度小夹角里，那个立起来高高的对边长度，永远精确等于极其修长斜边长度的正正好一半。</span>
+                        <span class="ru-part">Это «таблица умножения» в тригонометрии, с которой не поспоришь. В малом угле 30 градусов высота противолежащего катета всегда и абсолютно точно равна половине длины гипотенузы.</span>
+                        <span class="en-part">This is the non-negotiable "multiplication table" of trigonometry. At a small 30-degree angle, the vertical height (opposite side) is always exactly half the length of the long hypotenuse.</span>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+        <section>
+            <div class="section-title">
+                <span class="zh-part">✍️ 专项强化训练 / Practice Lab</span>
+                <span class="ru-part">✍️ Практическая лаборатория</span>
+                <span class="en-part">✍️ Practice Lab</span>
+            </div>
+            <div class="homework-grid">
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q1</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">请鉴别方程模型 $(x-1)^2 + (y+4)^2 = 4$ 定义之关联圆心汇聚坐标所在：</span>
+                        <span class="ru-part">Пожалуйста, определите координаты центра окружности, определенной моделью уравнения: $(x-1)^2 + (y+4)^2 = 4$:</span>
+                        <span class="en-part">Identify the coordinates of the center of the circle defined by $(x-1)^2 + (y+4)^2 = 4$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(1, 4)$</span>
+                        <span class="ru-part">$(1, 4)$</span>
+                        <span class="en-part">$(1, 4)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(-1, -4)$</span>
+                        <span class="ru-part">$(-1, -4)$</span>
+                        <span class="en-part">$(-1, -4)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(-1, 4)$</span>
+                        <span class="ru-part">$(-1, 4)$</span>
+                        <span class="en-part">$(-1, 4)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(1, -4)$</span>
+                        <span class="ru-part">$(1, -4)$</span>
+                        <span class="en-part">$(1, -4)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**还原关于圆特征标准形式的提取解题法则**：<br>圆的理论基本方程模式定义为 $(x-a)^2 + (y-b)^2 = r^2$，体现了直接获取必须反号提取。<br>观察前半表 $(x-1)$ 解析还原的是正实数值 $1$。<br>对于后半部表带有括号 $(y+4)$ 导出，须依照原规则回撤向其真实负向位置 $-4$。<br>判定圆心落在位点 $(1, -4)$。</div>
+                            <div class="ru-part">**Правила извлечения решения из стандартной формы уравнения окружности**:<br>Уравнение круга теоретически определяется по формуле $(x-a)^2 + (y-b)^2 = r^2$, где значения a и b (координаты центра) извлекаются с изменением знака.<br>Рассматривая первую скобку $(x-1)$, значением является положительное действительное число $1$.<br>Во второй скобке $(y+4)$ необходимо соблюдать правило и инвертировать знак, перейдя к отрицательному значению $-4$.<br>Центр круга попадает в точку $(1, -4)$.</div>
+                            <div class="en-part">**Standard Form Pattern Matching**:<br>Circle equation: $(x-a)^2 + (y-b)^2 = r^2$. The center is $(a, b)$.<br>From $(x-1)$, $a = 1$.<br>From $(y+4)$ which is $(y - (-4))$, $b = -4$.<br>The center is $(1, -4)$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(1, 4)$ — 错误。并未对代数学形式中式子后半部分内的 $(y+{y})^2$ 进行正确的对应圆心转换反置推论。</span>
+                            <span class="ru-part">$(1, 4)$ — Ошибка. На задней части алгебраического выражения $(y+{y})^2$ не была должным образом выведена симметричная инверсия для преобразования центра круга.</span>
+                            <span class="en-part">$(1, 4)$ — Incorrect. The sign for the y-coordinate was not flipped.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(-1, -4)$ — 错误。未经合理换元并误导强行将式内前端截段 $(x-{x})^2$ 系数随动强制变号。</span>
+                            <span class="ru-part">$(-1, -4)$ — Ошибка. Без проведения правильной замены знаков искусственно заменена передняя часть интервала $(x-{x})^2$, вследствие чего знаки поменялись принудительно.</span>
+                            <span class="en-part">$(-1, -4)$ — Incorrect. The sign for the x-coordinate was mistakenly flipped.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(-1, 4)$ — 错误。未能依照标准等式特征正确推演横跨方向提取极性正负反序特征。</span>
+                            <span class="ru-part">$(-1, 4)$ — Ошибка. Из-за отсутствия правильного анализа знаков в стандартном уравнении свойства инвертирования знаков не были правильно применены.</span>
+                            <span class="en-part">$(-1, 4)$ — Incorrect. Failed to correctly invert the signs to find the center.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(1, -4)$ — 正确答案。</span>
+                            <span class="ru-part">$(1, -4)$ — Правильный ответ.</span>
+                            <span class="en-part">$(1, -4)$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q2</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">请鉴别方程模型 $(x-2)^2 + (y+4)^2 = 4$ 定义之关联圆心汇聚坐标所在：</span>
+                        <span class="ru-part">Пожалуйста, определите координаты центра окружности, определенной моделью уравнения: $(x-2)^2 + (y+4)^2 = 4$:</span>
+                        <span class="en-part">Identify the coordinates of the center of the circle defined by $(x-2)^2 + (y+4)^2 = 4$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(-2, -4)$</span>
+                        <span class="ru-part">$(-2, -4)$</span>
+                        <span class="en-part">$(-2, -4)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(2, -4)$</span>
+                        <span class="ru-part">$(2, -4)$</span>
+                        <span class="en-part">$(2, -4)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(-2, 4)$</span>
+                        <span class="ru-part">$(-2, 4)$</span>
+                        <span class="en-part">$(-2, 4)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(2, 4)$</span>
+                        <span class="ru-part">$(2, 4)$</span>
+                        <span class="en-part">$(2, 4)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**还原关于圆特征标准形式的提取解题法则**：<br>圆的理论基本方程模式定义为 $(x-a)^2 + (y-b)^2 = r^2$，体现了直接获取必须反号提取。<br>观察前半表 $(x-2)$ 解析还原的是正实数值 $2$。<br>对于后半部表带有括号 $(y+4)$ 导出，须依照原规则回撤向其真实负向位置 $-4$。<br>判定圆心落在位点 $(2, -4)$。</div>
+                            <div class="ru-part">**Правила извлечения решения из стандартной формы уравнения окружности**:<br>Уравнение круга теоретически определяется по формуле $(x-a)^2 + (y-b)^2 = r^2$, где значения a и b (координаты центра) извлекаются с изменением знака.<br>Рассматривая первую скобку $(x-2)$, значением является положительное действительное число $2$.<br>Во второй скобке $(y+4)$ необходимо соблюдать правило и инвертировать знак, перейдя к отрицательному значению $-4$.<br>Центр круга попадает в точку $(2, -4)$.</div>
+                            <div class="en-part">**Standard Form Pattern Matching**:<br>Circle equation: $(x-a)^2 + (y-b)^2 = r^2$. The center is $(a, b)$.<br>From $(x-2)$, $a = 2$.<br>From $(y+4)$ which is $(y - (-4))$, $b = -4$.<br>The center is $(2, -4)$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(-2, -4)$ — 错误。未经合理换元并误导强行将式内前端截段 $(x-{x})^2$ 系数随动强制变号。</span>
+                            <span class="ru-part">$(-2, -4)$ — Ошибка. Без проведения правильной замены знаков искусственно заменена передняя часть интервала $(x-{x})^2$, вследствие чего знаки поменялись принудительно.</span>
+                            <span class="en-part">$(-2, -4)$ — Incorrect. The sign for the x-coordinate was mistakenly flipped.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(2, -4)$ — 正确答案。</span>
+                            <span class="ru-part">$(2, -4)$ — Правильный ответ.</span>
+                            <span class="en-part">$(2, -4)$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(-2, 4)$ — 错误。未能依照标准等式特征正确推演横跨方向提取极性正负反序特征。</span>
+                            <span class="ru-part">$(-2, 4)$ — Ошибка. Из-за отсутствия правильного анализа знаков в стандартном уравнении свойства инвертирования знаков не были правильно применены.</span>
+                            <span class="en-part">$(-2, 4)$ — Incorrect. Failed to correctly invert the signs to find the center.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(2, 4)$ — 错误。并未对代数学形式中式子后半部分内的 $(y+{y})^2$ 进行正确的对应圆心转换反置推论。</span>
+                            <span class="ru-part">$(2, 4)$ — Ошибка. На задней части алгебраического выражения $(y+{y})^2$ не была должным образом выведена симметричная инверсия для преобразования центра круга.</span>
+                            <span class="en-part">$(2, 4)$ — Incorrect. The sign for the y-coordinate was not flipped.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q3</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">请鉴别方程模型 $(x-2)^2 + (y+1)^2 = 4$ 定义之关联圆心汇聚坐标所在：</span>
+                        <span class="ru-part">Пожалуйста, определите координаты центра окружности, определенной моделью уравнения: $(x-2)^2 + (y+1)^2 = 4$:</span>
+                        <span class="en-part">Identify the coordinates of the center of the circle defined by $(x-2)^2 + (y+1)^2 = 4$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(2, -1)$</span>
+                        <span class="ru-part">$(2, -1)$</span>
+                        <span class="en-part">$(2, -1)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(2, 1)$</span>
+                        <span class="ru-part">$(2, 1)$</span>
+                        <span class="en-part">$(2, 1)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(-2, -1)$</span>
+                        <span class="ru-part">$(-2, -1)$</span>
+                        <span class="en-part">$(-2, -1)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(-2, 1)$</span>
+                        <span class="ru-part">$(-2, 1)$</span>
+                        <span class="en-part">$(-2, 1)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**还原关于圆特征标准形式的提取解题法则**：<br>圆的理论基本方程模式定义为 $(x-a)^2 + (y-b)^2 = r^2$，体现了直接获取必须反号提取。<br>观察前半表 $(x-2)$ 解析还原的是正实数值 $2$。<br>对于后半部表带有括号 $(y+1)$ 导出，须依照原规则回撤向其真实负向位置 $-1$。<br>判定圆心落在位点 $(2, -1)$。</div>
+                            <div class="ru-part">**Правила извлечения решения из стандартной формы уравнения окружности**:<br>Уравнение круга теоретически определяется по формуле $(x-a)^2 + (y-b)^2 = r^2$, где значения a и b (координаты центра) извлекаются с изменением знака.<br>Рассматривая первую скобку $(x-2)$, значением является положительное действительное число $2$.<br>Во второй скобке $(y+1)$ необходимо соблюдать правило и инвертировать знак, перейдя к отрицательному значению $-1$.<br>Центр круга попадает в точку $(2, -1)$.</div>
+                            <div class="en-part">**Standard Form Pattern Matching**:<br>Circle equation: $(x-a)^2 + (y-b)^2 = r^2$. The center is $(a, b)$.<br>From $(x-2)$, $a = 2$.<br>From $(y+1)$ which is $(y - (-1))$, $b = -1$.<br>The center is $(2, -1)$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(2, -1)$ — 正确答案。</span>
+                            <span class="ru-part">$(2, -1)$ — Правильный ответ.</span>
+                            <span class="en-part">$(2, -1)$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(2, 1)$ — 错误。并未对代数学形式中式子后半部分内的 $(y+{y})^2$ 进行正确的对应圆心转换反置推论。</span>
+                            <span class="ru-part">$(2, 1)$ — Ошибка. На задней части алгебраического выражения $(y+{y})^2$ не была должным образом выведена симметричная инверсия для преобразования центра круга.</span>
+                            <span class="en-part">$(2, 1)$ — Incorrect. The sign for the y-coordinate was not flipped.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(-2, -1)$ — 错误。未经合理换元并误导强行将式内前端截段 $(x-{x})^2$ 系数随动强制变号。</span>
+                            <span class="ru-part">$(-2, -1)$ — Ошибка. Без проведения правильной замены знаков искусственно заменена передняя часть интервала $(x-{x})^2$, вследствие чего знаки поменялись принудительно.</span>
+                            <span class="en-part">$(-2, -1)$ — Incorrect. The sign for the x-coordinate was mistakenly flipped.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(-2, 1)$ — 错误。未能依照标准等式特征正确推演横跨方向提取极性正负反序特征。</span>
+                            <span class="ru-part">$(-2, 1)$ — Ошибка. Из-за отсутствия правильного анализа знаков в стандартном уравнении свойства инвертирования знаков не были правильно применены.</span>
+                            <span class="en-part">$(-2, 1)$ — Incorrect. Failed to correctly invert the signs to find the center.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q4</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">考察以通常样式输出的圆定性等式 $x^2 + y^2 = 25$，评选求出与之反映配套定义的圆之物理标定半径：</span>
+                        <span class="ru-part">Рассмотрите стандартное уравнение окружности $x^2 + y^2 = 25$. Найдите её физический радиус, заданный в этом определении:</span>
+                        <span class="en-part">For the circle equation $x^2 + y^2 = 25$, find its radius:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$12$</span>
+                        <span class="ru-part">$12$</span>
+                        <span class="en-part">$12$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$10$</span>
+                        <span class="ru-part">$10$</span>
+                        <span class="en-part">$10$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$25$</span>
+                        <span class="ru-part">$25$</span>
+                        <span class="en-part">$25$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$5$</span>
+                        <span class="ru-part">$5$</span>
+                        <span class="en-part">$5$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**提取圆结构公式结尾等比例平方提取规律法**：<br>按标准圆等效关系定则立等式，结尾的常数并非单维标轴长，它在圆辐射展开机制下体现出圆内展方等值 $r^2$ 。<br>匹配等式值已赋常参项为 $25$，从而建立联系 $r^2 = 25$。<br>破除代方项通过运算还原开平方，测实得出半径限线定点值：$r = 5$。</div>
+                            <div class="ru-part">**Метод извлечения корня из квадратных пропорций на конце формулы окружности**:<br>Согласно стандартному уравнению окружности, константа представляет не просто одну ось, а квадратный размер излучающего механизма, $r^2$.<br>Сопоставляем значение в уравнении с константой $25$, создавая связь $r^2 = 25$.<br>Раскрываем степень через квадратный корень, вычисляя точное контрольное значение для радиуса: $r = 5$.</div>
+                            <div class="en-part">**Radius Extraction**:<br>In $x^2+y^2=R$, the constant $R$ is $r^2$.<br>Here $r^2 = 25$.<br>Take the square root: $r = 5$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$12$ — 错误。未按根式操作将圆外常参进行分拆等量除2计算替代法则取代。</span>
+                            <span class="ru-part">$12$ — Ошибка. Не применялась операция извлечения корня; параметр окружности был разделен на 2.</span>
+                            <span class="en-part">$12$ — Incorrect. The constant was merely divided by 2 instead of taking the root.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$10$ — 错误。误将等常长极长度之全幅横跨切开圆直径作圆半距基数。</span>
+                            <span class="ru-part">$10$ — Ошибка. Весь экваториальный диаметр был неправильно определен как базовая полуось окружности.</span>
+                            <span class="en-part">$10$ — Incorrect. This is the diameter ($2r$), not the radius.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$25$ — 错误。将整体项定式抛入作为基值结果的等效基数单线半轴度量距。</span>
+                            <span class="ru-part">$25$ — Ошибка. Общая длина квадратичной константы из уравнения была ошибочно использована как длина линейного полудиаметра.</span>
+                            <span class="en-part">$25$ — Incorrect. This is $r^2$; the radius is its square root.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$5$ — 正确答案。</span>
+                            <span class="ru-part">$5$ — Правильный ответ.</span>
+                            <span class="en-part">$5$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q5</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">考察以通常样式输出的圆定性等式 $x^2 + y^2 = 36$，评选求出与之反映配套定义的圆之物理标定半径：</span>
+                        <span class="ru-part">Рассмотрите стандартное уравнение окружности $x^2 + y^2 = 36$. Найдите её физический радиус, заданный в этом определении:</span>
+                        <span class="en-part">For the circle equation $x^2 + y^2 = 36$, find its radius:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$36$</span>
+                        <span class="ru-part">$36$</span>
+                        <span class="en-part">$36$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$18$</span>
+                        <span class="ru-part">$18$</span>
+                        <span class="en-part">$18$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$6$</span>
+                        <span class="ru-part">$6$</span>
+                        <span class="en-part">$6$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$12$</span>
+                        <span class="ru-part">$12$</span>
+                        <span class="en-part">$12$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**提取圆结构公式结尾等比例平方提取规律法**：<br>按标准圆等效关系定则立等式，结尾的常数并非单维标轴长，它在圆辐射展开机制下体现出圆内展方等值 $r^2$ 。<br>匹配等式值已赋常参项为 $36$，从而建立联系 $r^2 = 36$。<br>破除代方项通过运算还原开平方，测实得出半径限线定点值：$r = 6$。</div>
+                            <div class="ru-part">**Метод извлечения корня из квадратных пропорций на конце формулы окружности**:<br>Согласно стандартному уравнению окружности, константа представляет не просто одну ось, а квадратный размер излучающего механизма, $r^2$.<br>Сопоставляем значение в уравнении с константой $36$, создавая связь $r^2 = 36$.<br>Раскрываем степень через квадратный корень, вычисляя точное контрольное значение для радиуса: $r = 6$.</div>
+                            <div class="en-part">**Radius Extraction**:<br>In $x^2+y^2=R$, the constant $R$ is $r^2$.<br>Here $r^2 = 36$.<br>Take the square root: $r = 6$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$36$ — 错误。将整体项定式抛入作为基值结果的等效基数单线半轴度量距。</span>
+                            <span class="ru-part">$36$ — Ошибка. Общая длина квадратичной константы из уравнения была ошибочно использована как длина линейного полудиаметра.</span>
+                            <span class="en-part">$36$ — Incorrect. This is $r^2$; the radius is its square root.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$18$ — 错误。未按根式操作将圆外常参进行分拆等量除2计算替代法则取代。</span>
+                            <span class="ru-part">$18$ — Ошибка. Не применялась операция извлечения корня; параметр окружности был разделен на 2.</span>
+                            <span class="en-part">$18$ — Incorrect. The constant was merely divided by 2 instead of taking the root.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$6$ — 正确答案。</span>
+                            <span class="ru-part">$6$ — Правильный ответ.</span>
+                            <span class="en-part">$6$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$12$ — 错误。误将等常长极长度之全幅横跨切开圆直径作圆半距基数。</span>
+                            <span class="ru-part">$12$ — Ошибка. Весь экваториальный диаметр был неправильно определен как базовая полуось окружности.</span>
+                            <span class="en-part">$12$ — Incorrect. This is the diameter ($2r$), not the radius.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q6</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">考察以通常样式输出的圆定性等式 $x^2 + y^2 = 25$，评选求出与之反映配套定义的圆之物理标定半径：</span>
+                        <span class="ru-part">Рассмотрите стандартное уравнение окружности $x^2 + y^2 = 25$. Найдите её физический радиус, заданный в этом определении:</span>
+                        <span class="en-part">For the circle equation $x^2 + y^2 = 25$, find its radius:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$5$</span>
+                        <span class="ru-part">$5$</span>
+                        <span class="en-part">$5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$12$</span>
+                        <span class="ru-part">$12$</span>
+                        <span class="en-part">$12$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$10$</span>
+                        <span class="ru-part">$10$</span>
+                        <span class="en-part">$10$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$25$</span>
+                        <span class="ru-part">$25$</span>
+                        <span class="en-part">$25$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**提取圆结构公式结尾等比例平方提取规律法**：<br>按标准圆等效关系定则立等式，结尾的常数并非单维标轴长，它在圆辐射展开机制下体现出圆内展方等值 $r^2$ 。<br>匹配等式值已赋常参项为 $25$，从而建立联系 $r^2 = 25$。<br>破除代方项通过运算还原开平方，测实得出半径限线定点值：$r = 5$。</div>
+                            <div class="ru-part">**Метод извлечения корня из квадратных пропорций на конце формулы окружности**:<br>Согласно стандартному уравнению окружности, константа представляет не просто одну ось, а квадратный размер излучающего механизма, $r^2$.<br>Сопоставляем значение в уравнении с константой $25$, создавая связь $r^2 = 25$.<br>Раскрываем степень через квадратный корень, вычисляя точное контрольное значение для радиуса: $r = 5$.</div>
+                            <div class="en-part">**Radius Extraction**:<br>In $x^2+y^2=R$, the constant $R$ is $r^2$.<br>Here $r^2 = 25$.<br>Take the square root: $r = 5$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$5$ — 正确答案。</span>
+                            <span class="ru-part">$5$ — Правильный ответ.</span>
+                            <span class="en-part">$5$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$12$ — 错误。未按根式操作将圆外常参进行分拆等量除2计算替代法则取代。</span>
+                            <span class="ru-part">$12$ — Ошибка. Не применялась операция извлечения корня; параметр окружности был разделен на 2.</span>
+                            <span class="en-part">$12$ — Incorrect. The constant was merely divided by 2 instead of taking the root.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$10$ — 错误。误将等常长极长度之全幅横跨切开圆直径作圆半距基数。</span>
+                            <span class="ru-part">$10$ — Ошибка. Весь экваториальный диаметр был неправильно определен как базовая полуось окружности.</span>
+                            <span class="en-part">$10$ — Incorrect. This is the diameter ($2r$), not the radius.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$25$ — 错误。将整体项定式抛入作为基值结果的等效基数单线半轴度量距。</span>
+                            <span class="ru-part">$25$ — Ошибка. Общая длина квадратичной константы из уравнения была ошибочно использована как длина линейного полудиаметра.</span>
+                            <span class="en-part">$25$ — Incorrect. This is $r^2$; the radius is its square root.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q7</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">测算列名的一项抛物形态表达形如 $y^2 = 4x$ 的特向特定指向线方程公式规定：</span>
+                        <span class="ru-part">Рассчитайте формулу специфической директрисы для параболы, заданной уравнением $y^2 = 4x$:</span>
+                        <span class="en-part">Find the directrix equation for the parabola $y^2 = 4x$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x=-2$</span>
+                        <span class="ru-part">$x=-2$</span>
+                        <span class="en-part">$x=-2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x=1.0$</span>
+                        <span class="ru-part">$x=1.0$</span>
+                        <span class="en-part">$x=1.0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$y=-1.0$</span>
+                        <span class="ru-part">$y=-1.0$</span>
+                        <span class="en-part">$y=-1.0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$x=-1.0$</span>
+                        <span class="ru-part">$x=-1.0$</span>
+                        <span class="en-part">$x=-1.0$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**抛物面横置推演及定焦法则操作推求**：<br>应对以 $y^2 = 2px$ 呈现朝水向偏开向结构之平面模型时，公式常量项 $4x$ 等价映射置换式：$2p=4$，确证推取定义焦分量常理因子 $p=2$。<br>据标配抛物参数定线置后配准要求规定，它必然需向落放置在其定位焦点向半配反转方向 $p/2$ 点。<br>进行坐点标向化定位得：$x = -1.0$。</div>
+                            <div class="ru-part">**Оперативный вывод продольной параболы и метод фокусировки**:<br>Для горизонтальной модели параболы $y^2 = 2px$, константа формулы $4x$ эквивалентна выражению $2p=4$, что дает коэффициент фокусировки $p=2$.<br>В соответствии с конфигурациями параметров параболоида, её директриса должна располагаться за предельной точкой фокуса в отрицательном направлении на расстоянии $p/2$.<br>Определяем местоположение точки как: $x = -1.0$.</div>
+                            <div class="en-part">**Directrix Rule**:<br>Standard form: $y^2 = 2px$. Here $2p = 4 \Rightarrow p = 2$.<br>The directrix is $x = -p/2$.<br>Substitution: $x = -2/2 = -1.0$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x=-2$ — 错误。引推取距离倍分度超距拉至焦点长幅边界限位区间域。</span>
+                            <span class="ru-part">$x=-2$ — Ошибка. Извлечение за пределами расстояния, приравненное к фокусному расстоянию, ведет к диапазону границ.</span>
+                            <span class="en-part">$x=-2$ — Incorrect. The distance to the directrix is $p/2$, not $p$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x=1.0$ — 错误。若强定义以极向准正位指将导致准被划定并切并入内侧开口抛物系统内。</span>
+                            <span class="ru-part">$x=1.0$ — Ошибка. Строгое определение в положительном направлении сдвинет директрису так, что она врежется во внутреннюю открытую параболическую систему.</span>
+                            <span class="en-part">$x=1.0$ — Incorrect. A positive value would place the directrix inside the parabola.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$y=-1.0$ — 错误。原函数确朝X轴水平线向扩，与之伴随之纵极向准线参数系不置于不同变切。</span>
+                            <span class="ru-part">$y=-1.0$ — Ошибка. Исходная функция направлена горизонтально по оси X. Соответствующая вертикальная система параметров директрисы не находится на разных сдвигах.</span>
+                            <span class="en-part">$y=-1.0$ — Incorrect. For a horizontal parabola, the directrix must be a vertical line ($x=...$).</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$x=-1.0$ — 正确答案。</span>
+                            <span class="ru-part">$x=-1.0$ — Правильный ответ.</span>
+                            <span class="en-part">$x=-1.0$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q8</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">测算列名的一项抛物形态表达形如 $y^2 = 8x$ 的特向特定指向线方程公式规定：</span>
+                        <span class="ru-part">Рассчитайте формулу специфической директрисы для параболы, заданной уравнением $y^2 = 8x$:</span>
+                        <span class="en-part">Find the directrix equation for the parabola $y^2 = 8x$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x=-4$</span>
+                        <span class="ru-part">$x=-4$</span>
+                        <span class="en-part">$x=-4$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x=-2.0$</span>
+                        <span class="ru-part">$x=-2.0$</span>
+                        <span class="en-part">$x=-2.0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$x=2.0$</span>
+                        <span class="ru-part">$x=2.0$</span>
+                        <span class="en-part">$x=2.0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$y=-2.0$</span>
+                        <span class="ru-part">$y=-2.0$</span>
+                        <span class="en-part">$y=-2.0$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**抛物面横置推演及定焦法则操作推求**：<br>应对以 $y^2 = 2px$ 呈现朝水向偏开向结构之平面模型时，公式常量项 $8x$ 等价映射置换式：$2p=8$，确证推取定义焦分量常理因子 $p=4$。<br>据标配抛物参数定线置后配准要求规定，它必然需向落放置在其定位焦点向半配反转方向 $p/2$ 点。<br>进行坐点标向化定位得：$x = -2.0$。</div>
+                            <div class="ru-part">**Оперативный вывод продольной параболы и метод фокусировки**:<br>Для горизонтальной модели параболы $y^2 = 2px$, константа формулы $8x$ эквивалентна выражению $2p=8$, что дает коэффициент фокусировки $p=4$.<br>В соответствии с конфигурациями параметров параболоида, её директриса должна располагаться за предельной точкой фокуса в отрицательном направлении на расстоянии $p/2$.<br>Определяем местоположение точки как: $x = -2.0$.</div>
+                            <div class="en-part">**Directrix Rule**:<br>Standard form: $y^2 = 2px$. Here $2p = 8 \Rightarrow p = 4$.<br>The directrix is $x = -p/2$.<br>Substitution: $x = -4/2 = -2.0$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x=-4$ — 错误。引推取距离倍分度超距拉至焦点长幅边界限位区间域。</span>
+                            <span class="ru-part">$x=-4$ — Ошибка. Извлечение за пределами расстояния, приравненное к фокусному расстоянию, ведет к диапазону границ.</span>
+                            <span class="en-part">$x=-4$ — Incorrect. The distance to the directrix is $p/2$, not $p$.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x=-2.0$ — 正确答案。</span>
+                            <span class="ru-part">$x=-2.0$ — Правильный ответ.</span>
+                            <span class="en-part">$x=-2.0$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$x=2.0$ — 错误。若强定义以极向准正位指将导致准被划定并切并入内侧开口抛物系统内。</span>
+                            <span class="ru-part">$x=2.0$ — Ошибка. Строгое определение в положительном направлении сдвинет директрису так, что она врежется во внутреннюю открытую параболическую систему.</span>
+                            <span class="en-part">$x=2.0$ — Incorrect. A positive value would place the directrix inside the parabola.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$y=-2.0$ — 错误。原函数确朝X轴水平线向扩，与之伴随之纵极向准线参数系不置于不同变切。</span>
+                            <span class="ru-part">$y=-2.0$ — Ошибка. Исходная функция направлена горизонтально по оси X. Соответствующая вертикальная система параметров директрисы не находится на разных сдвигах.</span>
+                            <span class="en-part">$y=-2.0$ — Incorrect. For a horizontal parabola, the directrix must be a vertical line ($x=...$).</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q9</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">探讨定论椭圆方程式体系列 $\frac{x^2}{25} + \frac{y^2}{4} = 1$，曲线上游离任一点到设定两核心发源主源心点间产生聚和测量联合数应当维持：</span>
+                        <span class="ru-part">Рассмотрите уравнение эллипса $\frac{x^2}{25} + \frac{y^2}{4} = 1$. Сумма расстояний от любой точки на кривой до двух фиксированных фокусов должна составлять:</span>
+                        <span class="en-part">For the ellipse $\frac{x^2}{25} + \frac{y^2}{4} = 1$, the sum of distances from any point on the curve to the two foci is:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$25$</span>
+                        <span class="ru-part">$25$</span>
+                        <span class="en-part">$25$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$5$</span>
+                        <span class="ru-part">$5$</span>
+                        <span class="en-part">$5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$10$</span>
+                        <span class="ru-part">$10$</span>
+                        <span class="en-part">$10$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$4$</span>
+                        <span class="ru-part">$4$</span>
+                        <span class="en-part">$4$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**应用几何长定线段之共性规定定义**：<br>对所有合闭曲线形构成的椭圆双焦几何定规论下，在常平面内的指定某处至内部的双中心距离积和量不可变并不变改定值恒量！<br>该固定等距对应即其横延最距等之其参数表示为 $2a$ 之特大贯横拉轴长度极值表现。<br>提并列合取主二次式极数值分可得 $a^2 = 25 \Rightarrow a=5$，代推入列满足限制数条件定式结出：$2 \times 5 = 10$。</div>
+                            <div class="ru-part">**Применение геометрических определений общей фиксированной линии**:<br>Для геометрии конфигурации эллипса сумма расстояний от любой точки на кривой до двух фокусов остается неизменной (является фиксированной величиной)!<br>Это постоянное расстояние равно длине большой (главной) оси, представленной параметром $2a$.<br>Извлекая значение из главной квадратичной части: $a^2 = 25 \Rightarrow a=5$. Поднимаем его к ограничению уравнения: $2 \times 5 = 10$.</div>
+                            <div class="en-part">**Focal Definition**:<br>For an ellipse, the sum of distances to both foci is always $2a$.<br>From the equation denominator $a^2 = 25 \Rightarrow a = 5$.<br>The sum is $2 \cdot 5 = 10$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$25$ — 错误。这等阶项只位于常规代数恒等定分母下方二次表达式系无进行等解求长并化距推论算解提取处理。</span>
+                            <span class="ru-part">$25$ — Ошибка. Это значение квадратичного выражения в знаменателе стандартного алгебраического тождества, длина из которого не извлекалась.</span>
+                            <span class="en-part">$25$ — Incorrect. This is $a^2$, not the focal sum length.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$5$ — 错误。应对需提取两组合的全局半轴合量长度段累积常量而非单边一半值。</span>
+                            <span class="ru-part">$5$ — Ошибка. Необходимо было извлечь сумму обеих частей глобальной полуоси, а не единичное половинное значение.</span>
+                            <span class="en-part">$5$ — Incorrect. This is only the semi-major axis $a$; the definition requires $2a$.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$10$ — 正确答案。</span>
+                            <span class="ru-part">$10$ — Правильный ответ.</span>
+                            <span class="en-part">$10$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$4$ — 错误。未按需求计算主侧轴距误列代常参数极之横向非要点半位小短截距离量。</span>
+                            <span class="ru-part">$4$ — Ошибка. Вычислен параметр поперечного расстояния для малой оси, а не главный продольный параметр.</span>
+                            <span class="en-part">$4$ — Incorrect. This refers to the minor axis ($2b$), not the major axis.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q10</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">探讨定论椭圆方程式体系列 $\frac{x^2}{16} + \frac{y^2}{4} = 1$，曲线上游离任一点到设定两核心发源主源心点间产生聚和测量联合数应当维持：</span>
+                        <span class="ru-part">Рассмотрите уравнение эллипса $\frac{x^2}{16} + \frac{y^2}{4} = 1$. Сумма расстояний от любой точки на кривой до двух фиксированных фокусов должна составлять:</span>
+                        <span class="en-part">For the ellipse $\frac{x^2}{16} + \frac{y^2}{4} = 1$, the sum of distances from any point on the curve to the two foci is:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$16$</span>
+                        <span class="ru-part">$16$</span>
+                        <span class="en-part">$16$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$8$</span>
+                        <span class="ru-part">$8$</span>
+                        <span class="en-part">$8$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$4$</span>
+                        <span class="ru-part">$4$</span>
+                        <span class="en-part">$4$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$4$</span>
+                        <span class="ru-part">$4$</span>
+                        <span class="en-part">$4$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**应用几何长定线段之共性规定定义**：<br>对所有合闭曲线形构成的椭圆双焦几何定规论下，在常平面内的指定某处至内部的双中心距离积和量不可变并不变改定值恒量！<br>该固定等距对应即其横延最距等之其参数表示为 $2a$ 之特大贯横拉轴长度极值表现。<br>提并列合取主二次式极数值分可得 $a^2 = 16 \Rightarrow a=4$，代推入列满足限制数条件定式结出：$2 \times 4 = 8$。</div>
+                            <div class="ru-part">**Применение геометрических определений общей фиксированной линии**:<br>Для геометрии конфигурации эллипса сумма расстояний от любой точки на кривой до двух фокусов остается неизменной (является фиксированной величиной)!<br>Это постоянное расстояние равно длине большой (главной) оси, представленной параметром $2a$.<br>Извлекая значение из главной квадратичной части: $a^2 = 16 \Rightarrow a=4$. Поднимаем его к ограничению уравнения: $2 \times 4 = 8$.</div>
+                            <div class="en-part">**Focal Definition**:<br>For an ellipse, the sum of distances to both foci is always $2a$.<br>From the equation denominator $a^2 = 16 \Rightarrow a = 4$.<br>The sum is $2 \cdot 4 = 8$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$16$ — 错误。这等阶项只位于常规代数恒等定分母下方二次表达式系无进行等解求长并化距推论算解提取处理。</span>
+                            <span class="ru-part">$16$ — Ошибка. Это значение квадратичного выражения в знаменателе стандартного алгебраического тождества, длина из которого не извлекалась.</span>
+                            <span class="en-part">$16$ — Incorrect. This is $a^2$, not the focal sum length.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$8$ — 正确答案。</span>
+                            <span class="ru-part">$8$ — Правильный ответ.</span>
+                            <span class="en-part">$8$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$4$ — 错误。应对需提取两组合的全局半轴合量长度段累积常量而非单边一半值。</span>
+                            <span class="ru-part">$4$ — Ошибка. Необходимо было извлечь сумму обеих частей глобальной полуоси, а не единичное половинное значение.</span>
+                            <span class="en-part">$4$ — Incorrect. This is only the semi-major axis $a$; the definition requires $2a$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$4$ — 错误。未按需求计算主侧轴距误列代常参数极之横向非要点半位小短截距离量。</span>
+                            <span class="ru-part">$4$ — Ошибка. Вычислен параметр поперечного расстояния для малой оси, а не главный продольный параметр.</span>
+                            <span class="en-part">$4$ — Incorrect. This refers to the minor axis ($2b$), not the major axis.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q11</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">解析给定的标准双曲线方程 $\frac{x^2}{9} - \frac{y^2}{16} = 1$，求其焦点常数半焦距数据 c：</span>
+                        <span class="ru-part">Проанализируйте заданное стандартное уравнение гиперболы $\frac{x^2}{9} - \frac{y^2}{16} = 1$, найдите её фокусное расстояние (линейный эксцентриситет) c:</span>
+                        <span class="en-part">Analyze the standard hyperbola equation $\frac{x^2}{9} - \frac{y^2}{16} = 1$; find its focal distance $c$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$5$</span>
+                        <span class="ru-part">$5$</span>
+                        <span class="en-part">$5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$25$</span>
+                        <span class="ru-part">$25$</span>
+                        <span class="en-part">$25$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$7$</span>
+                        <span class="ru-part">$7$</span>
+                        <span class="en-part">$7$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**利用双曲线基本性质计算**：<br>依据解析几何的理论规定，针对双曲线严格遵循内部特征约束关系：$c^2 = a^2 + b^2$。<br>查解基本参数方程提出数据加以整合：$9 + 16 = 25$。<br>解得方程约束下 $c^2 = 25$，对其取正根反求获取长度值为 $c = 5$。</div>
+                            <div class="ru-part">**Вычисление с использованием базовых свойств гиперболы**:<br>Согласно теории аналитической геометрии, для гиперболы строго соблюдается ограничение внутренней характеристики: $c^2 = a^2 + b^2$.<br>Извлекая данные из основного параметрического уравнения: $9 + 16 = 25$.<br>Решив уравнение для ограничения, получаем $c^2 = 25$. Извлечение положительного корня дает значение расстояния $c = 5$.</div>
+                            <div class="en-part">**Calculate using basic hyperbola properties**:<br>According to analytic geometry, a hyperbola strictly follows the relationship: $c^2 = a^2 + b^2$.<br>Extract parameters: $9 + 16 = 25$.<br>Thus $c^2 = 25$, taking the positive root gives $c = 5$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$5$ — 正确答案。</span>
+                            <span class="ru-part">$5$ — Правильный ответ.</span>
+                            <span class="en-part">$5$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$25$ — 错误。此结果为半焦距的平方 $c^2$，尚未进行开平方运算得到最终 $c$。</span>
+                            <span class="ru-part">$25$ — Ошибка. Этот результат является квадратом фокусного расстояния $c^2$, корень еще не вычислен для получения окончательного значения $c$.</span>
+                            <span class="en-part">$25$ — Incorrect. This is $c^2$; the root still needs to be extracted for $c$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$1$ — 错误。此为双曲线标准方程等式右侧的定常数值体系，非相关待求量。</span>
+                            <span class="ru-part">$1$ — Ошибка. Это постоянное значение правой части стандартного уравнения гиперболы, а не искомая величина.</span>
+                            <span class="en-part">$1$ — Incorrect. This is the constant term (1) on the right side of the equation.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$7$ — 错误。此运算误将分母基数值做了直接算术和处理，缺乏理论支持。</span>
+                            <span class="ru-part">$7$ — Ошибка. Операция неправомерно суммирует базовые значения знаменателей без теоретического обоснования.</span>
+                            <span class="en-part">$7$ — Incorrect. Simply adds denominators without theoretical basis.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q12</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">解析给定的标准双曲线方程 $\frac{x^2}{9} - \frac{y^2}{16} = 1$，求其焦点常数半焦距数据 c：</span>
+                        <span class="ru-part">Проанализируйте заданное стандартное уравнение гиперболы $\frac{x^2}{9} - \frac{y^2}{16} = 1$, найдите её фокусное расстояние (линейный эксцентриситет) c:</span>
+                        <span class="en-part">Analyze the standard hyperbola equation $\frac{x^2}{9} - \frac{y^2}{16} = 1$; find its focal distance $c$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$25$</span>
+                        <span class="ru-part">$25$</span>
+                        <span class="en-part">$25$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$7$</span>
+                        <span class="ru-part">$7$</span>
+                        <span class="en-part">$7$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$5$</span>
+                        <span class="ru-part">$5$</span>
+                        <span class="en-part">$5$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**利用双曲线基本性质计算**：<br>依据解析几何的理论规定，针对双曲线严格遵循内部特征约束关系：$c^2 = a^2 + b^2$。<br>查解基本参数方程提出数据加以整合：$9 + 16 = 25$。<br>解得方程约束下 $c^2 = 25$，对其取正根反求获取长度值为 $c = 5$。</div>
+                            <div class="ru-part">**Вычисление с использованием базовых свойств гиперболы**:<br>Согласно теории аналитической геометрии, для гиперболы строго соблюдается ограничение внутренней характеристики: $c^2 = a^2 + b^2$.<br>Извлекая данные из основного параметрического уравнения: $9 + 16 = 25$.<br>Решив уравнение для ограничения, получаем $c^2 = 25$. Извлечение положительного корня дает значение расстояния $c = 5$.</div>
+                            <div class="en-part">**Calculate using basic hyperbola properties**:<br>According to analytic geometry, a hyperbola strictly follows the relationship: $c^2 = a^2 + b^2$.<br>Extract parameters: $9 + 16 = 25$.<br>Thus $c^2 = 25$, taking the positive root gives $c = 5$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$1$ — 错误。此为双曲线标准方程等式右侧的定常数值体系，非相关待求量。</span>
+                            <span class="ru-part">$1$ — Ошибка. Это постоянное значение правой части стандартного уравнения гиперболы, а не искомая величина.</span>
+                            <span class="en-part">$1$ — Incorrect. This is the constant term (1) on the right side of the equation.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$25$ — 错误。此结果为半焦距的平方 $c^2$，尚未进行开平方运算得到最终 $c$。</span>
+                            <span class="ru-part">$25$ — Ошибка. Этот результат является квадратом фокусного расстояния $c^2$, корень еще не вычислен для получения окончательного значения $c$.</span>
+                            <span class="en-part">$25$ — Incorrect. This is $c^2$; the root still needs to be extracted for $c$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$7$ — 错误。此运算误将分母基数值做了直接算术和处理，缺乏理论支持。</span>
+                            <span class="ru-part">$7$ — Ошибка. Операция неправомерно суммирует базовые значения знаменателей без теоретического обоснования.</span>
+                            <span class="en-part">$7$ — Incorrect. Simply adds denominators without theoretical basis.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$5$ — 正确答案。</span>
+                            <span class="ru-part">$5$ — Правильный ответ.</span>
+                            <span class="en-part">$5$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q13</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">解析给定的标准双曲线方程 $\frac{x^2}{9} - \frac{y^2}{16} = 1$，求其焦点常数半焦距数据 c：</span>
+                        <span class="ru-part">Проанализируйте заданное стандартное уравнение гиперболы $\frac{x^2}{9} - \frac{y^2}{16} = 1$, найдите её фокусное расстояние (линейный эксцентриситет) c:</span>
+                        <span class="en-part">Analyze the standard hyperbola equation $\frac{x^2}{9} - \frac{y^2}{16} = 1$; find its focal distance $c$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$5$</span>
+                        <span class="ru-part">$5$</span>
+                        <span class="en-part">$5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$25$</span>
+                        <span class="ru-part">$25$</span>
+                        <span class="en-part">$25$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$7$</span>
+                        <span class="ru-part">$7$</span>
+                        <span class="en-part">$7$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**利用双曲线基本性质计算**：<br>依据解析几何的理论规定，针对双曲线严格遵循内部特征约束关系：$c^2 = a^2 + b^2$。<br>查解基本参数方程提出数据加以整合：$9 + 16 = 25$。<br>解得方程约束下 $c^2 = 25$，对其取正根反求获取长度值为 $c = 5$。</div>
+                            <div class="ru-part">**Вычисление с использованием базовых свойств гиперболы**:<br>Согласно теории аналитической геометрии, для гиперболы строго соблюдается ограничение внутренней характеристики: $c^2 = a^2 + b^2$.<br>Извлекая данные из основного параметрического уравнения: $9 + 16 = 25$.<br>Решив уравнение для ограничения, получаем $c^2 = 25$. Извлечение положительного корня дает значение расстояния $c = 5$.</div>
+                            <div class="en-part">**Calculate using basic hyperbola properties**:<br>According to analytic geometry, a hyperbola strictly follows the relationship: $c^2 = a^2 + b^2$.<br>Extract parameters: $9 + 16 = 25$.<br>Thus $c^2 = 25$, taking the positive root gives $c = 5$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$5$ — 正确答案。</span>
+                            <span class="ru-part">$5$ — Правильный ответ.</span>
+                            <span class="en-part">$5$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$25$ — 错误。此结果为半焦距的平方 $c^2$，尚未进行开平方运算得到最终 $c$。</span>
+                            <span class="ru-part">$25$ — Ошибка. Этот результат является квадратом фокусного расстояния $c^2$, корень еще не вычислен для получения окончательного значения $c$.</span>
+                            <span class="en-part">$25$ — Incorrect. This is $c^2$; the root still needs to be extracted for $c$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$1$ — 错误。此为双曲线标准方程等式右侧的定常数值体系，非相关待求量。</span>
+                            <span class="ru-part">$1$ — Ошибка. Это постоянное значение правой части стандартного уравнения гиперболы, а не искомая величина.</span>
+                            <span class="en-part">$1$ — Incorrect. This is the constant term (1) on the right side of the equation.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$7$ — 错误。此运算误将分母基数值做了直接算术和处理，缺乏理论支持。</span>
+                            <span class="ru-part">$7$ — Ошибка. Операция неправомерно суммирует базовые значения знаменателей без теоретического обоснования.</span>
+                            <span class="en-part">$7$ — Incorrect. Simply adds denominators without theoretical basis.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q14</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知定义的向量群 $\vec{a}=(1,2), \vec{b}=(3,4)$，计算其经过叠加相加形态 $\vec{a}+\vec{b}=$</span>
+                        <span class="ru-part">Известна заданная векторная группа $\vec{a}=(1,2), \vec{b}=(3,4)$, вычислите результат их сложения (суперпозиции) $\vec{a}+\vec{b}=$</span>
+                        <span class="en-part">Given vectors $\vec{a}=(1,2)$ and $\vec{b}=(3,4)$, calculate the sum $\vec{a}+\vec{b}$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(4,6)$</span>
+                        <span class="ru-part">$(4,6)$</span>
+                        <span class="en-part">$(4,6)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(4,8)$</span>
+                        <span class="ru-part">$(4,8)$</span>
+                        <span class="en-part">$(4,8)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(2,2)$</span>
+                        <span class="ru-part">$(2,2)$</span>
+                        <span class="en-part">$(2,2)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(3,8)$</span>
+                        <span class="ru-part">$(3,8)$</span>
+                        <span class="en-part">$(3,8)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**向量加法的坐标运算验证**：<br>基于二维向量处理中，不同点源矢量叠加需维持向轴数据并算。<br>推导x坐标维数加成：$1 + 3 = 4$。<br>同比验证验证y坐标加成演算：$2 + 4 = 6$。<br>输出汇总形成合并表达：$(4, 6)$。</div>
+                            <div class="ru-part">**Тестирование арифметики координат векторного сложения**:<br>Основываясь на операциях с двумерными векторами, сложение векторов разных источников требует объединения данных по соответствующим осям.<br>Сложение координаты x: $1 + 3 = 4$.<br>Проверка сложения координаты y: $2 + 4 = 6$.<br>Сумма дает объединенное выражение: $(4, 6)$.</div>
+                            <div class="en-part">**Coordinate-wise Vector Addition**:<br>In 2D vector addition, combine components along each axis.<br>x-component: $1 + 3 = 4$.<br>y-component: $2 + 4 = 6$.<br>Result: $(4, 6)$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(4,6)$ — 正确答案。</span>
+                            <span class="ru-part">$(4,6)$ — Правильный ответ.</span>
+                            <span class="en-part">$(4,6)$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(4,8)$ — 错误。该推演使后置向量被强制分配为内积运算。</span>
+                            <span class="ru-part">$(4,8)$ — Ошибка. В этом выводе последующий вектор был принудительно направлен на операцию внутреннего умножения.</span>
+                            <span class="en-part">$(4,8)$ — Incorrect. Applied an improper dot-product logic to addition.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(2,2)$ — 错误。此过程被误用为倒扣差差减算法运算。</span>
+                            <span class="ru-part">$(2,2)$ — Ошибка. Этот процесс был неправомерно заменен на вычитание значений разности.</span>
+                            <span class="en-part">$(2,2)$ — Incorrect. The operation was mistakenly performed as subtraction.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(3,8)$ — 错误。该运算错将内部数值成分点乘，未遵循线性代数相加特征。</span>
+                            <span class="ru-part">$(3,8)$ — Ошибка. В этом вычислении ошибочно умножены внутренние компоненты, не соблюдая свойств сложения в линейной алгебре.</span>
+                            <span class="en-part">$(3,8)$ — Incorrect. Components were multiplied instead of being added.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q15</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知定义的向量群 $\vec{a}=(1,2), \vec{b}=(3,4)$，计算其经过叠加相加形态 $\vec{a}+\vec{b}=$</span>
+                        <span class="ru-part">Известна заданная векторная группа $\vec{a}=(1,2), \vec{b}=(3,4)$, вычислите результат их сложения (суперпозиции) $\vec{a}+\vec{b}=$</span>
+                        <span class="en-part">Given vectors $\vec{a}=(1,2)$ and $\vec{b}=(3,4)$, calculate the sum $\vec{a}+\vec{b}$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(3,8)$</span>
+                        <span class="ru-part">$(3,8)$</span>
+                        <span class="en-part">$(3,8)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(4,8)$</span>
+                        <span class="ru-part">$(4,8)$</span>
+                        <span class="en-part">$(4,8)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(4,6)$</span>
+                        <span class="ru-part">$(4,6)$</span>
+                        <span class="en-part">$(4,6)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(2,2)$</span>
+                        <span class="ru-part">$(2,2)$</span>
+                        <span class="en-part">$(2,2)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**向量加法的坐标运算验证**：<br>基于二维向量处理中，不同点源矢量叠加需维持向轴数据并算。<br>推导x坐标维数加成：$1 + 3 = 4$。<br>同比验证验证y坐标加成演算：$2 + 4 = 6$。<br>输出汇总形成合并表达：$(4, 6)$。</div>
+                            <div class="ru-part">**Тестирование арифметики координат векторного сложения**:<br>Основываясь на операциях с двумерными векторами, сложение векторов разных источников требует объединения данных по соответствующим осям.<br>Сложение координаты x: $1 + 3 = 4$.<br>Проверка сложения координаты y: $2 + 4 = 6$.<br>Сумма дает объединенное выражение: $(4, 6)$.</div>
+                            <div class="en-part">**Coordinate-wise Vector Addition**:<br>In 2D vector addition, combine components along each axis.<br>x-component: $1 + 3 = 4$.<br>y-component: $2 + 4 = 6$.<br>Result: $(4, 6)$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(3,8)$ — 错误。该运算错将内部数值成分点乘，未遵循线性代数相加特征。</span>
+                            <span class="ru-part">$(3,8)$ — Ошибка. В этом вычислении ошибочно умножены внутренние компоненты, не соблюдая свойств сложения в линейной алгебре.</span>
+                            <span class="en-part">$(3,8)$ — Incorrect. Components were multiplied instead of being added.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(4,8)$ — 错误。该推演使后置向量被强制分配为内积运算。</span>
+                            <span class="ru-part">$(4,8)$ — Ошибка. В этом выводе последующий вектор был принудительно направлен на операцию внутреннего умножения.</span>
+                            <span class="en-part">$(4,8)$ — Incorrect. Applied an improper dot-product logic to addition.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(4,6)$ — 正确答案。</span>
+                            <span class="ru-part">$(4,6)$ — Правильный ответ.</span>
+                            <span class="en-part">$(4,6)$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(2,2)$ — 错误。此过程被误用为倒扣差差减算法运算。</span>
+                            <span class="ru-part">$(2,2)$ — Ошибка. Этот процесс был неправомерно заменен на вычитание значений разности.</span>
+                            <span class="en-part">$(2,2)$ — Incorrect. The operation was mistakenly performed as subtraction.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q16</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">若已有第一定式向量 $\vec{a}=(1,2)$ 和待设定变量 $\vec{b}=(4,y)$ 彼此保持平行连贯特性，解其因数量 y 为：</span>
+                        <span class="ru-part">Пусть задан первый вектор $\vec{a}=(1,2)$ и другой вектор $\vec{b}=(4,y)$, которые параллельны и коллинеарны друг другу, извлеките коэффициент y:</span>
+                        <span class="en-part">If $\vec{a}=(1,2)$ and $\vec{b}=(4,y)$ are collinear (parallel), find the value of y:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$16$</span>
+                        <span class="ru-part">$16$</span>
+                        <span class="en-part">$16$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$8$</span>
+                        <span class="ru-part">$8$</span>
+                        <span class="en-part">$8$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**遵循向量共线平行成比例验证守则**：<br>提取坐标点等比例关联：自标定向量 $\vec{a}$ 的横阶数字 $1$ 演化扩展指明对应 $\vec{b}$内横域数值 $4$，指明扩展统扩基值为公乘因子量项：$\times 4$。<br>推至纵向 Y轴亦必须满足配同比因次标倍扩大率要求即 $y = 2 \times 4 = 8$。</div>
+                            <div class="ru-part">**Соблюдение правил проверки пропорций коллинеарности и параллельности векторов**:<br>Извлекаем пропорциональную корреляцию: Горизонтальное значение $1$ из вектора $\vec{a}$ расширяется в горизонтальное значение $4$ в векторе $\vec{b}$, указывая коэффициент расширения: $\times 4$.<br>Это правило также необходимо применять к оси Y, чтобы удовлетворять требованию того же коэффициента расширения: $y = 2 \times 4 = 8$.</div>
+                            <div class="en-part">**Collinearity Proportion Rule**:<br>Collinear vectors must be proportional. Comparing x-components: $1 \rightarrow 4$ means a scale factor of $4$.<br>Applying the same factor to the y-component: $2 \times 4 = 8$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$16$ — 错误。放大推展系数执行了极大过量偏差翻倍导致解脱离轨道。</span>
+                            <span class="ru-part">$16$ — Ошибка. Коэффициент увеличения был чрезмерно удвоен, что привело к отклонению от заданного вектора.</span>
+                            <span class="en-part">$16$ — Incorrect. The scaling factor was doubled excessively.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$8$ — 正确答案。</span>
+                            <span class="ru-part">$8$ — Правильный ответ.</span>
+                            <span class="en-part">$8$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$0$ — 错误。此数据无法互依参数成立平等线索的共矩阵对应关系。</span>
+                            <span class="ru-part">$0$ — Ошибка. Эти данные не могут быть использованы для создания матричного отношения параллельных ориентиров.</span>
+                            <span class="en-part">$0$ — Incorrect. Zero cannot satisfy the proportionality required for collinearity.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$1$ — 错误。缺失按已知比例定量的步骤限制约束。</span>
+                            <span class="ru-part">$1$ — Ошибка. Отсутствует шаг количественного ограничения в соответствии с известными пропорциями.</span>
+                            <span class="en-part">$1$ — Incorrect. Ignores the required proportionality constant.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q17</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">若已有第一定式向量 $\vec{a}=(1,2)$ 和待设定变量 $\vec{b}=(4,y)$ 彼此保持平行连贯特性，解其因数量 y 为：</span>
+                        <span class="ru-part">Пусть задан первый вектор $\vec{a}=(1,2)$ и другой вектор $\vec{b}=(4,y)$, которые параллельны и коллинеарны друг другу, извлеките коэффициент y:</span>
+                        <span class="en-part">If $\vec{a}=(1,2)$ and $\vec{b}=(4,y)$ are collinear (parallel), find the value of y:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$8$</span>
+                        <span class="ru-part">$8$</span>
+                        <span class="en-part">$8$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$16$</span>
+                        <span class="ru-part">$16$</span>
+                        <span class="en-part">$16$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**遵循向量共线平行成比例验证守则**：<br>提取坐标点等比例关联：自标定向量 $\vec{a}$ 的横阶数字 $1$ 演化扩展指明对应 $\vec{b}$内横域数值 $4$，指明扩展统扩基值为公乘因子量项：$\times 4$。<br>推至纵向 Y轴亦必须满足配同比因次标倍扩大率要求即 $y = 2 \times 4 = 8$。</div>
+                            <div class="ru-part">**Соблюдение правил проверки пропорций коллинеарности и параллельности векторов**:<br>Извлекаем пропорциональную корреляцию: Горизонтальное значение $1$ из вектора $\vec{a}$ расширяется в горизонтальное значение $4$ в векторе $\vec{b}$, указывая коэффициент расширения: $\times 4$.<br>Это правило также необходимо применять к оси Y, чтобы удовлетворять требованию того же коэффициента расширения: $y = 2 \times 4 = 8$.</div>
+                            <div class="en-part">**Collinearity Proportion Rule**:<br>Collinear vectors must be proportional. Comparing x-components: $1 \rightarrow 4$ means a scale factor of $4$.<br>Applying the same factor to the y-component: $2 \times 4 = 8$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$1$ — 错误。缺失按已知比例定量的步骤限制约束。</span>
+                            <span class="ru-part">$1$ — Ошибка. Отсутствует шаг количественного ограничения в соответствии с известными пропорциями.</span>
+                            <span class="en-part">$1$ — Incorrect. Ignores the required proportionality constant.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$8$ — 正确答案。</span>
+                            <span class="ru-part">$8$ — Правильный ответ.</span>
+                            <span class="en-part">$8$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$16$ — 错误。放大推展系数执行了极大过量偏差翻倍导致解脱离轨道。</span>
+                            <span class="ru-part">$16$ — Ошибка. Коэффициент увеличения был чрезмерно удвоен, что привело к отклонению от заданного вектора.</span>
+                            <span class="en-part">$16$ — Incorrect. The scaling factor was doubled excessively.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$0$ — 错误。此数据无法互依参数成立平等线索的共矩阵对应关系。</span>
+                            <span class="ru-part">$0$ — Ошибка. Эти данные не могут быть использованы для создания матричного отношения параллельных ориентиров.</span>
+                            <span class="en-part">$0$ — Incorrect. Zero cannot satisfy the proportionality required for collinearity.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q18</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">若已有第一定式向量 $\vec{a}=(1,2)$ 和待设定变量 $\vec{b}=(3,y)$ 彼此保持平行连贯特性，解其因数量 y 为：</span>
+                        <span class="ru-part">Пусть задан первый вектор $\vec{a}=(1,2)$ и другой вектор $\vec{b}=(3,y)$, которые параллельны и коллинеарны друг другу, извлеките коэффициент y:</span>
+                        <span class="en-part">If $\vec{a}=(1,2)$ and $\vec{b}=(3,y)$ are collinear (parallel), find the value of y:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$12$</span>
+                        <span class="ru-part">$12$</span>
+                        <span class="en-part">$12$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$6$</span>
+                        <span class="ru-part">$6$</span>
+                        <span class="en-part">$6$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**遵循向量共线平行成比例验证守则**：<br>提取坐标点等比例关联：自标定向量 $\vec{a}$ 的横阶数字 $1$ 演化扩展指明对应 $\vec{b}$内横域数值 $3$，指明扩展统扩基值为公乘因子量项：$\times 3$。<br>推至纵向 Y轴亦必须满足配同比因次标倍扩大率要求即 $y = 2 \times 3 = 6$。</div>
+                            <div class="ru-part">**Соблюдение правил проверки пропорций коллинеарности и параллельности векторов**:<br>Извлекаем пропорциональную корреляцию: Горизонтальное значение $1$ из вектора $\vec{a}$ расширяется в горизонтальное значение $3$ в векторе $\vec{b}$, указывая коэффициент расширения: $\times 3$.<br>Это правило также необходимо применять к оси Y, чтобы удовлетворять требованию того же коэффициента расширения: $y = 2 \times 3 = 6$.</div>
+                            <div class="en-part">**Collinearity Proportion Rule**:<br>Collinear vectors must be proportional. Comparing x-components: $1 \rightarrow 3$ means a scale factor of $3$.<br>Applying the same factor to the y-component: $2 \times 3 = 6$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$1$ — 错误。缺失按已知比例定量的步骤限制约束。</span>
+                            <span class="ru-part">$1$ — Ошибка. Отсутствует шаг количественного ограничения в соответствии с известными пропорциями.</span>
+                            <span class="en-part">$1$ — Incorrect. Ignores the required proportionality constant.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$12$ — 错误。放大推展系数执行了极大过量偏差翻倍导致解脱离轨道。</span>
+                            <span class="ru-part">$12$ — Ошибка. Коэффициент увеличения был чрезмерно удвоен, что привело к отклонению от заданного вектора.</span>
+                            <span class="en-part">$12$ — Incorrect. The scaling factor was doubled excessively.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$6$ — 正确答案。</span>
+                            <span class="ru-part">$6$ — Правильный ответ.</span>
+                            <span class="en-part">$6$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$0$ — 错误。此数据无法互依参数成立平等线索的共矩阵对应关系。</span>
+                            <span class="ru-part">$0$ — Ошибка. Эти данные не могут быть использованы для создания матричного отношения параллельных ориентиров.</span>
+                            <span class="en-part">$0$ — Incorrect. Zero cannot satisfy the proportionality required for collinearity.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q19</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">求解常见基本特定度角下的对应函数指标：求 $\sin 30^\circ$ 输出结果表现量为：</span>
+                        <span class="ru-part">Найдите соответствующий функциональный индикатор для стандартного основного угла: определите результат $\sin 30^\circ$:</span>
+                        <span class="en-part">Find the value of the trigonometric function for the given angle: $\sin 30^\circ = $</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$1/2$</span>
+                        <span class="ru-part">$1/2$</span>
+                        <span class="en-part">$1/2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$\sqrt{2}/2$</span>
+                        <span class="ru-part">$\sqrt{2}/2$</span>
+                        <span class="en-part">$\sqrt{2}/2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\sqrt{3}/2$</span>
+                        <span class="ru-part">$\sqrt{3}/2$</span>
+                        <span class="en-part">$\sqrt{3}/2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**提取特殊角常用函数性质映射基准库**：<br>在代数体系指常等映射必须直接调用定解。即推断 $\sin 30^\circ$ 的函数指标落位置固定其数值于分列：$1/2$。</div>
+                            <div class="ru-part">**Извлечение стандартной функциональной базы данных для конкретных углов**:<br>В алгебраической системе следует напрямую использовать регулярные сопоставления. Из этого следует, что значение функции $\sin 30^\circ$ является фиксированным и равно: $1/2$.</div>
+                            <div class="en-part">**Special Angle Values**:<br>Standard trigonometric values should be memorized. Specifically, $\sin 30^\circ$ is always precisely $1/2$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$1/2$ — 正确答案。</span>
+                            <span class="ru-part">$1/2$ — Правильный ответ.</span>
+                            <span class="en-part">$1/2$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$\sqrt{2}/2$ — 错误。对应的前提条件需角值锁定于相匹配 $45^\circ$ 常设情况适用。</span>
+                            <span class="ru-part">$\sqrt{2}/2$ — Ошибка. Соответствующее предварительное условие требует фиксации значения угла на согласованных условиях в $45^\circ$.</span>
+                            <span class="en-part">$\sqrt{2}/2$ — Incorrect. This is the value for $45^\circ$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\sqrt{3}/2$ — 错误。这是其他基准角条件被请求对应的特异值属性。</span>
+                            <span class="ru-part">$\sqrt{3}/2$ — Ошибка. Это атрибут специального значения, требуемый для другого угла в условиях отсчета.</span>
+                            <span class="en-part">$\sqrt{3}/2$ — Incorrect. This is the value for $\sin 60^\circ$ or $\cos 30^\circ$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$1$ — 错误。该数值局限于角呈垂直特有定值为 $90^\circ$ 下对应正向高点态峰。</span>
+                            <span class="ru-part">$1$ — Ошибка. Это значение ограничивается положительным максимальным пиком для вертикально установленного угла $90^\circ$.</span>
+                            <span class="en-part">$1$ — Incorrect. This is the value for $\sin 90^\circ$.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q20</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">求解常见基本特定度角下的对应函数指标：求 $\sin 30^\circ$ 输出结果表现量为：</span>
+                        <span class="ru-part">Найдите соответствующий функциональный индикатор для стандартного основного угла: определите результат $\sin 30^\circ$:</span>
+                        <span class="en-part">Find the value of the trigonometric function for the given angle: $\sin 30^\circ = $</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\sqrt{3}/2$</span>
+                        <span class="ru-part">$\sqrt{3}/2$</span>
+                        <span class="en-part">$\sqrt{3}/2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$1/2$</span>
+                        <span class="ru-part">$1/2$</span>
+                        <span class="en-part">$1/2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$\sqrt{2}/2$</span>
+                        <span class="ru-part">$\sqrt{2}/2$</span>
+                        <span class="en-part">$\sqrt{2}/2$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**提取特殊角常用函数性质映射基准库**：<br>在代数体系指常等映射必须直接调用定解。即推断 $\sin 30^\circ$ 的函数指标落位置固定其数值于分列：$1/2$。</div>
+                            <div class="ru-part">**Извлечение стандартной функциональной базы данных для конкретных углов**:<br>В алгебраической системе следует напрямую использовать регулярные сопоставления. Из этого следует, что значение функции $\sin 30^\circ$ является фиксированным и равно: $1/2$.</div>
+                            <div class="en-part">**Special Angle Values**:<br>Standard trigonometric values should be memorized. Specifically, $\sin 30^\circ$ is always precisely $1/2$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\sqrt{3}/2$ — 错误。这是其他基准角条件被请求对应的特异值属性。</span>
+                            <span class="ru-part">$\sqrt{3}/2$ — Ошибка. Это атрибут специального значения, требуемый для другого угла в условиях отсчета.</span>
+                            <span class="en-part">$\sqrt{3}/2$ — Incorrect. This is the value for $\sin 60^\circ$ or $\cos 30^\circ$.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$1/2$ — 正确答案。</span>
+                            <span class="ru-part">$1/2$ — Правильный ответ.</span>
+                            <span class="en-part">$1/2$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$1$ — 错误。该数值局限于角呈垂直特有定值为 $90^\circ$ 下对应正向高点态峰。</span>
+                            <span class="ru-part">$1$ — Ошибка. Это значение ограничивается положительным максимальным пиком для вертикально установленного угла $90^\circ$.</span>
+                            <span class="en-part">$1$ — Incorrect. This is the value for $\sin 90^\circ$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$\sqrt{2}/2$ — 错误。对应的前提条件需角值锁定于相匹配 $45^\circ$ 常设情况适用。</span>
+                            <span class="ru-part">$\sqrt{2}/2$ — Ошибка. Соответствующее предварительное условие требует фиксации значения угла на согласованных условиях в $45^\circ$.</span>
+                            <span class="en-part">$\sqrt{2}/2$ — Incorrect. This is the value for $45^\circ$.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+    </div>
+</body>
+</html>

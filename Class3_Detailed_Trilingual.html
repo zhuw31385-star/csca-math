@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 3: Exponents, Logs & Sequences - CSCA Interactive Lecture</title>
+    <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #f43f5e;
+            --bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --zh-light: #fef2f2;
+            --ru-light: #eff6ff;
+            --en-light: #fffbeb;
+            --zh-dark: #dc2626;
+            --ru-dark: #2563eb;
+            --en-dark: #d97706;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: radial-gradient(circle at top left, #f1f5f9, #e2e8f0);
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        header h1 { font-size: 36px; font-weight: 900; margin: 0; letter-spacing: -0.05em; color: var(--primary); }
+        header p { color: #64748b; font-size: 18px; margin-top: 8px; }
+
+        /* Language Controls */
+        .lang-nav {
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .lang-btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .lang-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .lang-btn.active.zh { background: var(--zh-dark); color: white; border-color: transparent; }
+        .lang-btn.active.ru { background: var(--ru-dark); color: white; border-color: transparent; }
+        .lang-btn.active.en { background: var(--en-dark); color: white; border-color: transparent; }
+
+        /* Section Styling */
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 60px 0 30px;
+            padding-left: 15px;
+            border-left: 6px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Topic Card */
+        .topic-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .topic-meta { font-size: 12px; font-weight: 800; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+        .topic-name { font-size: 28px; font-weight: 900; margin: 0 0 24px 0; letter-spacing: -0.02em; }
+
+        .concept-box {
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+        .zh-active .concept-box { background: var(--zh-light); border-left: 6px solid var(--zh-dark); }
+        .ru-active .concept-box { background: var(--ru-light); border-left: 6px solid var(--ru-dark); }
+        .en-active .concept-box { background: var(--en-light); border-left: 6px solid var(--en-dark); }
+
+        .concept-text { font-size: 19px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
+        .explain-text { font-size: 15px; color: #475569; }
+
+        .diagram-outer { background: white; border-radius: 16px; padding: 20px; text-align: center; margin: 30px 0; border: 1px solid #e2e8f0; }
+
+        /* Homework Blocks */
+        .homework-grid { display: flex; flex-direction: column; gap: 30px; }
+        .q-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .q-card:hover { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); transform: translateY(-4px); }
+        .q-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .q-num { background: #f1f5f9; padding: 4px 12px; border-radius: 8px; font-weight: 800; font-size: 14px; }
+        .q-text { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+
+        .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+        .opt {
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .opt:hover { border-color: #94a3b8; background: #f1f5f9; }
+
+        .analysis-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .analysis-btn:hover { opacity: 0.9; }
+
+        .analysis-panel {
+            display: none;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px dashed #e2e8f0;
+        }
+        .analysis-panel.open { display: block; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .step-bubble { background: #f0fdf4; border: 1px solid #dcfce7; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        .audit-item { padding: 12px; border-radius: 10px; margin-bottom: 12px; font-size: 14px; }
+        .audit-correct { background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+        .audit-wrong { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+
+        /* Visibility Classes */
+        .zh-part, .ru-part, .en-part { display: none; }
+        .zh-active .zh-part { display: block; }
+        .ru-active .ru-part { display: block; }
+        .en-active .en-part { display: block; }
+
+        .hidden { display: none !important; }
+    </style>
+    <script>
+        function setLang(lang) {
+            const container = document.getElementById('main-container');
+            container.classList.remove('zh-active', 'ru-active', 'en-active');
+            container.classList.add(lang + '-active');
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.lang-btn.' + lang).classList.add('active');
+            
+            localStorage.setItem('csca_lang', lang);
+        }
+
+        function toggleAnalysis(btn) {
+            const panel = btn.nextElementSibling;
+            panel.classList.toggle('open');
+            btn.innerText = panel.classList.contains('open') ? '收起解析 / CLOSE' : '查看详尽解析 / FULL ANALYSIS';
+        }
+
+        window.onload = () => {
+            const saved = localStorage.getItem('csca_lang') || 'zh';
+            setLang(saved);
+        };
+    </script>
+</head>
+<body>
+    <div class="lang-nav">
+        <button class="lang-btn zh" onclick="setLang('zh')">🇨🇳 中文</button>
+        <button class="lang-btn ru" onclick="setLang('ru')">🇷🇺 Рус</button>
+        <button class="lang-btn en" onclick="setLang('en')">🇺🇸 Eng</button>
+    </div>
+
+    <div class="container zh-active" id="main-container">
+        <header>
+            <h1>Class 3: Exponents, Logs & Sequences</h1>
+            <p class="zh-part">CSCA 数学专项冲刺讲义 - 高阶三语版</p>
+            <p class="ru-part">CSCA Математика: Интенсивный курс - Триязычное издание</p>
+            <p class="en-part">CSCA Math Intensive Lecture - Trilingual Edition</p>
+        </header>
+
+        <section>
+            <div class="section-title">
+                <span class="zh-part">📖 核心考点手册 / Theory Guide</span>
+                <span class="ru-part">📖 Теоретический справочник</span>
+                <span class="en-part">📖 Essential Theory Guide</span>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 17</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">对数定点 (Фиксированная точка логарифмической функции)</span>
+                    <span class="ru-part">Фиксированная точка логарифмической функции</span>
+                    <span class="en-part">Fixed Points of Logarithmic Functions</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">对于任何非标准的复合对数函数形式 $y=\log_a(x-b)$，只要令其**真数部分等于1**，便可解得一个永不随底数改变的定点横坐标。</span>
+                        <span class="ru-part">Для любой функции $y=\log_a(x-b)$, если приравнять **аргумент логарифма к 1**, можно получить фиксированную абсциссу, не зависящую от основания a.</span>
+                        <span class="en-part">For any non-standard logarithmic function $y=\log_a(x-b)$, if you set the **argument equal to 1**, you can solve for a fixed x-coordinate that never changes regardless of the base $a$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">无论底数是什么牛鬼蛇神，只要 $\log$ 抱住的那一坨真数整体等于 $1$，最终的结果永远是 $0$。利用这个破绽，强行令括号内部整体为1算出来的x配合上恒等于0的y，就是雷打不动的“定点”。</span>
+                        <span class="ru-part">Каким бы ни было основание логарифма, если аргумент, сжимаемый $\log$, равен $1$, результат всегда будет $0$. Используя это, принудительно приравняв скобку к 1, вы найдете непоколебимую «фиксированную точку» координатой y, равной 0.</span>
+                        <span class="en-part">Regardless of how strange the base is, as long as the argument held by the $\log$ is equal to $1$, the result is always $0$. Exploiting this, forcing the interior to be 1 allows you to solve for an $x$ that, with $y=0$, forms an unmovable "fixed point".</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 18</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">等差数列通项 (Формула n-го члена арифметической прогрессии)</span>
+                    <span class="ru-part">Формула n-го члена арифметической прогрессии</span>
+                    <span class="en-part">General Term of Arithmetic Sequence</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">数列在递进过程中享有固定差值 $d$，公式为：$a_n = a_1 + (n-1)d$。</span>
+                        <span class="ru-part">Прогрессия с фиксированной разностью $d$, формула: $a_n = a_1 + (n-1)d$.</span>
+                        <span class="en-part">In a sequence with a common difference $d$, the formula for the nth term is: $a_n = a_1 + (n-1)d$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">就等于是在上阶梯，要想上到第n楼，由于你本身站在一楼($a_1$)了，所以你实际只需要跨越 $n-1$ 个台阶，每个台阶厚度是 $d$。这叫“起步不计跨距”。</span>
+                        <span class="ru-part">Это как подниматься по лестнице на n-ный этаж. Поскольку вы уже находитесь на первом этаже ($a_1$), вам нужно преодолеть только $n-1$ ступенек, каждая высотой $d$. Начальная точка не считается шагом.</span>
+                        <span class="en-part">It's like climbing stairs. To reach the nth floor, since you are already on the 1st floor ($a_1$), you actually only need to cross $n-1$ steps, each with height $d$. This is called "starting point doesn't count as a gap".</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 19</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">求等差公差 (Нахождение разности прогрессии)</span>
+                    <span class="ru-part">Нахождение разности прогрессии</span>
+                    <span class="en-part">Finding Common Difference</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">公差是恒定量 $d$。可以通过相距若干位置的两项求取平均差幅获得：$d = \frac{{a_m - a_n}}{{m - n}}$。</span>
+                        <span class="ru-part">Разность прогрессии $d$ — это константа. Находится делением разности величин членов на разность их индексов: $d = \frac{{a_m - a_n}}{{m - n}}$.</span>
+                        <span class="en-part">The common difference $d$ is constant. It can be found by dividing the difference between two terms by the difference between their indices: $d = \frac{{a_m - a_n}}{{m - n}}$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">用第三项减去首项，这中间到底跨了几次差分（台阶）？不能只算距离，算出来的距离必须除以真实跨越的间隔次数（比如 $3-1=2$ 次）。跨几次平分几次。</span>
+                        <span class="ru-part">Если вы вычтете первый член из третьего, сколько разностей (ступенек) окажется посередине? Расстояние нужно разделить на реальное количество интервалов (например, $3-1=2$ раза).</span>
+                        <span class="en-part">Subtracting the first term from the third, how many gaps (steps) were crossed in between? You can't just calculate the distance; the distance must be divided by the actual number of intervals crossed ($3-1=2$ times). Divide the total distance by the number of steps.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 20</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">交替数列结构 (Знакочередующаяся последовательность)</span>
+                    <span class="ru-part">Знакочередующаяся последовательность</span>
+                    <span class="en-part">Alternating Sequences</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">产生在正负间循环反复跳跃的信号序列时，引入符号生成装置 $(-1)^n$ 或 $(-1)^{n-1}$ 进行定秩。</span>
+                        <span class="ru-part">Для последовательности чередующихся знаков плюса и минуса используется генератор $(-1)^n$ или $(-1)^{n-1}$.</span>
+                        <span class="en-part">For sequences that alternate between positive and negative values, a sign generator $(-1)^n$ or $(-1)^{n-1}$ is used for indexing.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">一正一负跳来跳去这种事，是普通多项式做不到的。这必须派出一个极性翻转器：“每次乘一个负一”。注意如果数列上来第一项是负数，那么指数就直接写 $n$；反之则用 $n-1$。</span>
+                        <span class="ru-part">Чередование знаков невозможно реализовать обычными многочленами. Для этого требуется инвертор: «умножить на минус единицу». Если первый элемент отрицательный, используйте $n$; если положительный — $n-1$.</span>
+                        <span class="en-part">Jumping between positive and negative is something normal polynomials can't do. It requires a polarity flipper: "multiply by -1 each time". Note that if the first term is negative, the exponent is simply $n$; otherwise, use $n-1$.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 21</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">等比数列求和 (Сумма геометрической прогрессии)</span>
+                    <span class="ru-part">Сумма геометрической прогрессии</span>
+                    <span class="en-part">Sum of Geometric Progression</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">等比数列在前 $n$ 项的几何级数累加综合公式（$q \neq 1$时）： $S_n = \frac{{a_1(1-q^n)}}{{1-q}}$ 。</span>
+                        <span class="ru-part">Формула суммы первых $n$ членов геометрической прогрессии (при $q \neq 1$): $S_n = \frac{{a_1(1-q^n)}}{{1-q}}$.</span>
+                        <span class="en-part">The formula for the sum of the first $n$ terms of a geometric sequence (when $q \neq 1$) is: $S_n = \frac{{a_1(1-q^n)}}{{1-q}}$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">这是一个能让人“瞬间暴富”的放大器模型求总量的公式。记忆这个公式，核心在于分子上是 $1$ 减去公比的 $n$ 次方，分母是 $1-q$。上下符号一致即可，千万别把幂乘在分子外面而是要放在只归属于q上。</span>
+                        <span class="ru-part">Это формула для расчета общего экспоненциального «генератора богатства». Важно помнить: числитель содержит $1$ минус $q$ в степени $n$, а знаменатель — $1-q$. Степень n применяется только к q!</span>
+                        <span class="en-part">This is a formula for the total amount of an "instant wealth" amplifier model. To memorize it: the numerator is $1$ minus the common ratio to the $n$th power, and the denominator is $1-q$. Keep signs consistent; never put the power outside the fraction; it only belongs to $q$.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 22</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">算术平均值 (Среднее арифметическое)</span>
+                    <span class="ru-part">Среднее арифметическое</span>
+                    <span class="en-part">Arithmetic Mean</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">任何两实变量的算术结合中心值求取必须满足公式：$M = \frac{{x + y}}{{2}}$。</span>
+                        <span class="ru-part">Центральное среднее арифметическое двух переменных должно удовлетворять формуле: $M = \frac{{x + y}}{{2}}$.</span>
+                        <span class="en-part">The arithmetic mean center value of any two real variables must satisfy the formula: $M = \frac{{x + y}}{{2}}$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">在包含根号如 $\pm\sqrt{2}$ 的对称长式子中，求算术平均值最痛快的一步就是相加。一加，所有非理性的奇怪后缀刚好互相抵消杀尽清零，最后直接除以2即可平分天下一家一半。</span>
+                        <span class="ru-part">В симметричных выражениях, содержащих корни вроде $\pm\sqrt{2}$, суммирование - лучший метод. Иррациональные хвосты идеально уничтожают друг друга, после чего останется лишь поделить на 2.</span>
+                        <span class="en-part">In symmetric long expressions containing radicals like $\pm\sqrt{2}$, the most satisfying step in finding the arithmetic mean is adding them. Upon addition, all irrational suffixes cancel each other out, leaving you to simply divide by 2.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 23</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">坐标象限判定 (Определение квадрантов)</span>
+                    <span class="ru-part">Определение квадрантов</span>
+                    <span class="en-part">Quadrant Determination</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">二维直角坐标系将空间切割为四大板块，其中第二象限的特征为横坐标为负 ($x<0$) 纵坐标为正 ($y>0$)。</span>
+                        <span class="ru-part">Двумерная декартова система делит пространство на 4 сектора. Второй квадрант имеет отрицательную абсциссу ($x<0$) и положительную ординату ($y>0$).</span>
+                        <span class="en-part">The 2D Cartesian coordinate system divides space into four sectors. The second quadrant is characterized by a negative x-coordinate ($x<0$) and a positive y-coordinate ($y>0$).</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">可以把你置身于一个十字大马路中心。往左走是x负，往上走是y正，你走到了左上角的片区，这就是所谓的“第二象限”。反方向右边正区叫一四，左边负区叫二三。</span>
+                        <span class="ru-part">Представьте, что вы находитесь на перекрестке. Идти влево — x отрицательный, идти вверх — y положительный. Левый верхний сектор называется «вторым квадрантом».</span>
+                        <span class="en-part">Imagine you are at the center of a crossroad. Walking left is negative x, walking up is positive y; you arrive at the upper-left sector, which is the "second quadrant". Conversely, the right side is quadrants 1 & 4, and the left is 2 & 3.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 24</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">轴对称变换 (Осевая симметрия)</span>
+                    <span class="ru-part">Осевая симметрия</span>
+                    <span class="en-part">Axial Symmetry (Reflection)</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">若点产生针对 x 轴（横置主线）的对称倒影反射，则其横坐标 $x$ 保持恒定，纵坐标 $y$ 符号取反。</span>
+                        <span class="ru-part">Если точка отражается относительно оси x (горизонтальной оси), координат x остается неизменной, а знак координаты y инвертируется.</span>
+                        <span class="en-part">If a point undergoes symmetric reflection across the x-axis (horizontal line), its x-coordinate remains constant, and the sign of its y-coordinate is inverted.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">关于谁对称，谁就不改变面貌！把 x 轴想象成一条水面，你站在岸上，水里的镜面倒影还是在相同的地平线上（x不变），唯独你的垂直形态头朝下栽了进去（y加了负号）。</span>
+                        <span class="ru-part">Относительно какой оси существует симметрия, то значение и не меняется! Представьте ось x как поверхность воды: горизонтальная координата остается прежней (x не меняется), а вот ваше отражение перевернуто вверх ногами (y получает минус).</span>
+                        <span class="en-part">Regarding symmetry: the axis of reflection remains unchanged! Imagine the x-axis as a water surface. You stand on the bank; your reflection in the water stays at the same horizontal level (x unchanged), but your vertical form is head-down (y flipped).</span>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+        <section>
+            <div class="section-title">
+                <span class="zh-part">✍️ 专项强化训练 / Practice Lab</span>
+                <span class="ru-part">✍️ Практическая лаборатория</span>
+                <span class="en-part">✍️ Practice Lab</span>
+            </div>
+            <div class="homework-grid">
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q1</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">不论底数 a 为何值，函数 $y = \log_a (x - 3)$ 恒过定点：</span>
+                        <span class="ru-part">('При любом значении основания a график функции $y = \\log_a (x - 3)$ всегда проходит через точку:',)</span>
+                        <span class="en-part">Regardless of the base a, the function $y = \log_a (x - 3)$ always passes through the fixed point:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(3, 0)$</span>
+                        <span class="ru-part">$(3, 0)$</span>
+                        <span class="en-part">$(3, 0)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(0, 3)$</span>
+                        <span class="ru-part">$(0, 3)$</span>
+                        <span class="en-part">$(0, 3)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(4, 0)$</span>
+                        <span class="ru-part">$(4, 0)$</span>
+                        <span class="en-part">$(4, 0)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(1, 0)$</span>
+                        <span class="ru-part">$(1, 0)$</span>
+                        <span class="en-part">$(1, 0)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解题技巧**：<br>对数函数在真数为 1 时结果恒为 0。<br>令 $x - 3 = 1 \Rightarrow x = 4$。<br>此时 $y = \log_a 1 = 0$。故定点为 $(4, 0)$。</div>
+                            <div class="ru-part">**Прием решения**:<br>Логарифмическая функция всегда равна 0, когда ее аргумент равен 1.<br>Приравняем $x - 3 = 1 \Rightarrow x = 4$.<br>Тогда $y = \log_a 1 = 0$. Фиксированная точка — $(4, 0)$.</div>
+                            <div class="en-part">**Solution tip**:<br>A logarithmic function is always 0 when its argument is 1.<br>Set $x - 3 = 1 \Rightarrow x = 4$.<br>Then $y = \log_a 1 = 0$. The fixed point is $(4, 0)$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(3, 0)$ — 错误。当 $x={a}$ 时真数为 0，对数无意义，此处并未达到定点条件。</span>
+                            <span class="ru-part">$(3, 0)$ — Ошибка. При $x={a}$ аргумент логарифма равен 0, что не имеет смысла. Условие фиксированной точки не выполняется.</span>
+                            <span class="en-part">$(3, 0)$ — Incorrect. At $x={a}$, the argument is 0 (undefined), failing the fixed-point condition.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(0, 3)$ — 错误。此处混淆了横纵坐标的位置，且 0 代入真数可能非法。</span>
+                            <span class="ru-part">$(0, 3)$ — Ошибка. Перепутаны абсцисса и ордината, подстановка 0 в аргумент может быть недопустимой.</span>
+                            <span class="en-part">$(0, 3)$ — Incorrect. Coordinates are swapped, and plugging in 0 might be invalid.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(4, 0)$ — 正确答案。</span>
+                            <span class="ru-part">$(4, 0)$ — Правильный ответ.</span>
+                            <span class="en-part">$(4, 0)$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(1, 0)$ — 错误。这是基础函数 $\log_a x$ 的定点，未考虑本题中的水平平移。</span>
+                            <span class="ru-part">$(1, 0)$ — Ошибка. Это фиксированная точка базовой функции $\log_a x$, не учтен горизонтальный сдвиг в данной задаче.</span>
+                            <span class="en-part">$(1, 0)$ — Incorrect. This is the fixed point for $\log_a x$; it ignores the horizontal shift in this problem.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q2</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">不论底数 a 为何值，函数 $y = \log_a (x - 5)$ 恒过定点：</span>
+                        <span class="ru-part">('При любом значении основания a график функции $y = \\log_a (x - 5)$ всегда проходит через точку:',)</span>
+                        <span class="en-part">Regardless of the base a, the function $y = \log_a (x - 5)$ always passes through the fixed point:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(0, 5)$</span>
+                        <span class="ru-part">$(0, 5)$</span>
+                        <span class="en-part">$(0, 5)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(5, 0)$</span>
+                        <span class="ru-part">$(5, 0)$</span>
+                        <span class="en-part">$(5, 0)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(6, 0)$</span>
+                        <span class="ru-part">$(6, 0)$</span>
+                        <span class="en-part">$(6, 0)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(1, 0)$</span>
+                        <span class="ru-part">$(1, 0)$</span>
+                        <span class="en-part">$(1, 0)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解题技巧**：<br>对数函数在真数为 1 时结果恒为 0。<br>令 $x - 5 = 1 \Rightarrow x = 6$。<br>此时 $y = \log_a 1 = 0$。故定点为 $(6, 0)$。</div>
+                            <div class="ru-part">**Прием решения**:<br>Логарифмическая функция всегда равна 0, когда ее аргумент равен 1.<br>Приравняем $x - 5 = 1 \Rightarrow x = 6$.<br>Тогда $y = \log_a 1 = 0$. Фиксированная точка — $(6, 0)$.</div>
+                            <div class="en-part">**Solution tip**:<br>A logarithmic function is always 0 when its argument is 1.<br>Set $x - 5 = 1 \Rightarrow x = 6$.<br>Then $y = \log_a 1 = 0$. The fixed point is $(6, 0)$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(0, 5)$ — 错误。此处混淆了横纵坐标的位置，且 0 代入真数可能非法。</span>
+                            <span class="ru-part">$(0, 5)$ — Ошибка. Перепутаны абсцисса и ордината, подстановка 0 в аргумент может быть недопустимой.</span>
+                            <span class="en-part">$(0, 5)$ — Incorrect. Coordinates are swapped, and plugging in 0 might be invalid.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(5, 0)$ — 错误。当 $x={a}$ 时真数为 0，对数无意义，此处并未达到定点条件。</span>
+                            <span class="ru-part">$(5, 0)$ — Ошибка. При $x={a}$ аргумент логарифма равен 0, что не имеет смысла. Условие фиксированной точки не выполняется.</span>
+                            <span class="en-part">$(5, 0)$ — Incorrect. At $x={a}$, the argument is 0 (undefined), failing the fixed-point condition.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(6, 0)$ — 正确答案。</span>
+                            <span class="ru-part">$(6, 0)$ — Правильный ответ.</span>
+                            <span class="en-part">$(6, 0)$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(1, 0)$ — 错误。这是基础函数 $\log_a x$ 的定点，未考虑本题中的水平平移。</span>
+                            <span class="ru-part">$(1, 0)$ — Ошибка. Это фиксированная точка базовой функции $\log_a x$, не учтен горизонтальный сдвиг в данной задаче.</span>
+                            <span class="en-part">$(1, 0)$ — Incorrect. This is the fixed point for $\log_a x$; it ignores the horizontal shift in this problem.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q3</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知等差数列 $a_1 = 4$，公差 $d = 2$，求第 5 项 $a_{5}$ 的值：</span>
+                        <span class="ru-part">('В арифметической прогрессии $a_1 = 4$, разность $d = 2$. Найдите 5-й член $a_{5}$:',)</span>
+                        <span class="en-part">In an arithmetic sequence, $a_1 = 4$ and the common difference $d = 2$. Find the 5th term $a_{5}$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$64$</span>
+                        <span class="ru-part">$64$</span>
+                        <span class="en-part">$64$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$14$</span>
+                        <span class="ru-part">$14$</span>
+                        <span class="en-part">$14$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$10$</span>
+                        <span class="ru-part">$10$</span>
+                        <span class="en-part">$10$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$12$</span>
+                        <span class="ru-part">$12$</span>
+                        <span class="en-part">$12$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**计算过程**：<br>使用定义公式：$a_n = a_1 + (n-1)d$。<br>代入数据：$a_{5} = 4 + (5-1) \times 2 = 4 + 4 \times 2 = 12$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Используем формулу: $a_n = a_1 + (n-1)d$.<br>Подставляем данные: $a_{5} = 4 + (5-1) \times 2 = 4 + 4 \times 2 = 12$.</div>
+                            <div class="en-part">**Solution process**:<br>Use the formula: $a_n = a_1 + (n-1)d$.<br>Substitute data: $a_{5} = 4 + (5-1) \times 2 = 4 + 4 \times 2 = 12$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$64$ — 错误。此为等比数列的通项计算方式，非等差数列规则。</span>
+                            <span class="ru-part">$64$ — Ошибка. Это способ расчета n-го члена геометрической прогрессии, а не арифметической.</span>
+                            <span class="en-part">$64$ — Incorrect. This is the formula for a geometric sequence, not an arithmetic one.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$14$ — 错误。公式应用错误，多算了一层公差（应为 $n-1$ 次）。</span>
+                            <span class="ru-part">$14$ — Ошибка. Неверное применение формулы: добавлена лишняя разность (должно быть $n-1$ раз).</span>
+                            <span class="en-part">$14$ — Incorrect. Formula misapplied; added an extra common difference (should be $n-1$ times).</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$10$ — 错误。少算了一层公差间隔。</span>
+                            <span class="ru-part">$10$ — Ошибка. Пропущен один интервал разности.</span>
+                            <span class="en-part">$10$ — Incorrect. Missed one common difference interval.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$12$ — 正确答案。</span>
+                            <span class="ru-part">$12$ — Правильный ответ.</span>
+                            <span class="en-part">$12$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q4</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知等差数列 $a_1 = 3$，公差 $d = 3$，求第 8 项 $a_{8}$ 的值：</span>
+                        <span class="ru-part">('В арифметической прогрессии $a_1 = 3$, разность $d = 3$. Найдите 8-й член $a_{8}$:',)</span>
+                        <span class="en-part">In an arithmetic sequence, $a_1 = 3$ and the common difference $d = 3$. Find the 8th term $a_{8}$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$27$</span>
+                        <span class="ru-part">$27$</span>
+                        <span class="en-part">$27$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$24$</span>
+                        <span class="ru-part">$24$</span>
+                        <span class="en-part">$24$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$21$</span>
+                        <span class="ru-part">$21$</span>
+                        <span class="en-part">$21$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$6561$</span>
+                        <span class="ru-part">$6561$</span>
+                        <span class="en-part">$6561$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**计算过程**：<br>使用定义公式：$a_n = a_1 + (n-1)d$。<br>代入数据：$a_{8} = 3 + (8-1) \times 3 = 3 + 7 \times 3 = 24$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Используем формулу: $a_n = a_1 + (n-1)d$.<br>Подставляем данные: $a_{8} = 3 + (8-1) \times 3 = 3 + 7 \times 3 = 24$.</div>
+                            <div class="en-part">**Solution process**:<br>Use the formula: $a_n = a_1 + (n-1)d$.<br>Substitute data: $a_{8} = 3 + (8-1) \times 3 = 3 + 7 \times 3 = 24$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$27$ — 错误。公式应用错误，多算了一层公差（应为 $n-1$ 次）。</span>
+                            <span class="ru-part">$27$ — Ошибка. Неверное применение формулы: добавлена лишняя разность (должно быть $n-1$ раз).</span>
+                            <span class="en-part">$27$ — Incorrect. Formula misapplied; added an extra common difference (should be $n-1$ times).</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$24$ — 正确答案。</span>
+                            <span class="ru-part">$24$ — Правильный ответ.</span>
+                            <span class="en-part">$24$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$21$ — 错误。少算了一层公差间隔。</span>
+                            <span class="ru-part">$21$ — Ошибка. Пропущен один интервал разности.</span>
+                            <span class="en-part">$21$ — Incorrect. Missed one common difference interval.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$6561$ — 错误。此为等比数列的通项计算方式，非等差数列规则。</span>
+                            <span class="ru-part">$6561$ — Ошибка. Это способ расчета n-го члена геометрической прогрессии, а не арифметической.</span>
+                            <span class="en-part">$6561$ — Incorrect. This is the formula for a geometric sequence, not an arithmetic one.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q5</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">等差数列中，$a_1 = 1, a_{6} = 11$，求公差 d：</span>
+                        <span class="ru-part">('В арифметической прогрессии $a_1 = 1, a_{6} = 11$. Найдите разность d:',)</span>
+                        <span class="en-part">In an arithmetic sequence, $a_1 = 1$ and $a_{6} = 11$. Find the common difference d:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$10$</span>
+                        <span class="ru-part">$10$</span>
+                        <span class="en-part">$10$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$3$</span>
+                        <span class="ru-part">$3$</span>
+                        <span class="en-part">$3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$2$</span>
+                        <span class="ru-part">$2$</span>
+                        <span class="en-part">$2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$1.67$</span>
+                        <span class="ru-part">$1.67$</span>
+                        <span class="en-part">$1.67$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**计算过程**：<br>利用变形公式：$d = (a_n - a_1) / (n-1)$。<br>计算：$d = (11 - 1) / (6-1) = 10 / 5 = 2$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Используем преобразованную формулу: $d = (a_n - a_1) / (n-1)$.<br>Расчет: $d = (11 - 1) / (6-1) = 10 / 5 = 2$.</div>
+                            <div class="en-part">**Solution process**:<br>Use the derived formula: $d = (a_n - a_1) / (n-1)$.<br>Calculation: $d = (11 - 1) / (6-1) = 10 / 5 = 2$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$10$ — 错误。这仅是总差值，尚未除以间隔次数 $n-1$。</span>
+                            <span class="ru-part">$10$ — Ошибка. Это только общая разность, она еще не разделена на количество интервалов $n-1$.</span>
+                            <span class="en-part">$10$ — Incorrect. This is just the total difference; it hasn't been divided by the number of intervals $n-1$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$3$ — 错误。计算过程存在溢出或偏移误差。</span>
+                            <span class="ru-part">$3$ — Ошибка. Ошибка смещения в процессе расчета.</span>
+                            <span class="en-part">$3$ — Incorrect. Offset error in calculation.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$2$ — 正确答案。</span>
+                            <span class="ru-part">$2$ — Правильный ответ.</span>
+                            <span class="en-part">$2$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$1.67$ — 错误。分母应为间隔数 $n-1$ 而非项数 $n$。</span>
+                            <span class="ru-part">$1.67$ — Ошибка. Знаменатель должен быть количеством интервалов $n-1$, а не количеством членов $n$.</span>
+                            <span class="en-part">$1.67$ — Incorrect. The denominator should be the number of intervals ($n-1$), not the number of terms ($n$).</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q6</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">等差数列中，$a_1 = 2, a_{6} = 17$，求公差 d：</span>
+                        <span class="ru-part">('В арифметической прогрессии $a_1 = 2, a_{6} = 17$. Найдите разность d:',)</span>
+                        <span class="en-part">In an arithmetic sequence, $a_1 = 2$ and $a_{6} = 17$. Find the common difference d:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$2.5$</span>
+                        <span class="ru-part">$2.5$</span>
+                        <span class="en-part">$2.5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$3$</span>
+                        <span class="ru-part">$3$</span>
+                        <span class="en-part">$3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$4$</span>
+                        <span class="ru-part">$4$</span>
+                        <span class="en-part">$4$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$15$</span>
+                        <span class="ru-part">$15$</span>
+                        <span class="en-part">$15$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**计算过程**：<br>利用变形公式：$d = (a_n - a_1) / (n-1)$。<br>计算：$d = (17 - 2) / (6-1) = 15 / 5 = 3$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Используем преобразованную формулу: $d = (a_n - a_1) / (n-1)$.<br>Расчет: $d = (17 - 2) / (6-1) = 15 / 5 = 3$.</div>
+                            <div class="en-part">**Solution process**:<br>Use the derived formula: $d = (a_n - a_1) / (n-1)$.<br>Calculation: $d = (17 - 2) / (6-1) = 15 / 5 = 3$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$2.5$ — 错误。分母应为间隔数 $n-1$ 而非项数 $n$。</span>
+                            <span class="ru-part">$2.5$ — Ошибка. Знаменатель должен быть количеством интервалов $n-1$, а не количеством членов $n$.</span>
+                            <span class="en-part">$2.5$ — Incorrect. The denominator should be the number of intervals ($n-1$), not the number of terms ($n$).</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$3$ — 正确答案。</span>
+                            <span class="ru-part">$3$ — Правильный ответ.</span>
+                            <span class="en-part">$3$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$4$ — 错误。计算过程存在溢出或偏移误差。</span>
+                            <span class="ru-part">$4$ — Ошибка. Ошибка смещения в процессе расчета.</span>
+                            <span class="en-part">$4$ — Incorrect. Offset error in calculation.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$15$ — 错误。这仅是总差值，尚未除以间隔次数 $n-1$。</span>
+                            <span class="ru-part">$15$ — Ошибка. Это только общая разность, она еще не разделена на количество интервалов $n-1$.</span>
+                            <span class="en-part">$15$ — Incorrect. This is just the total difference; it hasn't been divided by the number of intervals $n-1$.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q7</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">等差数列中，$a_1 = 3, a_{4} = 18$，求公差 d：</span>
+                        <span class="ru-part">('В арифметической прогрессии $a_1 = 3, a_{4} = 18$. Найдите разность d:',)</span>
+                        <span class="en-part">In an arithmetic sequence, $a_1 = 3$ and $a_{4} = 18$. Find the common difference d:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$3.75$</span>
+                        <span class="ru-part">$3.75$</span>
+                        <span class="en-part">$3.75$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$6$</span>
+                        <span class="ru-part">$6$</span>
+                        <span class="en-part">$6$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$15$</span>
+                        <span class="ru-part">$15$</span>
+                        <span class="en-part">$15$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$5$</span>
+                        <span class="ru-part">$5$</span>
+                        <span class="en-part">$5$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**计算过程**：<br>利用变形公式：$d = (a_n - a_1) / (n-1)$。<br>计算：$d = (18 - 3) / (4-1) = 15 / 3 = 5$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Используем преобразованную формулу: $d = (a_n - a_1) / (n-1)$.<br>Расчет: $d = (18 - 3) / (4-1) = 15 / 3 = 5$.</div>
+                            <div class="en-part">**Solution process**:<br>Use the derived formula: $d = (a_n - a_1) / (n-1)$.<br>Calculation: $d = (18 - 3) / (4-1) = 15 / 3 = 5$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$3.75$ — 错误。分母应为间隔数 $n-1$ 而非项数 $n$。</span>
+                            <span class="ru-part">$3.75$ — Ошибка. Знаменатель должен быть количеством интервалов $n-1$, а не количеством членов $n$.</span>
+                            <span class="en-part">$3.75$ — Incorrect. The denominator should be the number of intervals ($n-1$), not the number of terms ($n$).</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$6$ — 错误。计算过程存在溢出或偏移误差。</span>
+                            <span class="ru-part">$6$ — Ошибка. Ошибка смещения в процессе расчета.</span>
+                            <span class="en-part">$6$ — Incorrect. Offset error in calculation.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$15$ — 错误。这仅是总差值，尚未除以间隔次数 $n-1$。</span>
+                            <span class="ru-part">$15$ — Ошибка. Это только общая разность, она еще не разделена на количество интервалов $n-1$.</span>
+                            <span class="en-part">$15$ — Incorrect. This is just the total difference; it hasn't been divided by the number of intervals $n-1$.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$5$ — 正确答案。</span>
+                            <span class="ru-part">$5$ — Правильный ответ.</span>
+                            <span class="en-part">$5$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q8</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">观察数列：-1, 1, -1, 1... 其通项公式 $a_n$ 可表示为：</span>
+                        <span class="ru-part">('Рассмотрите последовательность: -1, 1, -1, 1... Ее общая формула $a_n$ может быть записана как:',)</span>
+                        <span class="en-part">Observe the sequence: -1, 1, -1, 1... Its general formula $a_n$ can be expressed as:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$a_n = (-1)^{n-1}$</span>
+                        <span class="ru-part">$a_n = (-1)^{n-1}$</span>
+                        <span class="en-part">$a_n = (-1)^{n-1}$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$a_n = 1^n$</span>
+                        <span class="ru-part">$a_n = 1^n$</span>
+                        <span class="en-part">$a_n = 1^n$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$a_n = -n$</span>
+                        <span class="ru-part">$a_n = -n$</span>
+                        <span class="en-part">$a_n = -n$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$a_n = (-1)^n$</span>
+                        <span class="ru-part">$a_n = (-1)^n$</span>
+                        <span class="en-part">$a_n = (-1)^n$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**思路总结**：<br>数列在 -1 和 1 之间交替，由 $(-1)^n$ 生成核心序列。<br>当 $n=1$ 时，$(-1)^1 = -1$，正好符合首项。由此锁定公式。</div>
+                            <div class="ru-part">**Ход решения**:<br>Последовательность чередуется между -1 и 1, ядро последовательности генерируется $(-1)^n$.<br>При $n=1$, $(-1)^1 = -1$, что в точности соответствует первому члену. Формула верна.</div>
+                            <div class="en-part">**Solution Summary**:<br>The sequence alternates between -1 and 1; $(-1)^n$ generates such core sequences.<br>When $n=1$, $(-1)^1 = -1$, which matches the first term. Thus, the formula is confirmed.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$a_n = (-1)^{n-1}$ — 错误。该公式的首项为正1，与题意不符。</span>
+                            <span class="ru-part">$a_n = (-1)^{n-1}$ — Ошибка. Первый член по этой формуле равен +1, что не соответствует условию.</span>
+                            <span class="en-part">$a_n = (-1)^{n-1}$ — Incorrect. The first term in this formula is +1, which contradicts the prompt.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$a_n = 1^n$ — 错误。这恒等于 1，失去了正负交替的特性。</span>
+                            <span class="ru-part">$a_n = 1^n$ — Ошибка. Это выражение всегда равно 1, оно не имеет свойства чередования знаков.</span>
+                            <span class="en-part">$a_n = 1^n$ — Incorrect. This is always equal to 1; it lacks the sign-alternating property.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$a_n = -n$ — 错误。此数列会随 n 无限减小，而非在 $\pm 1$ 间跳跃。</span>
+                            <span class="ru-part">$a_n = -n$ — Ошибка. Эта последовательность будет бесконечно уменьшаться, а не прыгать между $\pm 1$.</span>
+                            <span class="en-part">$a_n = -n$ — Incorrect. This sequence decreases infinitely; it doesn't jump between $\pm 1$.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$a_n = (-1)^n$ — 正确答案。</span>
+                            <span class="ru-part">$a_n = (-1)^n$ — Правильный ответ.</span>
+                            <span class="en-part">$a_n = (-1)^n$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q9</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">观察数列：-1, 1, -1, 1... 其通项公式 $a_n$ 可表示为：</span>
+                        <span class="ru-part">('Рассмотрите последовательность: -1, 1, -1, 1... Ее общая формула $a_n$ может быть записана как:',)</span>
+                        <span class="en-part">Observe the sequence: -1, 1, -1, 1... Its general formula $a_n$ can be expressed as:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$a_n = (-1)^{n-1}$</span>
+                        <span class="ru-part">$a_n = (-1)^{n-1}$</span>
+                        <span class="en-part">$a_n = (-1)^{n-1}$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$a_n = -n$</span>
+                        <span class="ru-part">$a_n = -n$</span>
+                        <span class="en-part">$a_n = -n$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$a_n = 1^n$</span>
+                        <span class="ru-part">$a_n = 1^n$</span>
+                        <span class="en-part">$a_n = 1^n$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$a_n = (-1)^n$</span>
+                        <span class="ru-part">$a_n = (-1)^n$</span>
+                        <span class="en-part">$a_n = (-1)^n$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**思路总结**：<br>数列在 -1 和 1 之间交替，由 $(-1)^n$ 生成核心序列。<br>当 $n=1$ 时，$(-1)^1 = -1$，正好符合首项。由此锁定公式。</div>
+                            <div class="ru-part">**Ход решения**:<br>Последовательность чередуется между -1 и 1, ядро последовательности генерируется $(-1)^n$.<br>При $n=1$, $(-1)^1 = -1$, что в точности соответствует первому члену. Формула верна.</div>
+                            <div class="en-part">**Solution Summary**:<br>The sequence alternates between -1 and 1; $(-1)^n$ generates such core sequences.<br>When $n=1$, $(-1)^1 = -1$, which matches the first term. Thus, the formula is confirmed.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$a_n = (-1)^{n-1}$ — 错误。该公式的首项为正1，与题意不符。</span>
+                            <span class="ru-part">$a_n = (-1)^{n-1}$ — Ошибка. Первый член по этой формуле равен +1, что не соответствует условию.</span>
+                            <span class="en-part">$a_n = (-1)^{n-1}$ — Incorrect. The first term in this formula is +1, which contradicts the prompt.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$a_n = -n$ — 错误。此数列会随 n 无限减小，而非在 $\pm 1$ 间跳跃。</span>
+                            <span class="ru-part">$a_n = -n$ — Ошибка. Эта последовательность будет бесконечно уменьшаться, а не прыгать между $\pm 1$.</span>
+                            <span class="en-part">$a_n = -n$ — Incorrect. This sequence decreases infinitely; it doesn't jump between $\pm 1$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$a_n = 1^n$ — 错误。这恒等于 1，失去了正负交替的特性。</span>
+                            <span class="ru-part">$a_n = 1^n$ — Ошибка. Это выражение всегда равно 1, оно не имеет свойства чередования знаков.</span>
+                            <span class="en-part">$a_n = 1^n$ — Incorrect. This is always equal to 1; it lacks the sign-alternating property.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$a_n = (-1)^n$ — 正确答案。</span>
+                            <span class="ru-part">$a_n = (-1)^n$ — Правильный ответ.</span>
+                            <span class="en-part">$a_n = (-1)^n$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q10</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">观察数列：-1, 1, -1, 1... 其通项公式 $a_n$ 可表示为：</span>
+                        <span class="ru-part">('Рассмотрите последовательность: -1, 1, -1, 1... Ее общая формула $a_n$ может быть записана как:',)</span>
+                        <span class="en-part">Observe the sequence: -1, 1, -1, 1... Its general formula $a_n$ can be expressed as:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$a_n = (-1)^n$</span>
+                        <span class="ru-part">$a_n = (-1)^n$</span>
+                        <span class="en-part">$a_n = (-1)^n$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$a_n = -n$</span>
+                        <span class="ru-part">$a_n = -n$</span>
+                        <span class="en-part">$a_n = -n$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$a_n = (-1)^{n-1}$</span>
+                        <span class="ru-part">$a_n = (-1)^{n-1}$</span>
+                        <span class="en-part">$a_n = (-1)^{n-1}$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$a_n = 1^n$</span>
+                        <span class="ru-part">$a_n = 1^n$</span>
+                        <span class="en-part">$a_n = 1^n$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**思路总结**：<br>数列在 -1 和 1 之间交替，由 $(-1)^n$ 生成核心序列。<br>当 $n=1$ 时，$(-1)^1 = -1$，正好符合首项。由此锁定公式。</div>
+                            <div class="ru-part">**Ход решения**:<br>Последовательность чередуется между -1 и 1, ядро последовательности генерируется $(-1)^n$.<br>При $n=1$, $(-1)^1 = -1$, что в точности соответствует первому члену. Формула верна.</div>
+                            <div class="en-part">**Solution Summary**:<br>The sequence alternates between -1 and 1; $(-1)^n$ generates such core sequences.<br>When $n=1$, $(-1)^1 = -1$, which matches the first term. Thus, the formula is confirmed.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$a_n = (-1)^n$ — 正确答案。</span>
+                            <span class="ru-part">$a_n = (-1)^n$ — Правильный ответ.</span>
+                            <span class="en-part">$a_n = (-1)^n$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$a_n = -n$ — 错误。此数列会随 n 无限减小，而非在 $\pm 1$ 间跳跃。</span>
+                            <span class="ru-part">$a_n = -n$ — Ошибка. Эта последовательность будет бесконечно уменьшаться, а не прыгать между $\pm 1$.</span>
+                            <span class="en-part">$a_n = -n$ — Incorrect. This sequence decreases infinitely; it doesn't jump between $\pm 1$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$a_n = (-1)^{n-1}$ — 错误。该公式的首项为正1，与题意不符。</span>
+                            <span class="ru-part">$a_n = (-1)^{n-1}$ — Ошибка. Первый член по этой формуле равен +1, что не соответствует условию.</span>
+                            <span class="en-part">$a_n = (-1)^{n-1}$ — Incorrect. The first term in this formula is +1, which contradicts the prompt.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$a_n = 1^n$ — 错误。这恒等于 1，失去了正负交替的特性。</span>
+                            <span class="ru-part">$a_n = 1^n$ — Ошибка. Это выражение всегда равно 1, оно не имеет свойства чередования знаков.</span>
+                            <span class="en-part">$a_n = 1^n$ — Incorrect. This is always equal to 1; it lacks the sign-alternating property.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q11</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知等比数列 $a_1=1, q=2$，求该数列前 3 项的和 $S_{3}$ ：</span>
+                        <span class="ru-part">('В геометрической прогрессии $a_1=1, q=2$. Найдите сумму первых 3 членов $S_{3}$:',)</span>
+                        <span class="en-part">In a geometric sequence $a_1=1, q=2$, find the sum of the first 3 terms $S_{3}$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$8$</span>
+                        <span class="ru-part">$8$</span>
+                        <span class="en-part">$8$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$6$</span>
+                        <span class="ru-part">$6$</span>
+                        <span class="en-part">$6$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$7$</span>
+                        <span class="ru-part">$7$</span>
+                        <span class="en-part">$7$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$7$</span>
+                        <span class="ru-part">$7$</span>
+                        <span class="en-part">$7$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**计算过程**：<br>代入求和公式：$S_n = a_1(1-q^n)/(1-q)$。<br>$S_{3} = 1 \times (1-2^{3}) / (1-2) = (1-8) / -1 = 7 = 7$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Подставляем в формулу суммы: $S_n = a_1(1-q^n)/(1-q)$.<br>$S_{3} = 1 \times (1-2^{3}) / (1-2) = (1-8) / -1 = 7 = 7$.</div>
+                            <div class="en-part">**Solution process**:<br>Substitute into the sum formula: $S_n = a_1(1-q^n)/(1-q)$.<br>$S_{3} = 1 \times (1-2^{3}) / (1-2) = (1-8) / -1 = 7 = 7$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$8$ — 错误。这仅是第 $n+1$ 项的底数部分，并非前 n 项的和值。</span>
+                            <span class="ru-part">$8$ — Ошибка. Это только часть значения $n+1$-го члена, а не сумма первых n членов.</span>
+                            <span class="en-part">$8$ — Incorrect. This is just part of the $(n+1)$th term, not the sum of the first n terms.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$6$ — 错误。在公式处理中存在常数项偏移错误。</span>
+                            <span class="ru-part">$6$ — Ошибка. Ошибка смещения константы в формуле.</span>
+                            <span class="en-part">$6$ — Incorrect. Calculation error involving a constant offset.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$7$ — 正确答案。</span>
+                            <span class="ru-part">$7$ — Правильный ответ.</span>
+                            <span class="en-part">$7$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$7$ — 错误。误用了等差数列的累加逻辑。</span>
+                            <span class="ru-part">$7$ — Ошибка. Ошибочно использована логика суммирования арифметической прогрессии.</span>
+                            <span class="en-part">$7$ — Incorrect. Mistakenly used the summation logic for arithmetic sequences.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q12</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知等比数列 $a_1=1, q=2$，求该数列前 4 项的和 $S_{4}$ ：</span>
+                        <span class="ru-part">('В геометрической прогрессии $a_1=1, q=2$. Найдите сумму первых 4 членов $S_{4}$:',)</span>
+                        <span class="en-part">In a geometric sequence $a_1=1, q=2$, find the sum of the first 4 terms $S_{4}$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$9$</span>
+                        <span class="ru-part">$9$</span>
+                        <span class="en-part">$9$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$14$</span>
+                        <span class="ru-part">$14$</span>
+                        <span class="en-part">$14$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$16$</span>
+                        <span class="ru-part">$16$</span>
+                        <span class="en-part">$16$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$15$</span>
+                        <span class="ru-part">$15$</span>
+                        <span class="en-part">$15$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**计算过程**：<br>代入求和公式：$S_n = a_1(1-q^n)/(1-q)$。<br>$S_{4} = 1 \times (1-2^{4}) / (1-2) = (1-16) / -1 = 15 = 15$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Подставляем в формулу суммы: $S_n = a_1(1-q^n)/(1-q)$.<br>$S_{4} = 1 \times (1-2^{4}) / (1-2) = (1-16) / -1 = 15 = 15$.</div>
+                            <div class="en-part">**Solution process**:<br>Substitute into the sum formula: $S_n = a_1(1-q^n)/(1-q)$.<br>$S_{4} = 1 \times (1-2^{4}) / (1-2) = (1-16) / -1 = 15 = 15$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$9$ — 错误。误用了等差数列的累加逻辑。</span>
+                            <span class="ru-part">$9$ — Ошибка. Ошибочно использована логика суммирования арифметической прогрессии.</span>
+                            <span class="en-part">$9$ — Incorrect. Mistakenly used the summation logic for arithmetic sequences.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$14$ — 错误。在公式处理中存在常数项偏移错误。</span>
+                            <span class="ru-part">$14$ — Ошибка. Ошибка смещения константы в формуле.</span>
+                            <span class="en-part">$14$ — Incorrect. Calculation error involving a constant offset.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$16$ — 错误。这仅是第 $n+1$ 项的底数部分，并非前 n 项的和值。</span>
+                            <span class="ru-part">$16$ — Ошибка. Это только часть значения $n+1$-го члена, а не сумма первых n членов.</span>
+                            <span class="en-part">$16$ — Incorrect. This is just part of the $(n+1)$th term, not the sum of the first n terms.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$15$ — 正确答案。</span>
+                            <span class="ru-part">$15$ — Правильный ответ.</span>
+                            <span class="en-part">$15$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q13</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知等比数列 $a_1=1, q=2$，求该数列前 4 项的和 $S_{4}$ ：</span>
+                        <span class="ru-part">('В геометрической прогрессии $a_1=1, q=2$. Найдите сумму первых 4 членов $S_{4}$:',)</span>
+                        <span class="en-part">In a geometric sequence $a_1=1, q=2$, find the sum of the first 4 terms $S_{4}$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$15$</span>
+                        <span class="ru-part">$15$</span>
+                        <span class="en-part">$15$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$9$</span>
+                        <span class="ru-part">$9$</span>
+                        <span class="en-part">$9$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$16$</span>
+                        <span class="ru-part">$16$</span>
+                        <span class="en-part">$16$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$14$</span>
+                        <span class="ru-part">$14$</span>
+                        <span class="en-part">$14$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**计算过程**：<br>代入求和公式：$S_n = a_1(1-q^n)/(1-q)$。<br>$S_{4} = 1 \times (1-2^{4}) / (1-2) = (1-16) / -1 = 15 = 15$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Подставляем в формулу суммы: $S_n = a_1(1-q^n)/(1-q)$.<br>$S_{4} = 1 \times (1-2^{4}) / (1-2) = (1-16) / -1 = 15 = 15$.</div>
+                            <div class="en-part">**Solution process**:<br>Substitute into the sum formula: $S_n = a_1(1-q^n)/(1-q)$.<br>$S_{4} = 1 \times (1-2^{4}) / (1-2) = (1-16) / -1 = 15 = 15$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$15$ — 正确答案。</span>
+                            <span class="ru-part">$15$ — Правильный ответ.</span>
+                            <span class="en-part">$15$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$9$ — 错误。误用了等差数列的累加逻辑。</span>
+                            <span class="ru-part">$9$ — Ошибка. Ошибочно использована логика суммирования арифметической прогрессии.</span>
+                            <span class="en-part">$9$ — Incorrect. Mistakenly used the summation logic for arithmetic sequences.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$16$ — 错误。这仅是第 $n+1$ 项的底数部分，并非前 n 项的和值。</span>
+                            <span class="ru-part">$16$ — Ошибка. Это только часть значения $n+1$-го члена, а не сумма первых n членов.</span>
+                            <span class="en-part">$16$ — Incorrect. This is just part of the $(n+1)$th term, not the sum of the first n terms.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$14$ — 错误。在公式处理中存在常数项偏移错误。</span>
+                            <span class="ru-part">$14$ — Ошибка. Ошибка смещения константы в формуле.</span>
+                            <span class="en-part">$14$ — Incorrect. Calculation error involving a constant offset.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q14</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">求数值 $x = 3 + \sqrt{2}$ 与 $y = 3 - \sqrt{2}$ 的算术平均值：</span>
+                        <span class="ru-part">('Найдите среднее арифметическое чисел $x = 3 + \\sqrt{2}$ и $y = 3 - \\sqrt{2}$:',)</span>
+                        <span class="en-part">Find the arithmetic mean of $x = 3 + \sqrt{2}$ and $y = 3 - \sqrt{2}$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$3$</span>
+                        <span class="ru-part">$3$</span>
+                        <span class="en-part">$3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\sqrt{2}$</span>
+                        <span class="ru-part">$\sqrt{2}$</span>
+                        <span class="en-part">$\sqrt{2}$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$6$</span>
+                        <span class="ru-part">$6$</span>
+                        <span class="en-part">$6$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**计算过程**：<br>平均值公式为 $M = (x+y)/2$。<br>求和：$x+y = (3 + \sqrt{2}) + (3 - \sqrt{2}) = 6$。<br>计算平均值：$6 / 2 = 3$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Формула среднего арифметического $M = (x+y)/2$.<br>Суммируем: $x+y = (3 + \sqrt{2}) + (3 - \sqrt{2}) = 6$.<br>Среднее значение: $6 / 2 = 3$.</div>
+                            <div class="en-part">**Solution process**:<br>The mean formula is $M = (x+y)/2$.<br>Sum: $x+y = (3 + \sqrt{2}) + (3 - \sqrt{2}) = 6$.<br>Calculate mean: $6 / 2 = 3$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$0$ — 错误。抵消了根号部分后，常数项部分依然存在且不为零。</span>
+                            <span class="ru-part">$0$ — Ошибка. После сокращения части с корнем константа остается и не равна нулю.</span>
+                            <span class="en-part">$0$ — Incorrect. After the radical terms cancel out, the constant terms remain and are non-zero.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$3$ — 正确答案。</span>
+                            <span class="ru-part">$3$ — Правильный ответ.</span>
+                            <span class="en-part">$3$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\sqrt{2}$ — 错误。根号项在求和过程中已被正负抵消。</span>
+                            <span class="ru-part">$\sqrt{2}$ — Ошибка. Члены с корнем сократились при сложении.</span>
+                            <span class="en-part">$\sqrt{2}$ — Incorrect. Radical terms should have canceled each other out during addition.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$6$ — 错误。仅完成了求和步骤，忘记除以下标常数 2。</span>
+                            <span class="ru-part">$6$ — Ошибка. Выполнено только суммирование, забыли разделить на константу 2.</span>
+                            <span class="en-part">$6$ — Incorrect. Only the summation was performed; forgot to divide by the constant 2.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q15</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">求数值 $x = 2 + \sqrt{2}$ 与 $y = 2 - \sqrt{2}$ 的算术平均值：</span>
+                        <span class="ru-part">('Найдите среднее арифметическое чисел $x = 2 + \\sqrt{2}$ и $y = 2 - \\sqrt{2}$:',)</span>
+                        <span class="en-part">Find the arithmetic mean of $x = 2 + \sqrt{2}$ and $y = 2 - \sqrt{2}$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\sqrt{2}$</span>
+                        <span class="ru-part">$\sqrt{2}$</span>
+                        <span class="en-part">$\sqrt{2}$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$4$</span>
+                        <span class="ru-part">$4$</span>
+                        <span class="en-part">$4$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$2$</span>
+                        <span class="ru-part">$2$</span>
+                        <span class="en-part">$2$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**计算过程**：<br>平均值公式为 $M = (x+y)/2$。<br>求和：$x+y = (2 + \sqrt{2}) + (2 - \sqrt{2}) = 4$。<br>计算平均值：$4 / 2 = 2$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Формула среднего арифметического $M = (x+y)/2$.<br>Суммируем: $x+y = (2 + \sqrt{2}) + (2 - \sqrt{2}) = 4$.<br>Среднее значение: $4 / 2 = 2$.</div>
+                            <div class="en-part">**Solution process**:<br>The mean formula is $M = (x+y)/2$.<br>Sum: $x+y = (2 + \sqrt{2}) + (2 - \sqrt{2}) = 4$.<br>Calculate mean: $4 / 2 = 2$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\sqrt{2}$ — 错误。根号项在求和过程中已被正负抵消。</span>
+                            <span class="ru-part">$\sqrt{2}$ — Ошибка. Члены с корнем сократились при сложении.</span>
+                            <span class="en-part">$\sqrt{2}$ — Incorrect. Radical terms should have canceled each other out during addition.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$4$ — 错误。仅完成了求和步骤，忘记除以下标常数 2。</span>
+                            <span class="ru-part">$4$ — Ошибка. Выполнено только суммирование, забыли разделить на константу 2.</span>
+                            <span class="en-part">$4$ — Incorrect. Only the summation was performed; forgot to divide by the constant 2.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$0$ — 错误。抵消了根号部分后，常数项部分依然存在且不为零。</span>
+                            <span class="ru-part">$0$ — Ошибка. После сокращения части с корнем константа остается и не равна нулю.</span>
+                            <span class="en-part">$0$ — Incorrect. After the radical terms cancel out, the constant terms remain and are non-zero.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$2$ — 正确答案。</span>
+                            <span class="ru-part">$2$ — Правильный ответ.</span>
+                            <span class="en-part">$2$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q16</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">点 $P(-1, 1)$ 位于平面直角坐标系的第几象限？</span>
+                        <span class="ru-part">В каком квадранте декартовой системы координат находится точка $P(-1, 1)$?</span>
+                        <span class="en-part">In which quadrant of the Cartesian coordinate system is the point $P(-1, 1)$ located?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">第一象限</span>
+                        <span class="ru-part">первый квадрант</span>
+                        <span class="en-part">first quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">第二象限</span>
+                        <span class="ru-part">второй квадрант</span>
+                        <span class="en-part">second quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">第三象限</span>
+                        <span class="ru-part">третий квадрант</span>
+                        <span class="en-part">third quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">第四象限</span>
+                        <span class="ru-part">четвертый квадрант</span>
+                        <span class="en-part">fourth quadrant</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**判定逻辑**：<br>观察坐标正负：$x = -1 < 0, y = 1 > 0$。<br>根据定义：左上角区域（负，正）属于**第二象限**。</div>
+                            <div class="ru-part">**Логика определения**:<br>Смотрим на знаки координат: $x = -1 < 0, y = 1 > 0$.<br>По определению: область (отриц., полож.) относится ко **второму квадранту**.</div>
+                            <div class="en-part">**Determination Logic**:<br>Observe the signs: $x = -1 < 0, y = 1 > 0$.<br>By definition: the upper-left region (negative, positive) belongs to the **second quadrant**.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">第一象限 — 错误。第一象限要求横纵坐标均为正值。</span>
+                            <span class="ru-part">первый квадрант — Ошибка. В первом квадранте обе координаты должны быть положительными.</span>
+                            <span class="en-part">first quadrant — Incorrect. The first quadrant requires both coordinates to be positive.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">第二象限 — 正确答案。</span>
+                            <span class="ru-part">второй квадрант — Правильный ответ.</span>
+                            <span class="en-part">second quadrant — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">第三象限 — 错误。第三象限要求横纵坐标均为负值。</span>
+                            <span class="ru-part">третий квадрант — Ошибка. В третьем квадранте обе координаты должны быть отрицательными.</span>
+                            <span class="en-part">third quadrant — Incorrect. The third quadrant requires both coordinates to be negative.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">第四象限 — 错误。第四象限横坐标应为正，纵坐标应为负。</span>
+                            <span class="ru-part">четвертый квадрант — Ошибка. В четвертом квадранте абсцисса положительна, а ордината отрицательна.</span>
+                            <span class="en-part">fourth quadrant — Incorrect. The fourth quadrant requires a positive x and negative y.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q17</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">点 $P(-1, 5)$ 位于平面直角坐标系的第几象限？</span>
+                        <span class="ru-part">В каком квадранте декартовой системы координат находится точка $P(-1, 5)$?</span>
+                        <span class="en-part">In which quadrant of the Cartesian coordinate system is the point $P(-1, 5)$ located?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">第一象限</span>
+                        <span class="ru-part">первый квадрант</span>
+                        <span class="en-part">first quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">第三象限</span>
+                        <span class="ru-part">третий квадрант</span>
+                        <span class="en-part">third quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">第四象限</span>
+                        <span class="ru-part">четвертый квадрант</span>
+                        <span class="en-part">fourth quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">第二象限</span>
+                        <span class="ru-part">второй квадрант</span>
+                        <span class="en-part">second quadrant</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**判定逻辑**：<br>观察坐标正负：$x = -1 < 0, y = 5 > 0$。<br>根据定义：左上角区域（负，正）属于**第二象限**。</div>
+                            <div class="ru-part">**Логика определения**:<br>Смотрим на знаки координат: $x = -1 < 0, y = 5 > 0$.<br>По определению: область (отриц., полож.) относится ко **второму квадранту**.</div>
+                            <div class="en-part">**Determination Logic**:<br>Observe the signs: $x = -1 < 0, y = 5 > 0$.<br>By definition: the upper-left region (negative, positive) belongs to the **second quadrant**.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">第一象限 — 错误。第一象限要求横纵坐标均为正值。</span>
+                            <span class="ru-part">первый квадрант — Ошибка. В первом квадранте обе координаты должны быть положительными.</span>
+                            <span class="en-part">first quadrant — Incorrect. The first quadrant requires both coordinates to be positive.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">第三象限 — 错误。第三象限要求横纵坐标均为负值。</span>
+                            <span class="ru-part">третий квадрант — Ошибка. В третьем квадранте обе координаты должны быть отрицательными.</span>
+                            <span class="en-part">third quadrant — Incorrect. The third quadrant requires both coordinates to be negative.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">第四象限 — 错误。第四象限横坐标应为正，纵坐标应为负。</span>
+                            <span class="ru-part">четвертый квадрант — Ошибка. В четвертом квадранте абсцисса положительна, а ордината отрицательна.</span>
+                            <span class="en-part">fourth quadrant — Incorrect. The fourth quadrant requires a positive x and negative y.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">第二象限 — 正确答案。</span>
+                            <span class="ru-part">второй квадрант — Правильный ответ.</span>
+                            <span class="en-part">second quadrant — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q18</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">点 $P(-5, 1)$ 位于平面直角坐标系的第几象限？</span>
+                        <span class="ru-part">В каком квадранте декартовой системы координат находится точка $P(-5, 1)$?</span>
+                        <span class="en-part">In which quadrant of the Cartesian coordinate system is the point $P(-5, 1)$ located?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">第三象限</span>
+                        <span class="ru-part">третий квадрант</span>
+                        <span class="en-part">third quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">第二象限</span>
+                        <span class="ru-part">второй квадрант</span>
+                        <span class="en-part">second quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">第四象限</span>
+                        <span class="ru-part">четвертый квадрант</span>
+                        <span class="en-part">fourth quadrant</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">第一象限</span>
+                        <span class="ru-part">первый квадрант</span>
+                        <span class="en-part">first quadrant</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**判定逻辑**：<br>观察坐标正负：$x = -5 < 0, y = 1 > 0$。<br>根据定义：左上角区域（负，正）属于**第二象限**。</div>
+                            <div class="ru-part">**Логика определения**:<br>Смотрим на знаки координат: $x = -5 < 0, y = 1 > 0$.<br>По определению: область (отриц., полож.) относится ко **второму квадранту**.</div>
+                            <div class="en-part">**Determination Logic**:<br>Observe the signs: $x = -5 < 0, y = 1 > 0$.<br>By definition: the upper-left region (negative, positive) belongs to the **second quadrant**.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">第三象限 — 错误。第三象限要求横纵坐标均为负值。</span>
+                            <span class="ru-part">третий квадрант — Ошибка. В третьем квадранте обе координаты должны быть отрицательными.</span>
+                            <span class="en-part">third quadrant — Incorrect. The third quadrant requires both coordinates to be negative.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">第二象限 — 正确答案。</span>
+                            <span class="ru-part">второй квадрант — Правильный ответ.</span>
+                            <span class="en-part">second quadrant — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">第四象限 — 错误。第四象限横坐标应为正，纵坐标应为负。</span>
+                            <span class="ru-part">четвертый квадрант — Ошибка. В четвертом квадранте абсцисса положительна, а ордината отрицательна.</span>
+                            <span class="en-part">fourth quadrant — Incorrect. The fourth quadrant requires a positive x and negative y.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">第一象限 — 错误。第一象限要求横纵坐标均为正值。</span>
+                            <span class="ru-part">первый квадрант — Ошибка. В первом квадранте обе координаты должны быть положительными.</span>
+                            <span class="en-part">first quadrant — Incorrect. The first quadrant requires both coordinates to be positive.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q19</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">点 $A(5, 2)$ 关于 x 轴对称的点的坐标为：</span>
+                        <span class="ru-part">('Координаты точки, симметричной точке $A(5, 2)$ относительно оси x:',)</span>
+                        <span class="en-part">The coordinates of the point symmetric to $A(5, 2)$ with respect to the x-axis are:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(-5, 2)$</span>
+                        <span class="ru-part">$(-5, 2)$</span>
+                        <span class="en-part">$(-5, 2)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(2, 5)$</span>
+                        <span class="ru-part">$(2, 5)$</span>
+                        <span class="en-part">$(2, 5)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(-5, -2)$</span>
+                        <span class="ru-part">$(-5, -2)$</span>
+                        <span class="en-part">$(-5, -2)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(5, -2)$</span>
+                        <span class="ru-part">$(5, -2)$</span>
+                        <span class="en-part">$(5, -2)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**转换规则**：<br>关于 x 轴对称：横坐标 $x$ 不变，纵坐标 $y$ 变为其相反数。<br>变换结果：$(5, 2) \rightarrow (5, -2)$。</div>
+                            <div class="ru-part">**Правило преобразования**:<br>Симметрия относительно оси x: координата x остается прежней, а y меняется на противоположную.<br>Результат: $(5, 2) \rightarrow (5, -2)$.</div>
+                            <div class="en-part">**Transformation Rule**:<br>Symmetry about the x-axis: the x-coordinate remains unchanged, while the y-coordinate becomes its opposite.<br>Result: $(5, 2) \rightarrow (5, -2)$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(-5, 2)$ — 错误。这是点关于 y 轴对称后的坐标。</span>
+                            <span class="ru-part">$(-5, 2)$ — Ошибка. Это координаты точки после симметрии относительно оси y.</span>
+                            <span class="en-part">$(-5, 2)$ — Incorrect. These are the coordinates for symmetry about the y-axis.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(2, 5)$ — 错误。此为关于直线 $y=x$ 对称变换的结果。</span>
+                            <span class="ru-part">$(2, 5)$ — Ошибка. Это результат симметрии относительно прямой $y=x$.</span>
+                            <span class="en-part">$(2, 5)$ — Incorrect. This is the result for symmetry about the line $y=x$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(-5, -2)$ — 错误。这是关于原点（中心对称）变换后的结果。</span>
+                            <span class="ru-part">$(-5, -2)$ — Ошибка. Это результат преобразования относительно начала координат (центральная симметрия).</span>
+                            <span class="en-part">$(-5, -2)$ — Incorrect. This is the result of central symmetry (about the origin).</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(5, -2)$ — 正确答案。</span>
+                            <span class="ru-part">$(5, -2)$ — Правильный ответ.</span>
+                            <span class="en-part">$(5, -2)$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q20</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">点 $A(4, 5)$ 关于 x 轴对称的点的坐标为：</span>
+                        <span class="ru-part">('Координаты точки, симметричной точке $A(4, 5)$ относительно оси x:',)</span>
+                        <span class="en-part">The coordinates of the point symmetric to $A(4, 5)$ with respect to the x-axis are:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(5, 4)$</span>
+                        <span class="ru-part">$(5, 4)$</span>
+                        <span class="en-part">$(5, 4)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(4, -5)$</span>
+                        <span class="ru-part">$(4, -5)$</span>
+                        <span class="en-part">$(4, -5)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(-4, 5)$</span>
+                        <span class="ru-part">$(-4, 5)$</span>
+                        <span class="en-part">$(-4, 5)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(-4, -5)$</span>
+                        <span class="ru-part">$(-4, -5)$</span>
+                        <span class="en-part">$(-4, -5)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**转换规则**：<br>关于 x 轴对称：横坐标 $x$ 不变，纵坐标 $y$ 变为其相反数。<br>变换结果：$(4, 5) \rightarrow (4, -5)$。</div>
+                            <div class="ru-part">**Правило преобразования**:<br>Симметрия относительно оси x: координата x остается прежней, а y меняется на противоположную.<br>Результат: $(4, 5) \rightarrow (4, -5)$.</div>
+                            <div class="en-part">**Transformation Rule**:<br>Symmetry about the x-axis: the x-coordinate remains unchanged, while the y-coordinate becomes its opposite.<br>Result: $(4, 5) \rightarrow (4, -5)$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(5, 4)$ — 错误。此为关于直线 $y=x$ 对称变换的结果。</span>
+                            <span class="ru-part">$(5, 4)$ — Ошибка. Это результат симметрии относительно прямой $y=x$.</span>
+                            <span class="en-part">$(5, 4)$ — Incorrect. This is the result for symmetry about the line $y=x$.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(4, -5)$ — 正确答案。</span>
+                            <span class="ru-part">$(4, -5)$ — Правильный ответ.</span>
+                            <span class="en-part">$(4, -5)$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(-4, 5)$ — 错误。这是点关于 y 轴对称后的坐标。</span>
+                            <span class="ru-part">$(-4, 5)$ — Ошибка. Это координаты точки после симметрии относительно оси y.</span>
+                            <span class="en-part">$(-4, 5)$ — Incorrect. These are the coordinates for symmetry about the y-axis.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(-4, -5)$ — 错误。这是关于原点（中心对称）变换后的结果。</span>
+                            <span class="ru-part">$(-4, -5)$ — Ошибка. Это результат преобразования относительно начала координат (центральная симметрия).</span>
+                            <span class="en-part">$(-4, -5)$ — Incorrect. This is the result of central symmetry (about the origin).</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+    </div>
+</body>
+</html>

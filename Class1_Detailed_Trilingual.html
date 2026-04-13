@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 1: Algebra & Sets - CSCA Interactive Lecture</title>
+    <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #f43f5e;
+            --bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --zh-light: #fef2f2;
+            --ru-light: #eff6ff;
+            --en-light: #fffbeb;
+            --zh-dark: #dc2626;
+            --ru-dark: #2563eb;
+            --en-dark: #d97706;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: radial-gradient(circle at top left, #f1f5f9, #e2e8f0);
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        header h1 { font-size: 36px; font-weight: 900; margin: 0; letter-spacing: -0.05em; color: var(--primary); }
+        header p { color: #64748b; font-size: 18px; margin-top: 8px; }
+
+        /* Language Controls */
+        .lang-nav {
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .lang-btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .lang-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .lang-btn.active.zh { background: var(--zh-dark); color: white; border-color: transparent; }
+        .lang-btn.active.ru { background: var(--ru-dark); color: white; border-color: transparent; }
+        .lang-btn.active.en { background: var(--en-dark); color: white; border-color: transparent; }
+
+        /* Section Styling */
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 60px 0 30px;
+            padding-left: 15px;
+            border-left: 6px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Topic Card */
+        .topic-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .topic-meta { font-size: 12px; font-weight: 800; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+        .topic-name { font-size: 28px; font-weight: 900; margin: 0 0 24px 0; letter-spacing: -0.02em; }
+
+        .concept-box {
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+        .zh-active .concept-box { background: var(--zh-light); border-left: 6px solid var(--zh-dark); }
+        .ru-active .concept-box { background: var(--ru-light); border-left: 6px solid var(--ru-dark); }
+        .en-active .concept-box { background: var(--en-light); border-left: 6px solid var(--en-dark); }
+
+        .concept-text { font-size: 19px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
+        .explain-text { font-size: 15px; color: #475569; }
+
+        .diagram-outer { background: white; border-radius: 16px; padding: 20px; text-align: center; margin: 30px 0; border: 1px solid #e2e8f0; }
+
+        /* Homework Blocks */
+        .homework-grid { display: flex; flex-direction: column; gap: 30px; }
+        .q-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .q-card:hover { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); transform: translateY(-4px); }
+        .q-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .q-num { background: #f1f5f9; padding: 4px 12px; border-radius: 8px; font-weight: 800; font-size: 14px; }
+        .q-text { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+
+        .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+        .opt {
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .opt:hover { border-color: #94a3b8; background: #f1f5f9; }
+
+        .analysis-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .analysis-btn:hover { opacity: 0.9; }
+
+        .analysis-panel {
+            display: none;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px dashed #e2e8f0;
+        }
+        .analysis-panel.open { display: block; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .step-bubble { background: #f0fdf4; border: 1px solid #dcfce7; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        .audit-item { padding: 12px; border-radius: 10px; margin-bottom: 12px; font-size: 14px; }
+        .audit-correct { background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+        .audit-wrong { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+
+        /* Visibility Classes */
+        .zh-part, .ru-part, .en-part { display: none; }
+        .zh-active .zh-part { display: block; }
+        .ru-active .ru-part { display: block; }
+        .en-active .en-part { display: block; }
+
+        .hidden { display: none !important; }
+    </style>
+    <script>
+        function setLang(lang) {
+            const container = document.getElementById('main-container');
+            container.classList.remove('zh-active', 'ru-active', 'en-active');
+            container.classList.add(lang + '-active');
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.lang-btn.' + lang).classList.add('active');
+            
+            localStorage.setItem('csca_lang', lang);
+        }
+
+        function toggleAnalysis(btn) {
+            const panel = btn.nextElementSibling;
+            panel.classList.toggle('open');
+            btn.innerText = panel.classList.contains('open') ? '收起解析 / CLOSE' : '查看详尽解析 / FULL ANALYSIS';
+        }
+
+        window.onload = () => {
+            const saved = localStorage.getItem('csca_lang') || 'zh';
+            setLang(saved);
+        };
+    </script>
+</head>
+<body>
+    <div class="lang-nav">
+        <button class="lang-btn zh" onclick="setLang('zh')">🇨🇳 中文</button>
+        <button class="lang-btn ru" onclick="setLang('ru')">🇷🇺 Рус</button>
+        <button class="lang-btn en" onclick="setLang('en')">🇺🇸 Eng</button>
+    </div>
+
+    <div class="container zh-active" id="main-container">
+        <header>
+            <h1>Class 1: Algebra & Sets</h1>
+            <p class="zh-part">CSCA 数学专项冲刺讲义 - 高阶三语版</p>
+            <p class="ru-part">CSCA Математика: Интенсивный курс - Триязычное издание</p>
+            <p class="en-part">CSCA Math Intensive Lecture - Trilingual Edition</p>
+        </header>
+
+        <section>
+            <div class="section-title">
+                <span class="zh-part">📖 核心考点手册 / Theory Guide</span>
+                <span class="ru-part">📖 Теоретический справочник</span>
+                <span class="en-part">📖 Essential Theory Guide</span>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 01</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">集合基础 (Основы множеств)</span>
+                    <span class="ru-part">Основы множеств</span>
+                    <span class="en-part">Bases of Sets</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">元素与集合的关系使用属于($\in$)与不属于($\notin$)符号表示。</span>
+                        <span class="ru-part">Отношение между элементом и множеством обозначается символами принадлежности ($\in$) и непринадлежности ($\notin$).</span>
+                        <span class="en-part">The relationship between an element and a set is denoted by the symbols of membership ($\in$) and non-membership ($\notin$).</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">你可以把集合想象成一个“箱子”，元素就是箱子里的“苹果”。谈论苹果在不在箱子里时，只能用“属于”这个词。注意区分 $\subseteq$（包含），那是用来描述“一个小箱子是否放在了大箱子里”。</span>
+                        <span class="ru-part">Вы можете представить множество как «коробку», а элементы — как «яблоки» в ней. Когда мы говорим о том, находится ли яблоко в коробке, мы используем слово «принадлежит». Будьте осторожны, не путайте с $\subseteq$ (включает), которое описывает, «находится ли маленькая коробка внутри большой коробки».</span>
+                        <span class="en-part">You can think of a set as a "box" and the elements as "apples" inside it. When talking about whether an apple is in the box, you can only use the word "belongs to". Distinguish this from $\subseteq$ (subset), which describes "whether a small box is placed inside a larger box".</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 02</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">子集判定 (Подмножества)</span>
+                    <span class="ru-part">Подмножества</span>
+                    <span class="en-part">Subsets Determination</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">若集合A的所有元素都属于集合B，则称A是B的子集，记作 $A \subseteq B$。</span>
+                        <span class="ru-part">Если все элементы множества A принадлежат множеству B, то A называется подмножеством B, что записывается как $A \subseteq B$.</span>
+                        <span class="en-part">If all elements of set A belong to set B, then A is called a subset of B, denoted as $A \subseteq B$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">子集是集合与集合之间的关系。空集 $\emptyset$ 是任何集合的子集。含有特定元素的集合如 $\{a\}$ 本身是一个集合，所以它与另一个集合的关系必须用包含连词 $\subseteq$。</span>
+                        <span class="ru-part">Подмножество — это отношение между двумя множествами. Пустое множество $\emptyset$ является подмножеством любого множества. Множество $\{a\}$, содержащее конкретный элемент, само по себе является множеством, поэтому его отношение к другому множеству должно выражаться символом включения $\subseteq$.</span>
+                        <span class="en-part">A subset is a relationship between sets. The empty set $\emptyset$ is a subset of any set. A set containing specific elements, such as $\{a\}$, is itself a set, so its relationship with another set must use the inclusion symbol $\subseteq$.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 03</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">并集计算 (Объединение множеств)</span>
+                    <span class="ru-part">Объединение множеств</span>
+                    <span class="en-part">Union Calculation</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">由所有属于集合A或属于集合B的元素组成的集合，记作 $A \cup B$。</span>
+                        <span class="ru-part">Множество, состоящее из всех элементов, которые принадлежат множеству A или множеству B, обозначается $A \cup B$.</span>
+                        <span class="en-part">The set consisting of all elements that belong to set A or set B is denoted as $A \cup B$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">“并集”就是“合并”。在数轴上，把区间 A 和区间 B 画出来，只要有阴影覆盖的地方，全部合并到一起，取最左边的起点和最右边的终点。</span>
+                        <span class="ru-part">«Объединение» означает «слияние». На числовой оси нарисуйте интервалы A и B. Вся заштрихованная область объединяется; просто возьмите самую левую начальную точку и самую правую конечную точку.</span>
+                        <span class="en-part">"Union" means "merging". On the number line, draw interval A and interval B; wherever there is shaded coverage, merge them all together, taking the leftmost starting point and the rightmost ending point.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 04</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">交集计算 (Пересечение множеств)</span>
+                    <span class="ru-part">Пересечение множеств</span>
+                    <span class="en-part">Intersection Calculation</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">由属于A且同时属于B的元素构成的集合，记作 $A \cap B$。</span>
+                        <span class="ru-part">Множество, состоящее из элементов, которые принадлежат и A, и B, обозначается $A \cap B$.</span>
+                        <span class="en-part">The set consisting of elements that belong to A and simultaneously belong to B is denoted as $A \cap B$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">“交集”就是找“公共部分”。必须是 A 也有，且 B 也同时具备的范围。在数轴上画线，只有那段同时画了两层线的地方才是交集。</span>
+                        <span class="ru-part">«Пересечение» означает поиск «общей части». Это то, что есть и в A, и в B. Если нарисовать линии на числовой оси, пересечением будет только тот отрезок, где проходят обе линии.</span>
+                        <span class="en-part">"Intersection" means finding the "common part". It must be a range that exists in both A and B. When drawing lines on the number line, only the segment where both lines are drawn simultaneously is the intersection.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 05</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">分式定义域 (Область определения дроби)</span>
+                    <span class="ru-part">Область определения дроби</span>
+                    <span class="en-part">Domain of Fractions</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">对于含有未知数的分式表达式，分母不能等于0。</span>
+                        <span class="ru-part">Для дробных выражений, содержащих неизвестные, знаменатель не может быть равен 0.</span>
+                        <span class="en-part">For fractional expressions containing unknowns, the denominator cannot be equal to 0.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">在数学界，0不能作为除数，这是最高铁律之一。当我们看到类似 $\frac{1}{x-a}$ 的函数时，第一反应必须是让下面的部分 $x-a \neq 0$维护表达式有意义。</span>
+                        <span class="ru-part">В математике деление на 0 невозможно — это одно из самых строгих правил. Когда мы видим функцию вроде $\frac{1}{x-a}$, нашей первой реакцией должно быть обеспечение условия, чтобы знаменатель $x-a \neq 0$.</span>
+                        <span class="en-part">In mathematics, 0 cannot be a divisor—this is one of the supreme iron rules. When we see a function like $\frac{1}{x-a}$, our first reaction must be to make the bottom part $x-a \neq 0$, ensuring the expression is meaningful.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 06</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">根式定义域 (Область определения корня)</span>
+                    <span class="ru-part">Область определения корня</span>
+                    <span class="en-part">Domain of Radicals</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">偶次根号内的代数式（被开方数）必须大于或等于0，即 $\ge 0$。</span>
+                        <span class="ru-part">Алгебраическое выражение под корнем четной степени (подкоренное выражение) должно быть больше или равно 0, то есть $\ge 0$.</span>
+                        <span class="en-part">The algebraic expression inside an even root (radicand) must be greater than or equal to 0, i.e., $\ge 0$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">在实数世界里，没有哪个数字平方后会等于负数，所以如果你要开平方（偶数次开方），里面的数绝对不能是负的。我们要求内部算式必须 $\ge 0$。如果根式还在分母上，那么连等于0都不行，只能 $>0$！</span>
+                        <span class="ru-part">В мире действительных чисел нет числа, квадрат которого равен отрицательному числу. Поэтому при извлечении квадратного корня число внутри не может быть отрицательным. Мы требуем, чтобы оно было $\ge 0$. Если корень находится в знаменателе, он должен быть строго $>0$!</span>
+                        <span class="en-part">In the world of real numbers, no number squared equals a negative number, so if you want to take a square root (even-numbered root), the number inside absolutely cannot be negative. We require the internal expression to be $\ge 0$. If the radical is in the denominator, then it can't even be 0; it must be $>0$!</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 07</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">二次不等式-大于0 (Квадратные неравенства: больше 0)</span>
+                    <span class="ru-part">Квадратные неравенства: больше 0</span>
+                    <span class="en-part">Quadratic Inequalities (>0)</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">当一元二次多项式 $ax^2+bx+c > 0$ （且 $a>0$）时，其解集为两根之“外”。</span>
+                        <span class="ru-part">Когда квадратный многочлен $ax^2+bx+c > 0$ (при $a>0$), его множество решений находится «снаружи» от двух корней.</span>
+                        <span class="en-part">When a quadratic polynomial $ax^2+bx+c > 0$ (and $a>0$), its solution set lies "outside" the two roots.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">因为二次项系数为正，抛物线是个开口向上的“笑脸”。问我们“什么时候大于0”，其实就是在问图像的两边翘起来的触角对应什么 x 范围。所以答案是“取两边”（分散的区域：$x < 小根$ 或 $x > 大根$）。</span>
+                        <span class="ru-part">Поскольку старший коэффициент положителен, парабола выглядит как «улыбающееся лицо» (ветви направлены вверх). Спросить «когда она больше 0» — значит спросить, где находятся ее поднимающиеся ветви по оси x. Ответ — «по краям» ($x < меньшего\ корня$ или $x > большего\ корня$).</span>
+                        <span class="en-part">Since the quadratic coefficient is positive, the parabola is an upward-opening "smiley face". Asking us "when is it greater than 0" is actually asking what x-range corresponds to the upward-curling "antennas" on both sides of the graph. So the answer is "take both sides" (scattered regions: $x < smaller\ root$ or $x > larger\ root$).</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 08</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">二次不等式-小于0 (Квадратные неравенства: меньше 0)</span>
+                    <span class="ru-part">Квадратные неравенства: меньше 0</span>
+                    <span class="en-part">Quadratic Inequalities (<0)</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">当一元二次多项式 $ax^2+bx+c < 0$ （且 $a>0$）时，其解集为两根之“间”。</span>
+                        <span class="ru-part">Когда квадратный многочлен $ax^2+bx+c < 0$ (при $a>0$), его множество решений находится «между» двумя корнями.</span>
+                        <span class="en-part">When a quadratic polynomial $ax^2+bx+c < 0$ (and $a>0$), its solution set lies "between" the two roots.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">同样的“笑脸”抛物线，当问我们 `<0` 小于零的区间时，我们在找它深陷在 x 轴下方那个兜底的部分。它就像一个陷入地下的坑，处于左右两个交叉点(根)的正中间，所以解集是连着的封闭区间。</span>
+                        <span class="ru-part">В той же «улыбающейся параболе», когда нас спрашивают о диапазоне `<0`, мы проваливаемся в часть ниже оси x. Это похоже на яму под землей между двумя корнями, поэтому множество решений — это замкнутый интервал между ними.</span>
+                        <span class="en-part">With the same "smiley face" parabola, when asked for the `<0` range, we are looking for the part deeply recessed below the x-axis. It's like a pit in the ground, located right in the middle of the two intersection points (roots), so the solution set is a continuous closed interval.</span>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+        <section>
+            <div class="section-title">
+                <span class="zh-part">✍️ 专项强化训练 / Practice Lab</span>
+                <span class="ru-part">✍️ Практическая лаборатория</span>
+                <span class="en-part">✍️ Practice Lab</span>
+            </div>
+            <div class="homework-grid">
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q1</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知集合 $A=\{2,3,4\}$，下列选项中正确的是：</span>
+                        <span class="ru-part">Известно множество $A=\{2,3,4\}$, какой из следующих вариантов верен:</span>
+                        <span class="en-part">Given the set $A=\{2,3,4\}$, which of the following options is correct?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\{2\} \in A$</span>
+                        <span class="ru-part">$\{2\} \in A$</span>
+                        <span class="en-part">$\{2\} \in A$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$2 \subseteq A$</span>
+                        <span class="ru-part">$2 \subseteq A$</span>
+                        <span class="en-part">$2 \subseteq A$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\emptyset \in A$</span>
+                        <span class="ru-part">$\emptyset \in A$</span>
+                        <span class="en-part">$\emptyset \in A$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$2 \in A$</span>
+                        <span class="ru-part">$2 \in A$</span>
+                        <span class="en-part">$2 \in A$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>需明确元素与集合之间的对应关系符号。<br>2 作为数值元素，必须使用“属于”符号 $\in$ 表示与集合 A 的关系。</div>
+                            <div class="ru-part">**Ход решения**:<br>Необходимо четко определить символ отношения между элементом и множеством.<br>2 как числовой элемент должен использовать символ принадлежности $\in$ для выражения отношения к множеству A.</div>
+                            <div class="en-part">**Solution insight**:<br>Clarify the symbols for relationships between elements and sets.<br>2 is a numeric element and must use the 'belongs to' symbol $\in$ for its relationship with set A.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\{2\} \in A$ — 错误。$\{2\}$ 为集合形式，集合间的从属应使用包含关系而非属于。</span>
+                            <span class="ru-part">$\{2\} \in A$ — Ошибка. $\{{{a}\}}$ является множеством, для отношения между множествами должно использоваться включение $\subseteq$, а не принадлежность.</span>
+                            <span class="en-part">$\{2\} \in A$ — Incorrect. $\{2\}$ is a set; relationships between sets use inclusion, not membership.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$2 \subseteq A$ — 错误。该选项将个体元素与集合的关系混淆为包含关系（$\subseteq$应适用于集合之间）。</span>
+                            <span class="ru-part">$2 \subseteq A$ — Ошибка. Этот вариант путает отношение элемента к множеству с отношением включения ($\subseteq$ применяется между множествами).</span>
+                            <span class="en-part">$2 \subseteq A$ — Incorrect. This option confuses the member-set relationship with the subset relationship ($\subseteq$ is for sets).</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\emptyset \in A$ — 错误。空集是此集合的子集，其关系应表示为 $\emptyset \subseteq A$。</span>
+                            <span class="ru-part">$\emptyset \in A$ — Ошибка. Пустое множество является подмножеством, отношение должно записываться как $\emptyset \subseteq A$.</span>
+                            <span class="en-part">$\emptyset \in A$ — Incorrect. The empty set is a subset of this set; it should be $\emptyset \subseteq A$.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$2 \in A$ — 正确答案。</span>
+                            <span class="ru-part">$2 \in A$ — Правильный ответ.</span>
+                            <span class="en-part">$2 \in A$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q2</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知元素 $x=1$ 及集合 $A=\{1,2\}$，下列表达式正确的是：</span>
+                        <span class="ru-part">Известно, что элемент $x=1$ и множество $A=\{1,2\}$, какое из следующих выражений верно:</span>
+                        <span class="en-part">Given the element $x=1$ and set $A=\{1,2\}$, which of the following expressions is correct?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$1 \subseteq A$</span>
+                        <span class="ru-part">$1 \subseteq A$</span>
+                        <span class="en-part">$1 \subseteq A$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$\emptyset \in A$</span>
+                        <span class="ru-part">$\emptyset \in A$</span>
+                        <span class="en-part">$\emptyset \in A$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\{1\} \in A$</span>
+                        <span class="ru-part">$\{1\} \in A$</span>
+                        <span class="en-part">$\{1\} \in A$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$1 \in A$</span>
+                        <span class="ru-part">$1 \in A$</span>
+                        <span class="en-part">$1 \in A$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>需明确元素与集合之间的对应关系符号。<br>1 作为数值元素，必须使用“属于”符号 $\in$ 表示与集合 A 的关系。</div>
+                            <div class="ru-part">**Ход решения**:<br>Необходимо четко определить символ отношения между элементом и множеством.<br>1 как числовой элемент должен использовать символ принадлежности $\in$ для выражения отношения к множеству A.</div>
+                            <div class="en-part">**Solution insight**:<br>Clarify the symbols for relationships between elements and sets.<br>1 is a numeric element and must use the 'belongs to' symbol $\in$ for its relationship with set A.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$1 \subseteq A$ — 错误。该选项将个体元素与集合的关系混淆为包含关系（$\subseteq$应适用于集合之间）。</span>
+                            <span class="ru-part">$1 \subseteq A$ — Ошибка. Этот вариант путает отношение элемента к множеству с отношением включения ($\subseteq$ применяется между множествами).</span>
+                            <span class="en-part">$1 \subseteq A$ — Incorrect. This option confuses the member-set relationship with the subset relationship ($\subseteq$ is for sets).</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$\emptyset \in A$ — 错误。空集是此集合的子集，其关系应表示为 $\emptyset \subseteq A$。</span>
+                            <span class="ru-part">$\emptyset \in A$ — Ошибка. Пустое множество является подмножеством, отношение должно записываться как $\emptyset \subseteq A$.</span>
+                            <span class="en-part">$\emptyset \in A$ — Incorrect. The empty set is a subset of this set; it should be $\emptyset \subseteq A$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\{1\} \in A$ — 错误。$\{1\}$ 为集合形式，集合间的从属应使用包含关系而非属于。</span>
+                            <span class="ru-part">$\{1\} \in A$ — Ошибка. $\{{{a}\}}$ является множеством, для отношения между множествами должно использоваться включение $\subseteq$, а не принадлежность.</span>
+                            <span class="en-part">$\{1\} \in A$ — Incorrect. $\{1\}$ is a set; relationships between sets use inclusion, not membership.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$1 \in A$ — 正确答案。</span>
+                            <span class="ru-part">$1 \in A$ — Правильный ответ.</span>
+                            <span class="en-part">$1 \in A$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q3</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">给定集合 $B=\{4,6,8\}$，下列结论成立的是：</span>
+                        <span class="ru-part">Дано множество $B=\{4,6,8\}$, какое из следующих утверждений верно:</span>
+                        <span class="en-part">Given set $B=\{4,6,8\}$, which of the following conclusions holds?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$4 \subset B$</span>
+                        <span class="ru-part">$4 \subset B$</span>
+                        <span class="en-part">$4 \subset B$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$\emptyset = B$</span>
+                        <span class="ru-part">$\emptyset = B$</span>
+                        <span class="en-part">$\emptyset = B$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\{4\} \in B$</span>
+                        <span class="ru-part">$\{4\} \in B$</span>
+                        <span class="en-part">$\{4\} \in B$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$\{4\} \subseteq B$</span>
+                        <span class="ru-part">$\{4\} \subseteq B$</span>
+                        <span class="en-part">$\{4\} \subseteq B$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>选项中的 $\{4\}$ 表示一个单元素集合。<br>当一个集合的元素全部属于另一个集合时，二者为包含关系，用 $\subseteq$ 表示。</div>
+                            <div class="ru-part">**Ход решения**:<br>$\{4\}$ в вариантах ответов представляет собой множество из одного элемента.<br>Когда все элементы одного множества принадлежат другому множеству, между ними существует отношение включения, обозначаемое $\subseteq$.</div>
+                            <div class="en-part">**Solution insight**:<br>The option $\{4\}$ represents a singleton set.<br>When all elements of one set belong to another, it is an inclusion relationship, denoted by $\subseteq$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$4 \subset B$ — 错误。单一元素应当使用属于关系 $\in$，而非真子集关系。</span>
+                            <span class="ru-part">$4 \subset B$ — Ошибка. Для отдельного элемента должно использоваться отношение принадлежности $\in$, а не отношение собственного подмножества.</span>
+                            <span class="en-part">$4 \subset B$ — Incorrect. Single elements should use the membership relation $\in$, not the subset relation.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$\emptyset = B$ — 错误。已知集合 B 包含实数元素，并非空集。</span>
+                            <span class="ru-part">$\emptyset = B$ — Ошибка. Известно, что множество B содержит элементы действительных чисел и не является пустым множеством.</span>
+                            <span class="en-part">$\emptyset = B$ — Incorrect. Set B is known to contain real elements and is not empty.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\{4\} \in B$ — 错误。该项为集合形式，集合对集合不能使用属于关系符号。</span>
+                            <span class="ru-part">$\{4\} \in B$ — Ошибка. Это форма множества, символ принадлежности не может использоваться для отношения между множествами.</span>
+                            <span class="en-part">$\{4\} \in B$ — Incorrect. This is a set; membership symbols cannot be used for set-to-set relations.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$\{4\} \subseteq B$ — 正确答案。</span>
+                            <span class="ru-part">$\{4\} \subseteq B$ — Правильный ответ.</span>
+                            <span class="en-part">$\{4\} \subseteq B$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q4</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">给定集合 $B=\{9,11,13\}$，下列结论成立的是：</span>
+                        <span class="ru-part">Дано множество $B=\{9,11,13\}$, какое из следующих утверждений верно:</span>
+                        <span class="en-part">Given set $B=\{9,11,13\}$, which of the following conclusions holds?</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\{9\} \in B$</span>
+                        <span class="ru-part">$\{9\} \in B$</span>
+                        <span class="en-part">$\{9\} \in B$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$9 \subset B$</span>
+                        <span class="ru-part">$9 \subset B$</span>
+                        <span class="en-part">$9 \subset B$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\{9\} \subseteq B$</span>
+                        <span class="ru-part">$\{9\} \subseteq B$</span>
+                        <span class="en-part">$\{9\} \subseteq B$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$\emptyset = B$</span>
+                        <span class="ru-part">$\emptyset = B$</span>
+                        <span class="en-part">$\emptyset = B$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答思路**：<br>选项中的 $\{9\}$ 表示一个单元素集合。<br>当一个集合的元素全部属于另一个集合时，二者为包含关系，用 $\subseteq$ 表示。</div>
+                            <div class="ru-part">**Ход решения**:<br>$\{9\}$ в вариантах ответов представляет собой множество из одного элемента.<br>Когда все элементы одного множества принадлежат другому множеству, между ними существует отношение включения, обозначаемое $\subseteq$.</div>
+                            <div class="en-part">**Solution insight**:<br>The option $\{9\}$ represents a singleton set.<br>When all elements of one set belong to another, it is an inclusion relationship, denoted by $\subseteq$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\{9\} \in B$ — 错误。该项为集合形式，集合对集合不能使用属于关系符号。</span>
+                            <span class="ru-part">$\{9\} \in B$ — Ошибка. Это форма множества, символ принадлежности не может использоваться для отношения между множествами.</span>
+                            <span class="en-part">$\{9\} \in B$ — Incorrect. This is a set; membership symbols cannot be used for set-to-set relations.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$9 \subset B$ — 错误。单一元素应当使用属于关系 $\in$，而非真子集关系。</span>
+                            <span class="ru-part">$9 \subset B$ — Ошибка. Для отдельного элемента должно использоваться отношение принадлежности $\in$, а не отношение собственного подмножества.</span>
+                            <span class="en-part">$9 \subset B$ — Incorrect. Single elements should use the membership relation $\in$, not the subset relation.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\{9\} \subseteq B$ — 正确答案。</span>
+                            <span class="ru-part">$\{9\} \subseteq B$ — Правильный ответ.</span>
+                            <span class="en-part">$\{9\} \subseteq B$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$\emptyset = B$ — 错误。已知集合 B 包含实数元素，并非空集。</span>
+                            <span class="ru-part">$\emptyset = B$ — Ошибка. Известно, что множество B содержит элементы действительных чисел и не является пустым множеством.</span>
+                            <span class="en-part">$\emptyset = B$ — Incorrect. Set B is known to contain real elements and is not empty.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q5</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">设集合 $A=[-5, 5], B=(0, 8]$，则 $A \cup B$ 的结果为：</span>
+                        <span class="ru-part">Пусть множества $A=[-5, 5], B=(0, 8]$, тогда результатом $A \cup B$ будет:</span>
+                        <span class="en-part">Let $A=[-5, 5]$ and $B=(0, 8]$, the result of $A \cup B$ is:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$0 < x \le 5$</span>
+                        <span class="ru-part">$0 < x \le 5$</span>
+                        <span class="en-part">$0 < x \le 5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x < 8$</span>
+                        <span class="ru-part">$x < 8$</span>
+                        <span class="en-part">$x < 8$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$-5 \le x \le 8$</span>
+                        <span class="ru-part">$-5 \le x \le 8$</span>
+                        <span class="en-part">$-5 \le x \le 8$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$x > -5$</span>
+                        <span class="ru-part">$x > -5$</span>
+                        <span class="en-part">$x > -5$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答过程**：<br>求解**并集**即求两区间覆盖的所有范围。<br>根据题意，合并区域的左端点为 $-5$，右端点为 $8$。<br>综上求得范围：$-5 \le x \le 8$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Нахождение **объединения** означает поиск всего диапазона, охватываемого двумя интервалами.<br>Согласно условию задачи, левая конечная точка объединенной области равна $-5$, а правая конечная точка равна $8$.<br>В итоге получаем диапазон: $-5 \le x \le 8$.</div>
+                            <div class="en-part">**Solution process**:<br>Solving for the **union** means finding the entire range covered by both intervals.<br>The left endpoint of the combined region is $-5$, and the right endpoint is $8$.<br>Thus, the range is: $-5 \le x \le 8$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$0 < x \le 5$ — 错误。此区间对应的是两集合的交集。</span>
+                            <span class="ru-part">$0 < x \le 5$ — Ошибка. Этот интервал соответствует пересечению двух множеств.</span>
+                            <span class="en-part">$0 < x \le 5$ — Incorrect. This interval corresponds to the intersection of the two sets.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x < 8$ — 错误。忽略了集合 A 规定下的左侧下限约束。</span>
+                            <span class="ru-part">$x < 8$ — Ошибка. Проигнорировано ограничение левого нижнего предела по множеству A.</span>
+                            <span class="en-part">$x < 8$ — Incorrect. The lower-left limit prescribed by set A was ignored.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$-5 \le x \le 8$ — 正确答案。</span>
+                            <span class="ru-part">$-5 \le x \le 8$ — Правильный ответ.</span>
+                            <span class="en-part">$-5 \le x \le 8$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$x > -5$ — 错误。忽略了集合 B 所规定的上限。</span>
+                            <span class="ru-part">$x > -5$ — Ошибка. Проигнорирован верхний предел, установленный множеством B.</span>
+                            <span class="en-part">$x > -5$ — Incorrect. The upper limit defined by set B was ignored.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q6</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">设集合 $A=[-4, 4], B=(0, 7]$，则 $A \cup B$ 的结果为：</span>
+                        <span class="ru-part">Пусть множества $A=[-4, 4], B=(0, 7]$, тогда результатом $A \cup B$ будет:</span>
+                        <span class="en-part">Let $A=[-4, 4]$ and $B=(0, 7]$, the result of $A \cup B$ is:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x < 7$</span>
+                        <span class="ru-part">$x < 7$</span>
+                        <span class="en-part">$x < 7$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$-4 \le x \le 7$</span>
+                        <span class="ru-part">$-4 \le x \le 7$</span>
+                        <span class="en-part">$-4 \le x \le 7$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$0 < x \le 4$</span>
+                        <span class="ru-part">$0 < x \le 4$</span>
+                        <span class="en-part">$0 < x \le 4$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$x > -4$</span>
+                        <span class="ru-part">$x > -4$</span>
+                        <span class="en-part">$x > -4$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答过程**：<br>求解**并集**即求两区间覆盖的所有范围。<br>根据题意，合并区域的左端点为 $-4$，右端点为 $7$。<br>综上求得范围：$-4 \le x \le 7$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Нахождение **объединения** означает поиск всего диапазона, охватываемого двумя интервалами.<br>Согласно условию задачи, левая конечная точка объединенной области равна $-4$, а правая конечная точка равна $7$.<br>В итоге получаем диапазон: $-4 \le x \le 7$.</div>
+                            <div class="en-part">**Solution process**:<br>Solving for the **union** means finding the entire range covered by both intervals.<br>The left endpoint of the combined region is $-4$, and the right endpoint is $7$.<br>Thus, the range is: $-4 \le x \le 7$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x < 7$ — 错误。忽略了集合 A 规定下的左侧下限约束。</span>
+                            <span class="ru-part">$x < 7$ — Ошибка. Проигнорировано ограничение левого нижнего предела по множеству A.</span>
+                            <span class="en-part">$x < 7$ — Incorrect. The lower-left limit prescribed by set A was ignored.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$-4 \le x \le 7$ — 正确答案。</span>
+                            <span class="ru-part">$-4 \le x \le 7$ — Правильный ответ.</span>
+                            <span class="en-part">$-4 \le x \le 7$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$0 < x \le 4$ — 错误。此区间对应的是两集合的交集。</span>
+                            <span class="ru-part">$0 < x \le 4$ — Ошибка. Этот интервал соответствует пересечению двух множеств.</span>
+                            <span class="en-part">$0 < x \le 4$ — Incorrect. This interval corresponds to the intersection of the two sets.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$x > -4$ — 错误。忽略了集合 B 所规定的上限。</span>
+                            <span class="ru-part">$x > -4$ — Ошибка. Проигнорирован верхний предел, установленный множеством B.</span>
+                            <span class="en-part">$x > -4$ — Incorrect. The upper limit defined by set B was ignored.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q7</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知 $A=[-2, 2], B=(0, 5]$，求两集合的交集 $A \cap B$ ：</span>
+                        <span class="ru-part">Известно $A=[-2, 2], B=(0, 5]$, найдите пересечение двух множеств $A \cap B$:</span>
+                        <span class="en-part">Given $A=[-2, 2]$ and $B=(0, 5]$, find the intersection $A \cap B$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$-2 \le x \le 5$</span>
+                        <span class="ru-part">$-2 \le x \le 5$</span>
+                        <span class="en-part">$-2 \le x \le 5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x \le 2$</span>
+                        <span class="ru-part">$x \le 2$</span>
+                        <span class="en-part">$x \le 2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$0 < x \le 2$</span>
+                        <span class="ru-part">$0 < x \le 2$</span>
+                        <span class="en-part">$0 < x \le 2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$x > 0$</span>
+                        <span class="ru-part">$x > 0$</span>
+                        <span class="en-part">$x > 0$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答过程**：<br>求解**交集**需要求出两区域的公共部分。<br>考虑到 $A$ 限定了上限为 $2$ 且 $B$ 限定了下限为 $>0$，<br>二者重合部分即区间 $(0, 2]$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Нахождение **пересечения** требует нахождения общей части двух областей.<br>Учитывая, что $A$ ограничивает верхний предел $2$, а $B$ ограничивает нижний предел $>0$,<br>их перекрывающаяся часть - это интервал $(0, 2]$.</div>
+                            <div class="en-part">**Solution process**:<br>Solving for the **intersection** requires finding the common part of the two regions.<br>Since $A$ limits the upper bound to $2$ and $B$ limits the lower bound to $>0$, the overlapping part is the interval $(0, 2]$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$-2 \le x \le 5$ — 错误。此结果为集合的并集范围。</span>
+                            <span class="ru-part">$-2 \le x \le 5$ — Ошибка. Этот результат является диапазоном объединения множеств.</span>
+                            <span class="en-part">$-2 \le x \le 5$ — Incorrect. This result is the range of the union of the sets.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x \le 2$ — 错误。交集须同时满足集合 B 中的下限 $x>0$ 条件。</span>
+                            <span class="ru-part">$x \le 2$ — Ошибка. Пересечение должно одновременно удовлетворять условию нижней границы $x>0$ в множестве B.</span>
+                            <span class="en-part">$x \le 2$ — Incorrect. The intersection must simultaneously satisfy the lower-limit condition $x>0$ from set B.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$0 < x \le 2$ — 正确答案。</span>
+                            <span class="ru-part">$0 < x \le 2$ — Правильный ответ.</span>
+                            <span class="en-part">$0 < x \le 2$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$x > 0$ — 错误。忽略了集合 A 原本对变量上限的约束。</span>
+                            <span class="ru-part">$x > 0$ — Ошибка. Проигнорировано исходное ограничение множества A на верхний предел переменной.</span>
+                            <span class="en-part">$x > 0$ — Incorrect. The original upper-limit constraint of set A was ignored.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q8</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知 $A=[-4, 4], B=(0, 7]$，求两集合的交集 $A \cap B$ ：</span>
+                        <span class="ru-part">Известно $A=[-4, 4], B=(0, 7]$, найдите пересечение двух множеств $A \cap B$:</span>
+                        <span class="en-part">Given $A=[-4, 4]$ and $B=(0, 7]$, find the intersection $A \cap B$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x \le 4$</span>
+                        <span class="ru-part">$x \le 4$</span>
+                        <span class="en-part">$x \le 4$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x > 0$</span>
+                        <span class="ru-part">$x > 0$</span>
+                        <span class="en-part">$x > 0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$-4 \le x \le 7$</span>
+                        <span class="ru-part">$-4 \le x \le 7$</span>
+                        <span class="en-part">$-4 \le x \le 7$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$0 < x \le 4$</span>
+                        <span class="ru-part">$0 < x \le 4$</span>
+                        <span class="en-part">$0 < x \le 4$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答过程**：<br>求解**交集**需要求出两区域的公共部分。<br>考虑到 $A$ 限定了上限为 $4$ 且 $B$ 限定了下限为 $>0$，<br>二者重合部分即区间 $(0, 4]$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Нахождение **пересечения** требует нахождения общей части двух областей.<br>Учитывая, что $A$ ограничивает верхний предел $4$, а $B$ ограничивает нижний предел $>0$,<br>их перекрывающаяся часть - это интервал $(0, 4]$.</div>
+                            <div class="en-part">**Solution process**:<br>Solving for the **intersection** requires finding the common part of the two regions.<br>Since $A$ limits the upper bound to $4$ and $B$ limits the lower bound to $>0$, the overlapping part is the interval $(0, 4]$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x \le 4$ — 错误。交集须同时满足集合 B 中的下限 $x>0$ 条件。</span>
+                            <span class="ru-part">$x \le 4$ — Ошибка. Пересечение должно одновременно удовлетворять условию нижней границы $x>0$ в множестве B.</span>
+                            <span class="en-part">$x \le 4$ — Incorrect. The intersection must simultaneously satisfy the lower-limit condition $x>0$ from set B.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x > 0$ — 错误。忽略了集合 A 原本对变量上限的约束。</span>
+                            <span class="ru-part">$x > 0$ — Ошибка. Проигнорировано исходное ограничение множества A на верхний предел переменной.</span>
+                            <span class="en-part">$x > 0$ — Incorrect. The original upper-limit constraint of set A was ignored.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$-4 \le x \le 7$ — 错误。此结果为集合的并集范围。</span>
+                            <span class="ru-part">$-4 \le x \le 7$ — Ошибка. Этот результат является диапазоном объединения множеств.</span>
+                            <span class="en-part">$-4 \le x \le 7$ — Incorrect. This result is the range of the union of the sets.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$0 < x \le 4$ — 正确答案。</span>
+                            <span class="ru-part">$0 < x \le 4$ — Правильный ответ.</span>
+                            <span class="en-part">$0 < x \le 4$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q9</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知 $A=[-5, 5], B=(0, 8]$，求两集合的交集 $A \cap B$ ：</span>
+                        <span class="ru-part">Известно $A=[-5, 5], B=(0, 8]$, найдите пересечение двух множеств $A \cap B$:</span>
+                        <span class="en-part">Given $A=[-5, 5]$ and $B=(0, 8]$, find the intersection $A \cap B$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x \le 5$</span>
+                        <span class="ru-part">$x \le 5$</span>
+                        <span class="en-part">$x \le 5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$-5 \le x \le 8$</span>
+                        <span class="ru-part">$-5 \le x \le 8$</span>
+                        <span class="en-part">$-5 \le x \le 8$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$0 < x \le 5$</span>
+                        <span class="ru-part">$0 < x \le 5$</span>
+                        <span class="en-part">$0 < x \le 5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$x > 0$</span>
+                        <span class="ru-part">$x > 0$</span>
+                        <span class="en-part">$x > 0$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解答过程**：<br>求解**交集**需要求出两区域的公共部分。<br>考虑到 $A$ 限定了上限为 $5$ 且 $B$ 限定了下限为 $>0$，<br>二者重合部分即区间 $(0, 5]$。</div>
+                            <div class="ru-part">**Ход решения**:<br>Нахождение **пересечения** требует нахождения общей части двух областей.<br>Учитывая, что $A$ ограничивает верхний предел $5$, а $B$ ограничивает нижний предел $>0$,<br>их перекрывающаяся часть - это интервал $(0, 5]$.</div>
+                            <div class="en-part">**Solution process**:<br>Solving for the **intersection** requires finding the common part of the two regions.<br>Since $A$ limits the upper bound to $5$ and $B$ limits the lower bound to $>0$, the overlapping part is the interval $(0, 5]$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x \le 5$ — 错误。交集须同时满足集合 B 中的下限 $x>0$ 条件。</span>
+                            <span class="ru-part">$x \le 5$ — Ошибка. Пересечение должно одновременно удовлетворять условию нижней границы $x>0$ в множестве B.</span>
+                            <span class="en-part">$x \le 5$ — Incorrect. The intersection must simultaneously satisfy the lower-limit condition $x>0$ from set B.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$-5 \le x \le 8$ — 错误。此结果为集合的并集范围。</span>
+                            <span class="ru-part">$-5 \le x \le 8$ — Ошибка. Этот результат является диапазоном объединения множеств.</span>
+                            <span class="en-part">$-5 \le x \le 8$ — Incorrect. This result is the range of the union of the sets.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$0 < x \le 5$ — 正确答案。</span>
+                            <span class="ru-part">$0 < x \le 5$ — Правильный ответ.</span>
+                            <span class="en-part">$0 < x \le 5$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$x > 0$ — 错误。忽略了集合 A 原本对变量上限的约束。</span>
+                            <span class="ru-part">$x > 0$ — Ошибка. Проигнорировано исходное ограничение множества A на верхний предел переменной.</span>
+                            <span class="en-part">$x > 0$ — Incorrect. The original upper-limit constraint of set A was ignored.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q10</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">求函数 $y=\frac{1}{x-9}$ 的自变量定义域：</span>
+                        <span class="ru-part">Найдите область определения аргумента функции $y=\frac{1}{x-9}$:</span>
+                        <span class="en-part">Find the domain of the function $y=\frac{1}{x-9}$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x > 9$</span>
+                        <span class="ru-part">$x > 9$</span>
+                        <span class="en-part">$x > 9$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x < 9$</span>
+                        <span class="ru-part">$x < 9$</span>
+                        <span class="en-part">$x < 9$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$x = 9$</span>
+                        <span class="ru-part">$x = 9$</span>
+                        <span class="en-part">$x = 9$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$x \neq 9$</span>
+                        <span class="ru-part">$x \neq 9$</span>
+                        <span class="en-part">$x \neq 9$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**考点解析**：<br>对于分式表达式，其自变量必须满足**分母不等于零**的条件。<br>即需要满足方程：$x-9 \neq 0 \Rightarrow x \neq 9$。</div>
+                            <div class="ru-part">**Анализ задачи**:<br>Для дробных выражений независимая переменная должна удовлетворять условию: **знаменатель не равен нулю**.<br>То есть должно выполняться уравнение: $x-9 \neq 0 \Rightarrow x \neq 9$.</div>
+                            <div class="en-part">**Topic Analysis**:<br>For fractional expressions, the variable must satisfy the condition that the **denominator is not zero**.<br>Thus: $x-9 \neq 0 \Rightarrow x \neq 9$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x > 9$ — 错误。未能考虑 $x<{a}$ 时分母为负数但也成立的合法情况。</span>
+                            <span class="ru-part">$x > 9$ — Ошибка. Не учтен случай, когда при $x<{a}$ знаменатель отрицателен, что также является допустимым.</span>
+                            <span class="en-part">$x > 9$ — Incorrect. Fails to consider the case where the denominator is negative but valid ($x<{a}$).</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x < 9$ — 错误。未能考虑 $x>{a}$ 时分母为正数但也成立的合法情况。</span>
+                            <span class="ru-part">$x < 9$ — Ошибка. Не учтен случай, когда при $x>{a}$ знаменатель положителен, что также допустимо.</span>
+                            <span class="en-part">$x < 9$ — Incorrect. Fails to consider the case where the denominator is positive but valid ($x>{a}$).</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$x = 9$ — 错误。当此等式成立时分母将等于 0，导致分式无实数意义。</span>
+                            <span class="ru-part">$x = 9$ — Ошибка. При выполнении этого равенства знаменатель будет равен 0, что лишает дробь смысла в области действительных чисел.</span>
+                            <span class="en-part">$x = 9$ — Incorrect. When this is true, the denominator equals 0, making the fraction undefined in real numbers.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$x \neq 9$ — 正确答案。</span>
+                            <span class="ru-part">$x \neq 9$ — Правильный ответ.</span>
+                            <span class="en-part">$x \neq 9$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q11</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">若代数式 $\frac{x^2+1}{x-9}$ 有意义，实数 x 必须满足：</span>
+                        <span class="ru-part">Чтобы алгебраическое выражение $\frac{x^2+1}{x-9}$ имело смысл, действительное число x должно удовлетворять условию:</span>
+                        <span class="en-part">For the expression $\frac{x^2+1}{x-9}$ to be defined, the real number x must satisfy:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x \neq 9$</span>
+                        <span class="ru-part">$x \neq 9$</span>
+                        <span class="en-part">$x \neq 9$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x = 9$</span>
+                        <span class="ru-part">$x = 9$</span>
+                        <span class="en-part">$x = 9$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$x < 9$</span>
+                        <span class="ru-part">$x < 9$</span>
+                        <span class="en-part">$x < 9$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$x > 9$</span>
+                        <span class="ru-part">$x > 9$</span>
+                        <span class="en-part">$x > 9$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**考点解析**：<br>对于分式表达式，其自变量必须满足**分母不等于零**的条件。<br>即需要满足方程：$x-9 \neq 0 \Rightarrow x \neq 9$。</div>
+                            <div class="ru-part">**Анализ задачи**:<br>Для дробных выражений независимая переменная должна удовлетворять условию: **знаменатель не равен нулю**.<br>То есть должно выполняться уравнение: $x-9 \neq 0 \Rightarrow x \neq 9$.</div>
+                            <div class="en-part">**Topic Analysis**:<br>For fractional expressions, the variable must satisfy the condition that the **denominator is not zero**.<br>Thus: $x-9 \neq 0 \Rightarrow x \neq 9$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x \neq 9$ — 正确答案。</span>
+                            <span class="ru-part">$x \neq 9$ — Правильный ответ.</span>
+                            <span class="en-part">$x \neq 9$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x = 9$ — 错误。当此等式成立时分母将等于 0，导致分式无实数意义。</span>
+                            <span class="ru-part">$x = 9$ — Ошибка. При выполнении этого равенства знаменатель будет равен 0, что лишает дробь смысла в области действительных чисел.</span>
+                            <span class="en-part">$x = 9$ — Incorrect. When this is true, the denominator equals 0, making the fraction undefined in real numbers.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$x < 9$ — 错误。未能考虑 $x>{a}$ 时分母为正数但也成立的合法情况。</span>
+                            <span class="ru-part">$x < 9$ — Ошибка. Не учтен случай, когда при $x>{a}$ знаменатель положителен, что также допустимо.</span>
+                            <span class="en-part">$x < 9$ — Incorrect. Fails to consider the case where the denominator is positive but valid ($x>{a}$).</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$x > 9$ — 错误。未能考虑 $x<{a}$ 时分母为负数但也成立的合法情况。</span>
+                            <span class="ru-part">$x > 9$ — Ошибка. Не учтен случай, когда при $x<{a}$ знаменатель отрицателен, что также является допустимым.</span>
+                            <span class="en-part">$x > 9$ — Incorrect. Fails to consider the case where the denominator is negative but valid ($x<{a}$).</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q12</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">若代数式 $\frac{x^2+1}{x-4}$ 有意义，实数 x 必须满足：</span>
+                        <span class="ru-part">Чтобы алгебраическое выражение $\frac{x^2+1}{x-4}$ имело смысл, действительное число x должно удовлетворять условию:</span>
+                        <span class="en-part">For the expression $\frac{x^2+1}{x-4}$ to be defined, the real number x must satisfy:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x = 4$</span>
+                        <span class="ru-part">$x = 4$</span>
+                        <span class="en-part">$x = 4$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x > 4$</span>
+                        <span class="ru-part">$x > 4$</span>
+                        <span class="en-part">$x > 4$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$x < 4$</span>
+                        <span class="ru-part">$x < 4$</span>
+                        <span class="en-part">$x < 4$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$x \neq 4$</span>
+                        <span class="ru-part">$x \neq 4$</span>
+                        <span class="en-part">$x \neq 4$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**考点解析**：<br>对于分式表达式，其自变量必须满足**分母不等于零**的条件。<br>即需要满足方程：$x-4 \neq 0 \Rightarrow x \neq 4$。</div>
+                            <div class="ru-part">**Анализ задачи**:<br>Для дробных выражений независимая переменная должна удовлетворять условию: **знаменатель не равен нулю**.<br>То есть должно выполняться уравнение: $x-4 \neq 0 \Rightarrow x \neq 4$.</div>
+                            <div class="en-part">**Topic Analysis**:<br>For fractional expressions, the variable must satisfy the condition that the **denominator is not zero**.<br>Thus: $x-4 \neq 0 \Rightarrow x \neq 4$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x = 4$ — 错误。当此等式成立时分母将等于 0，导致分式无实数意义。</span>
+                            <span class="ru-part">$x = 4$ — Ошибка. При выполнении этого равенства знаменатель будет равен 0, что лишает дробь смысла в области действительных чисел.</span>
+                            <span class="en-part">$x = 4$ — Incorrect. When this is true, the denominator equals 0, making the fraction undefined in real numbers.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x > 4$ — 错误。未能考虑 $x<{a}$ 时分母为负数但也成立的合法情况。</span>
+                            <span class="ru-part">$x > 4$ — Ошибка. Не учтен случай, когда при $x<{a}$ знаменатель отрицателен, что также является допустимым.</span>
+                            <span class="en-part">$x > 4$ — Incorrect. Fails to consider the case where the denominator is negative but valid ($x<{a}$).</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$x < 4$ — 错误。未能考虑 $x>{a}$ 时分母为正数但也成立的合法情况。</span>
+                            <span class="ru-part">$x < 4$ — Ошибка. Не учтен случай, когда при $x>{a}$ знаменатель положителен, что также допустимо.</span>
+                            <span class="en-part">$x < 4$ — Incorrect. Fails to consider the case where the denominator is positive but valid ($x>{a}$).</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$x \neq 4$ — 正确答案。</span>
+                            <span class="ru-part">$x \neq 4$ — Правильный ответ.</span>
+                            <span class="en-part">$x \neq 4$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q13</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">求解实变函数 $y=\sqrt{5-x}$ 的定义域：</span>
+                        <span class="ru-part">Найдите область определения функции действительного переменного $y=\sqrt{5-x}$:</span>
+                        <span class="en-part">Find the domain of the real-valued function $y=\sqrt{5-x}$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x \ge 5$</span>
+                        <span class="ru-part">$x \ge 5$</span>
+                        <span class="en-part">$x \ge 5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x < 5$</span>
+                        <span class="ru-part">$x < 5$</span>
+                        <span class="en-part">$x < 5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$x \neq 5$</span>
+                        <span class="ru-part">$x \neq 5$</span>
+                        <span class="en-part">$x \neq 5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$x \le 5$</span>
+                        <span class="ru-part">$x \le 5$</span>
+                        <span class="en-part">$x \le 5$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**考点解析**：<br>偶次根式的内部表达式必须满足非负性要求，即**被开方数大于等于0**。<br>列出不等式并求解：$5 - x \ge 0 \Rightarrow x \le 5$。</div>
+                            <div class="ru-part">**Анализ задачи**:<br>Внутреннее выражение корня четной степени должно удовлетворять требованию неотрицательности, то есть **подкоренное выражение больше или равно 0**.<br>Составляем неравенство и решаем: $5 - x \ge 0 \Rightarrow x \le 5$.</div>
+                            <div class="en-part">**Topic Analysis**:<br>The expression inside an even-degree radical must be non-negative, meaning the **radicand $\ge 0$**.<br>Solve: $5 - x \ge 0 \Rightarrow x \le 5$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x \ge 5$ — 错误。如果代入 $x > 5$，将导致被开方数为负，无实数对应值。</span>
+                            <span class="ru-part">$x \ge 5$ — Ошибка. Если подставить $x > {a}$, подкоренное выражение станет отрицательным, не имея действительного значения.</span>
+                            <span class="en-part">$x \ge 5$ — Incorrect. If $x > {a}$, the radicand becomes negative, which has no real value.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x < 5$ — 错误。该条件遗漏了当被开方数等于0时的合理情形（$\sqrt{0} = 0$）。</span>
+                            <span class="ru-part">$x < 5$ — Ошибка. Это условие упускает случай, когда подкоренное выражение равно 0 ($\sqrt{{0}} = 0$), что является допустимым.</span>
+                            <span class="en-part">$x < 5$ — Incorrect. This misses the case where the radicand is 0 ($\sqrt{{0}} = 0$).</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$x \neq 5$ — 错误。此条件仅适用于限制分母为零的情形，不适用于偶次根式。</span>
+                            <span class="ru-part">$x \neq 5$ — Ошибка. Это условие применимо только для ограничения знаменателя от равенства нулю и не подходит для корней четной степени.</span>
+                            <span class="en-part">$x \neq 5$ — Incorrect. This only applies to excluding a zero denominator, not for even-degree radicals.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$x \le 5$ — 正确答案。</span>
+                            <span class="ru-part">$x \le 5$ — Правильный ответ.</span>
+                            <span class="en-part">$x \le 5$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q14</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">求解实变函数 $y=\sqrt{7-x}$ 的定义域：</span>
+                        <span class="ru-part">Найдите область определения функции действительного переменного $y=\sqrt{7-x}$:</span>
+                        <span class="en-part">Find the domain of the real-valued function $y=\sqrt{7-x}$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x \le 7$</span>
+                        <span class="ru-part">$x \le 7$</span>
+                        <span class="en-part">$x \le 7$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x \neq 7$</span>
+                        <span class="ru-part">$x \neq 7$</span>
+                        <span class="en-part">$x \neq 7$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$x \ge 7$</span>
+                        <span class="ru-part">$x \ge 7$</span>
+                        <span class="en-part">$x \ge 7$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$x < 7$</span>
+                        <span class="ru-part">$x < 7$</span>
+                        <span class="en-part">$x < 7$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**考点解析**：<br>偶次根式的内部表达式必须满足非负性要求，即**被开方数大于等于0**。<br>列出不等式并求解：$7 - x \ge 0 \Rightarrow x \le 7$。</div>
+                            <div class="ru-part">**Анализ задачи**:<br>Внутреннее выражение корня четной степени должно удовлетворять требованию неотрицательности, то есть **подкоренное выражение больше или равно 0**.<br>Составляем неравенство и решаем: $7 - x \ge 0 \Rightarrow x \le 7$.</div>
+                            <div class="en-part">**Topic Analysis**:<br>The expression inside an even-degree radical must be non-negative, meaning the **radicand $\ge 0$**.<br>Solve: $7 - x \ge 0 \Rightarrow x \le 7$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x \le 7$ — 正确答案。</span>
+                            <span class="ru-part">$x \le 7$ — Правильный ответ.</span>
+                            <span class="en-part">$x \le 7$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x \neq 7$ — 错误。此条件仅适用于限制分母为零的情形，不适用于偶次根式。</span>
+                            <span class="ru-part">$x \neq 7$ — Ошибка. Это условие применимо только для ограничения знаменателя от равенства нулю и не подходит для корней четной степени.</span>
+                            <span class="en-part">$x \neq 7$ — Incorrect. This only applies to excluding a zero denominator, not for even-degree radicals.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$x \ge 7$ — 错误。如果代入 $x > 7$，将导致被开方数为负，无实数对应值。</span>
+                            <span class="ru-part">$x \ge 7$ — Ошибка. Если подставить $x > {a}$, подкоренное выражение станет отрицательным, не имея действительного значения.</span>
+                            <span class="en-part">$x \ge 7$ — Incorrect. If $x > {a}$, the radicand becomes negative, which has no real value.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$x < 7$ — 错误。该条件遗漏了当被开方数等于0时的合理情形（$\sqrt{0} = 0$）。</span>
+                            <span class="ru-part">$x < 7$ — Ошибка. Это условие упускает случай, когда подкоренное выражение равно 0 ($\sqrt{{0}} = 0$), что является допустимым.</span>
+                            <span class="en-part">$x < 7$ — Incorrect. This misses the case where the radicand is 0 ($\sqrt{{0}} = 0$).</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q15</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">求一元二次不等式 $x^2 + x - 6 > 0$ 的解集：</span>
+                        <span class="ru-part">Найдите множество решений квадратного неравенства $x^2 + x - 6 > 0$:</span>
+                        <span class="en-part">Find the solution set of the quadratic inequality $x^2 + x - 6 > 0$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x<-3$</span>
+                        <span class="ru-part">$x<-3$</span>
+                        <span class="en-part">$x<-3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$-3 < x < 2$</span>
+                        <span class="ru-part">$-3 < x < 2$</span>
+                        <span class="en-part">$-3 < x < 2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$x<-3$ 或 $x>2$</span>
+                        <span class="ru-part">$x<-3$ 或 $x>2$</span>
+                        <span class="en-part">$x<-3$ or $x>2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$x>2$</span>
+                        <span class="ru-part">$x>2$</span>
+                        <span class="en-part">$x>2$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解题思路**：<br>该二次函数的二次项系数为正，图像对应开口向上的抛物线。<br>通过对应方程求得两根分别为 $x_1=-3, x_2=2$。<br>当不等式方向为“>0”时，解集位于两根的外部区域。</div>
+                            <div class="ru-part">**Ход решения**:<br>Коэффициент при квадратичном члене положителен, график соответствует параболе, ветви которой направлены вверх.<br>Решив соответствующее уравнение, получаем два корня $x_1=-3, x_2=2$.<br>Поскольку знак неравенства “>0”, множество решений находится во внешней области двух корней.</div>
+                            <div class="en-part">**Solution insight**:<br>The quadratic coefficient is positive, meaning an upward-opening parabola.<br>The roots of the corresponding equation are $x_1=-3, x_2=2$.<br>Since the inequality is ">0", the solution set consists of the regions outside the two roots.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x<-3$ — 错误。仅答对了一半，未补充向右发散的有效解区间。</span>
+                            <span class="ru-part">$x<-3$ — Ошибка. Верна только половина, не дополнен действительный интервал решения, расходящийся вправо.</span>
+                            <span class="en-part">$x<-3$ — Incorrect. Only half-correct; the rightward branch was not included.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$-3 < x < 2$ — 错误。此为原二次表达式小于 0 时的取值范围。</span>
+                            <span class="ru-part">$-3 < x < 2$ — Ошибка. Это диапазон значений, когда исходное квадратичное выражение меньше 0.</span>
+                            <span class="en-part">$-3 < x < 2$ — Incorrect. This is the range where the expression is less than 0.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$x<-3$ 或 $x>2$ — 正确答案。</span>
+                            <span class="ru-part">$x<-3$ 或 $x>2$ — Правильный ответ.</span>
+                            <span class="en-part">$x<-3$ or $x>2$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$x>2$ — 错误。忽视了不等式另一极值外侧的分支区间。</span>
+                            <span class="ru-part">$x>2$ — Ошибка. Проигнорирована ветвь интервала с внешней стороны другого экстремума неравенства.</span>
+                            <span class="en-part">$x>2$ — Incorrect. Overlooked the outer branch beyond the other root.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q16</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">求一元二次不等式 $x^2 + x - 2 > 0$ 的解集：</span>
+                        <span class="ru-part">Найдите множество решений квадратного неравенства $x^2 + x - 2 > 0$:</span>
+                        <span class="en-part">Find the solution set of the quadratic inequality $x^2 + x - 2 > 0$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x>1$</span>
+                        <span class="ru-part">$x>1$</span>
+                        <span class="en-part">$x>1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x<-2$</span>
+                        <span class="ru-part">$x<-2$</span>
+                        <span class="en-part">$x<-2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$x<-2$ 或 $x>1$</span>
+                        <span class="ru-part">$x<-2$ 或 $x>1$</span>
+                        <span class="en-part">$x<-2$ or $x>1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$-2 < x < 1$</span>
+                        <span class="ru-part">$-2 < x < 1$</span>
+                        <span class="en-part">$-2 < x < 1$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解题思路**：<br>该二次函数的二次项系数为正，图像对应开口向上的抛物线。<br>通过对应方程求得两根分别为 $x_1=-2, x_2=1$。<br>当不等式方向为“>0”时，解集位于两根的外部区域。</div>
+                            <div class="ru-part">**Ход решения**:<br>Коэффициент при квадратичном члене положителен, график соответствует параболе, ветви которой направлены вверх.<br>Решив соответствующее уравнение, получаем два корня $x_1=-2, x_2=1$.<br>Поскольку знак неравенства “>0”, множество решений находится во внешней области двух корней.</div>
+                            <div class="en-part">**Solution insight**:<br>The quadratic coefficient is positive, meaning an upward-opening parabola.<br>The roots of the corresponding equation are $x_1=-2, x_2=1$.<br>Since the inequality is ">0", the solution set consists of the regions outside the two roots.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x>1$ — 错误。忽视了不等式另一极值外侧的分支区间。</span>
+                            <span class="ru-part">$x>1$ — Ошибка. Проигнорирована ветвь интервала с внешней стороны другого экстремума неравенства.</span>
+                            <span class="en-part">$x>1$ — Incorrect. Overlooked the outer branch beyond the other root.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x<-2$ — 错误。仅答对了一半，未补充向右发散的有效解区间。</span>
+                            <span class="ru-part">$x<-2$ — Ошибка. Верна только половина, не дополнен действительный интервал решения, расходящийся вправо.</span>
+                            <span class="en-part">$x<-2$ — Incorrect. Only half-correct; the rightward branch was not included.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$x<-2$ 或 $x>1$ — 正确答案。</span>
+                            <span class="ru-part">$x<-2$ 或 $x>1$ — Правильный ответ.</span>
+                            <span class="en-part">$x<-2$ or $x>1$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$-2 < x < 1$ — 错误。此为原二次表达式小于 0 时的取值范围。</span>
+                            <span class="ru-part">$-2 < x < 1$ — Ошибка. Это диапазон значений, когда исходное квадратичное выражение меньше 0.</span>
+                            <span class="en-part">$-2 < x < 1$ — Incorrect. This is the range where the expression is less than 0.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q17</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">求一元二次不等式 $x^2 - x - 12 > 0$ 的解集：</span>
+                        <span class="ru-part">Найдите множество решений квадратного неравенства $x^2 - x - 12 > 0$:</span>
+                        <span class="en-part">Find the solution set of the quadratic inequality $x^2 - x - 12 > 0$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x<-3$ 或 $x>4$</span>
+                        <span class="ru-part">$x<-3$ 或 $x>4$</span>
+                        <span class="en-part">$x<-3$ or $x>4$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x<-3$</span>
+                        <span class="ru-part">$x<-3$</span>
+                        <span class="en-part">$x<-3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$x>4$</span>
+                        <span class="ru-part">$x>4$</span>
+                        <span class="en-part">$x>4$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$-3 < x < 4$</span>
+                        <span class="ru-part">$-3 < x < 4$</span>
+                        <span class="en-part">$-3 < x < 4$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解题思路**：<br>该二次函数的二次项系数为正，图像对应开口向上的抛物线。<br>通过对应方程求得两根分别为 $x_1=-3, x_2=4$。<br>当不等式方向为“>0”时，解集位于两根的外部区域。</div>
+                            <div class="ru-part">**Ход решения**:<br>Коэффициент при квадратичном члене положителен, график соответствует параболе, ветви которой направлены вверх.<br>Решив соответствующее уравнение, получаем два корня $x_1=-3, x_2=4$.<br>Поскольку знак неравенства “>0”, множество решений находится во внешней области двух корней.</div>
+                            <div class="en-part">**Solution insight**:<br>The quadratic coefficient is positive, meaning an upward-opening parabola.<br>The roots of the corresponding equation are $x_1=-3, x_2=4$.<br>Since the inequality is ">0", the solution set consists of the regions outside the two roots.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x<-3$ 或 $x>4$ — 正确答案。</span>
+                            <span class="ru-part">$x<-3$ 或 $x>4$ — Правильный ответ.</span>
+                            <span class="en-part">$x<-3$ or $x>4$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x<-3$ — 错误。仅答对了一半，未补充向右发散的有效解区间。</span>
+                            <span class="ru-part">$x<-3$ — Ошибка. Верна только половина, не дополнен действительный интервал решения, расходящийся вправо.</span>
+                            <span class="en-part">$x<-3$ — Incorrect. Only half-correct; the rightward branch was not included.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$x>4$ — 错误。忽视了不等式另一极值外侧的分支区间。</span>
+                            <span class="ru-part">$x>4$ — Ошибка. Проигнорирована ветвь интервала с внешней стороны другого экстремума неравенства.</span>
+                            <span class="en-part">$x>4$ — Incorrect. Overlooked the outer branch beyond the other root.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$-3 < x < 4$ — 错误。此为原二次表达式小于 0 时的取值范围。</span>
+                            <span class="ru-part">$-3 < x < 4$ — Ошибка. Это диапазон значений, когда исходное квадратичное выражение меньше 0.</span>
+                            <span class="en-part">$-3 < x < 4$ — Incorrect. This is the range where the expression is less than 0.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q18</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">解二次项不等式 $x^2 + x - 2 < 0$ ：</span>
+                        <span class="ru-part">Решите квадратное неравенство $x^2 + x - 2 < 0$:</span>
+                        <span class="en-part">Solve the quadratic inequality $x^2 + x - 2 < 0$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$x<-2$</span>
+                        <span class="ru-part">$x<-2$</span>
+                        <span class="en-part">$x<-2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x>1$</span>
+                        <span class="ru-part">$x>1$</span>
+                        <span class="en-part">$x>1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$x<-2$ 或 $x>1$</span>
+                        <span class="ru-part">$x<-2$ 或 $x>1$</span>
+                        <span class="en-part">$x<-2$ or $x>1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$-2 < x < 1$</span>
+                        <span class="ru-part">$-2 < x < 1$</span>
+                        <span class="en-part">$-2 < x < 1$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解题思路**：<br>二次项系数为正，抛物线开口向上。<br>不等号为 $<0$ 意味着寻求图像在 x 轴下方的部分，<br>根据两根 $x_1=-2$ 和 $x_2=1$，解集应为其间的连通区域。</div>
+                            <div class="ru-part">**Ход решения**:<br>Коэффициент при квадратичном члене положителен, ветви параболы направлены вверх.<br>Знак $<0$ означает поиск части графика ниже оси x.<br>На основе двух корней $x_1=-2$ и $x_2=1$, множество решений должно быть связной областью между ними.</div>
+                            <div class="en-part">**Solution insight**:<br>The quadratic coefficient is positive, so the parabola opens upward.<br>The "<0" sign means searching for the part of the graph below the x-axis.<br>Based on roots $x_1=-2$ and $x_2=1$, the solution is the region between them.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$x<-2$ — 错误。仅限于某一分支的判断，未能闭合成正确的中间区间。</span>
+                            <span class="ru-part">$x<-2$ — Ошибка. Ограничено только одной ветвью, не может образовать правильный промежуточный интервал.</span>
+                            <span class="en-part">$x<-2$ — Incorrect. Restricted to one branch; fails to form the correct intermediate interval.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x>1$ — 错误。给出的单边范围脱离了二次曲线在 x 轴下方封闭的实质性质。</span>
+                            <span class="ru-part">$x>1$ — Ошибка. Указанный односторонний диапазон не соответствует замкнутой природе квадратичной кривой под осью x.</span>
+                            <span class="en-part">$x>1$ — Incorrect. A one-sided range ignores the enclosed nature of the curve below the x-axis.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$x<-2$ 或 $x>1$ — 错误。选项给出的范围其实是不等式大于 0 时的解。</span>
+                            <span class="ru-part">$x<-2$ 或 $x>1$ — Ошибка. Диапазон в этом варианте фактически является решением, когда неравенство больше 0.</span>
+                            <span class="en-part">$x<-2$ or $x>1$ — Incorrect. This range is the solution for the inequality being ">0".</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$-2 < x < 1$ — 正确答案。</span>
+                            <span class="ru-part">$-2 < x < 1$ — Правильный ответ.</span>
+                            <span class="en-part">$-2 < x < 1$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q19</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">解二次项不等式 $x^2 - 2x - 3 < 0$ ：</span>
+                        <span class="ru-part">Решите квадратное неравенство $x^2 - 2x - 3 < 0$:</span>
+                        <span class="en-part">Solve the quadratic inequality $x^2 - 2x - 3 < 0$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$-1 < x < 3$</span>
+                        <span class="ru-part">$-1 < x < 3$</span>
+                        <span class="en-part">$-1 < x < 3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x<-1$</span>
+                        <span class="ru-part">$x<-1$</span>
+                        <span class="en-part">$x<-1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$x>3$</span>
+                        <span class="ru-part">$x>3$</span>
+                        <span class="en-part">$x>3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$x<-1$ 或 $x>3$</span>
+                        <span class="ru-part">$x<-1$ 或 $x>3$</span>
+                        <span class="en-part">$x<-1$ or $x>3$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解题思路**：<br>二次项系数为正，抛物线开口向上。<br>不等号为 $<0$ 意味着寻求图像在 x 轴下方的部分，<br>根据两根 $x_1=-1$ 和 $x_2=3$，解集应为其间的连通区域。</div>
+                            <div class="ru-part">**Ход решения**:<br>Коэффициент при квадратичном члене положителен, ветви параболы направлены вверх.<br>Знак $<0$ означает поиск части графика ниже оси x.<br>На основе двух корней $x_1=-1$ и $x_2=3$, множество решений должно быть связной областью между ними.</div>
+                            <div class="en-part">**Solution insight**:<br>The quadratic coefficient is positive, so the parabola opens upward.<br>The "<0" sign means searching for the part of the graph below the x-axis.<br>Based on roots $x_1=-1$ and $x_2=3$, the solution is the region between them.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$-1 < x < 3$ — 正确答案。</span>
+                            <span class="ru-part">$-1 < x < 3$ — Правильный ответ.</span>
+                            <span class="en-part">$-1 < x < 3$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x<-1$ — 错误。仅限于某一分支的判断，未能闭合成正确的中间区间。</span>
+                            <span class="ru-part">$x<-1$ — Ошибка. Ограничено только одной ветвью, не может образовать правильный промежуточный интервал.</span>
+                            <span class="en-part">$x<-1$ — Incorrect. Restricted to one branch; fails to form the correct intermediate interval.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$x>3$ — 错误。给出的单边范围脱离了二次曲线在 x 轴下方封闭的实质性质。</span>
+                            <span class="ru-part">$x>3$ — Ошибка. Указанный односторонний диапазон не соответствует замкнутой природе квадратичной кривой под осью x.</span>
+                            <span class="en-part">$x>3$ — Incorrect. A one-sided range ignores the enclosed nature of the curve below the x-axis.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$x<-1$ 或 $x>3$ — 错误。选项给出的范围其实是不等式大于 0 时的解。</span>
+                            <span class="ru-part">$x<-1$ 或 $x>3$ — Ошибка. Диапазон в этом варианте фактически является решением, когда неравенство больше 0.</span>
+                            <span class="en-part">$x<-1$ or $x>3$ — Incorrect. This range is the solution for the inequality being ">0".</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q20</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">解二次项不等式 $x^2 + 2x - 8 < 0$ ：</span>
+                        <span class="ru-part">Решите квадратное неравенство $x^2 + 2x - 8 < 0$:</span>
+                        <span class="en-part">Solve the quadratic inequality $x^2 + 2x - 8 < 0$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$-4 < x < 2$</span>
+                        <span class="ru-part">$-4 < x < 2$</span>
+                        <span class="en-part">$-4 < x < 2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$x<-4$ 或 $x>2$</span>
+                        <span class="ru-part">$x<-4$ 或 $x>2$</span>
+                        <span class="en-part">$x<-4$ or $x>2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$x>2$</span>
+                        <span class="ru-part">$x>2$</span>
+                        <span class="en-part">$x>2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$x<-4$</span>
+                        <span class="ru-part">$x<-4$</span>
+                        <span class="en-part">$x<-4$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**解题思路**：<br>二次项系数为正，抛物线开口向上。<br>不等号为 $<0$ 意味着寻求图像在 x 轴下方的部分，<br>根据两根 $x_1=-4$ 和 $x_2=2$，解集应为其间的连通区域。</div>
+                            <div class="ru-part">**Ход решения**:<br>Коэффициент при квадратичном члене положителен, ветви параболы направлены вверх.<br>Знак $<0$ означает поиск части графика ниже оси x.<br>На основе двух корней $x_1=-4$ и $x_2=2$, множество решений должно быть связной областью между ними.</div>
+                            <div class="en-part">**Solution insight**:<br>The quadratic coefficient is positive, so the parabola opens upward.<br>The "<0" sign means searching for the part of the graph below the x-axis.<br>Based on roots $x_1=-4$ and $x_2=2$, the solution is the region between them.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$-4 < x < 2$ — 正确答案。</span>
+                            <span class="ru-part">$-4 < x < 2$ — Правильный ответ.</span>
+                            <span class="en-part">$-4 < x < 2$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$x<-4$ 或 $x>2$ — 错误。选项给出的范围其实是不等式大于 0 时的解。</span>
+                            <span class="ru-part">$x<-4$ 或 $x>2$ — Ошибка. Диапазон в этом варианте фактически является решением, когда неравенство больше 0.</span>
+                            <span class="en-part">$x<-4$ or $x>2$ — Incorrect. This range is the solution for the inequality being ">0".</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$x>2$ — 错误。给出的单边范围脱离了二次曲线在 x 轴下方封闭的实质性质。</span>
+                            <span class="ru-part">$x>2$ — Ошибка. Указанный односторонний диапазон не соответствует замкнутой природе квадратичной кривой под осью x.</span>
+                            <span class="en-part">$x>2$ — Incorrect. A one-sided range ignores the enclosed nature of the curve below the x-axis.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$x<-4$ — 错误。仅限于某一分支的判断，未能闭合成正确的中间区间。</span>
+                            <span class="ru-part">$x<-4$ — Ошибка. Ограничено только одной ветвью, не может образовать правильный промежуточный интервал.</span>
+                            <span class="en-part">$x<-4$ — Incorrect. Restricted to one branch; fails to form the correct intermediate interval.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+    </div>
+</body>
+</html>

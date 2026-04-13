@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 4: Coordinates & Geometry - CSCA Interactive Lecture</title>
+    <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #f43f5e;
+            --bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --zh-light: #fef2f2;
+            --ru-light: #eff6ff;
+            --en-light: #fffbeb;
+            --zh-dark: #dc2626;
+            --ru-dark: #2563eb;
+            --en-dark: #d97706;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: radial-gradient(circle at top left, #f1f5f9, #e2e8f0);
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        header h1 { font-size: 36px; font-weight: 900; margin: 0; letter-spacing: -0.05em; color: var(--primary); }
+        header p { color: #64748b; font-size: 18px; margin-top: 8px; }
+
+        /* Language Controls */
+        .lang-nav {
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .lang-btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .lang-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .lang-btn.active.zh { background: var(--zh-dark); color: white; border-color: transparent; }
+        .lang-btn.active.ru { background: var(--ru-dark); color: white; border-color: transparent; }
+        .lang-btn.active.en { background: var(--en-dark); color: white; border-color: transparent; }
+
+        /* Section Styling */
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 60px 0 30px;
+            padding-left: 15px;
+            border-left: 6px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Topic Card */
+        .topic-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .topic-meta { font-size: 12px; font-weight: 800; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+        .topic-name { font-size: 28px; font-weight: 900; margin: 0 0 24px 0; letter-spacing: -0.02em; }
+
+        .concept-box {
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+        .zh-active .concept-box { background: var(--zh-light); border-left: 6px solid var(--zh-dark); }
+        .ru-active .concept-box { background: var(--ru-light); border-left: 6px solid var(--ru-dark); }
+        .en-active .concept-box { background: var(--en-light); border-left: 6px solid var(--en-dark); }
+
+        .concept-text { font-size: 19px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
+        .explain-text { font-size: 15px; color: #475569; }
+
+        .diagram-outer { background: white; border-radius: 16px; padding: 20px; text-align: center; margin: 30px 0; border: 1px solid #e2e8f0; }
+
+        /* Homework Blocks */
+        .homework-grid { display: flex; flex-direction: column; gap: 30px; }
+        .q-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .q-card:hover { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); transform: translateY(-4px); }
+        .q-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .q-num { background: #f1f5f9; padding: 4px 12px; border-radius: 8px; font-weight: 800; font-size: 14px; }
+        .q-text { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+
+        .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+        .opt {
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .opt:hover { border-color: #94a3b8; background: #f1f5f9; }
+
+        .analysis-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .analysis-btn:hover { opacity: 0.9; }
+
+        .analysis-panel {
+            display: none;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px dashed #e2e8f0;
+        }
+        .analysis-panel.open { display: block; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .step-bubble { background: #f0fdf4; border: 1px solid #dcfce7; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        .audit-item { padding: 12px; border-radius: 10px; margin-bottom: 12px; font-size: 14px; }
+        .audit-correct { background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+        .audit-wrong { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+
+        /* Visibility Classes */
+        .zh-part, .ru-part, .en-part { display: none; }
+        .zh-active .zh-part { display: block; }
+        .ru-active .ru-part { display: block; }
+        .en-active .en-part { display: block; }
+
+        .hidden { display: none !important; }
+    </style>
+    <script>
+        function setLang(lang) {
+            const container = document.getElementById('main-container');
+            container.classList.remove('zh-active', 'ru-active', 'en-active');
+            container.classList.add(lang + '-active');
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.lang-btn.' + lang).classList.add('active');
+            
+            localStorage.setItem('csca_lang', lang);
+        }
+
+        function toggleAnalysis(btn) {
+            const panel = btn.nextElementSibling;
+            panel.classList.toggle('open');
+            btn.innerText = panel.classList.contains('open') ? '收起解析 / CLOSE' : '查看详尽解析 / FULL ANALYSIS';
+        }
+
+        window.onload = () => {
+            const saved = localStorage.getItem('csca_lang') || 'zh';
+            setLang(saved);
+        };
+    </script>
+</head>
+<body>
+    <div class="lang-nav">
+        <button class="lang-btn zh" onclick="setLang('zh')">🇨🇳 中文</button>
+        <button class="lang-btn ru" onclick="setLang('ru')">🇷🇺 Рус</button>
+        <button class="lang-btn en" onclick="setLang('en')">🇺🇸 Eng</button>
+    </div>
+
+    <div class="container zh-active" id="main-container">
+        <header>
+            <h1>Class 4: Coordinates & Geometry</h1>
+            <p class="zh-part">CSCA 数学专项冲刺讲义 - 高阶三语版</p>
+            <p class="ru-part">CSCA Математика: Интенсивный курс - Триязычное издание</p>
+            <p class="en-part">CSCA Math Intensive Lecture - Trilingual Edition</p>
+        </header>
+
+        <section>
+            <div class="section-title">
+                <span class="zh-part">📖 核心考点手册 / Theory Guide</span>
+                <span class="ru-part">📖 Теоретический справочник</span>
+                <span class="en-part">📖 Essential Theory Guide</span>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 25</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">中心对称变换 (Симметрия относительно центра)</span>
+                    <span class="ru-part">Симметрия относительно центра</span>
+                    <span class="en-part">Central Symmetry (Point Reflection)</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">点 $A(x,y)$ 关于原点(0,0)发生中心等距反转时，横纵皆取倒反位化：变为 $(-x, -y)$。</span>
+                        <span class="ru-part">Когда точка $A(x,y)$ симметрично отражается относительно начала координат (0,0), обе координаты меняют знак: получается $(-x, -y)$.</span>
+                        <span class="en-part">When point $A(x,y)$ is reflected through the origin (0,0), both coordinates change their signs: it becomes $(-x, -y)$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">不同于只能单向倒翻的“照镜子（坐标轴对称）”，关于原点对称意味着你从一点向整个十字星域的核心穿洞而过跑到了完全对立的另一面宇宙。因此一切正的都变负了！</span>
+                        <span class="ru-part">В отличие от отражения в зеркале (осевая симметрия), симметрия относительно начала координат означает, что вы проходите сквозь ядро прямо на противоположную сторону вселенной. Поэтому все положительное становится отрицательным!</span>
+                        <span class="en-part">Different from the one-way "mirror reflection" (axial symmetry), symmetry about the origin means you pass through the core of the coordinate realm to the completely opposite side of the universe. Thus, all that was positive becomes negative!</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 26</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">直线斜率测定 (Вычисление углового коэффициента прямой)</span>
+                    <span class="ru-part">Вычисление углового коэффициента прямой</span>
+                    <span class="en-part">Slope Calculation of a Line</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">连接两分离定点构成直线的倾斜坡度 $k = \frac{{y_2 - y_1}}{{x_2 - x_1}}$。</span>
+                        <span class="ru-part">Наклон (угловой коэффициент) прямой, соединяющей две точки: $k = \frac{{y_2 - y_1}}{{x_2 - x_1}}$.</span>
+                        <span class="en-part">The slope $k$ of a line connecting two points is given by: $k = \frac{{y_2 - y_1}}{{x_2 - x_1}}$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">这其实就是用来计算“楼梯陡峭程度”的经典公式。用你爬了多高（Y差）除以你一共往前走了多远（X差）。走得短爬得高，必然是个陡峭高危的大斜率。</span>
+                        <span class="ru-part">Это классическая формула для расчета «крутизны лестницы». Разделите высоту (разница по Y) на пройденное расстояние (разница по X). Чем короче расстояние и больше высота, тем круче наклон.</span>
+                        <span class="en-part">This is actually the classic formula for calculating the "steepness of stairs". Divide how high you climbed (Y difference) by how far you moved forward (X difference). Short horizontal movement combined with high vertical gain means a steep, high slope.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 27</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">倾角与斜率转换 (Связь между углом наклона и коэффициентом)</span>
+                    <span class="ru-part">Связь между углом наклона и коэффициентом</span>
+                    <span class="en-part">Relation Between Inclination and Slope</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">斜率 $k$ 实质上等于偏线产生仰角 $\theta$ 的对应正切值，即 $k = \tan \theta$。</span>
+                        <span class="ru-part">Угловой коэффициент $k$ в сущности равен тангенсу угла наклона $\theta$, то есть $k = \tan \theta$.</span>
+                        <span class="en-part">The slope $k$ is equal to the tangent of the angle of inclination $\theta$, i.e., $k = \tan \theta$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">在直角三角形中，对边比邻边就是正切值。而映射在坐标轴里，对边正好是你的Y轴差高度，邻边正好是水平差位！所以角度决定了坡度，而 $45^\circ$ 则是个分水岭（$\tan 45^\circ = 1$）。</span>
+                        <span class="ru-part">В прямоугольном треугольнике отношение противолежащего катета к прилежащему — это тангенс. На координатной плоскости — это разница по Y к разнице по X! Поэтому угол определяет крутизну, а $45^\circ$ дает наклон $1$.</span>
+                        <span class="en-part">In a right triangle, the ratio of opposite to adjacent is the tangent. In coordinate geometry, the opposite side is your Y-difference and the adjacent is the horizontal difference! Thus the angle determines the slope, with $45^\circ$ being the watershed point ($\tan 45^\circ = 1$).</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 28</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">点斜式应用 (Уравнение с угловым коэффициентом)</span>
+                    <span class="ru-part">Уравнение с угловым коэффициентом</span>
+                    <span class="en-part">Slope-Intercept Form</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">一旦明确截穿 Y 轴固位标以及既有斜率 $k$，立即通过一次方程统一定式构立 $y=kx+b$。</span>
+                        <span class="ru-part">Владея угловым коэффициентом $k$ и пересечением с осью Y ($b$), немедленно составляется уравнение $y=kx+b$.</span>
+                        <span class="en-part">Once the slope $k$ and the y-intercept $b$ are known, the equation of the line is $y = kx + b$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">这是高中生造直线最快最直接的流水线模型。只要搞到一个能告诉你坡度的 $k$，再去截取到 y 轴那个独一无二“撞车点”高度 $b$，往架子里一拼，万事大吉。</span>
+                        <span class="ru-part">Это самая быстрая и прямая модель создания прямой линии. Если у вас есть крутизна $k$ и высота "точки столкновения" с осью Y ($b$), просто вставьте их в каркас, и всё готово.</span>
+                        <span class="en-part">This is the fastest assembly-line model for creating a line. Once you get a slope $k$ and find the unique "crash point" on the y-axis (height $b$), just plug them into the framework and you're good to go.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 29</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">两直线垂直条件 (Условие перпендикулярности двух прямых)</span>
+                    <span class="ru-part">Условие перпендикулярности двух прямых</span>
+                    <span class="en-part">Perpendicular Line Condition</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">唯有满足系统设定条件 $k_1 \times k_2 = -1$，两条处在此平面空间内的相交斜线段才能达成 $90^\circ$ 的垂十字切交叉！</span>
+                        <span class="ru-part">Только при выполнении условия $k_1 \times k_2 = -1$ две пересекающиеся прямые в плоскости могут образовать прямой угол $90^\circ$.</span>
+                        <span class="en-part">Two lines are perpendicular if and only if the product of their slopes is -1: $k_1 \times k_2 = -1$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">如果一条直线很陡峭往上攀，那 and 它呈现垂直的一定是缓慢向下掉的。两者相乘必须等于特殊的常数 -1。也就是说：互相垂直的斜率等于“负的倒数”。</span>
+                        <span class="ru-part">Если одна прямая круто поднимается вверх, перпендикулярная ей должна медленно опускаться вниз. Их произведение должно равняться специальной константе -1. То есть: угловые коэффициенты перпендикулярных прямых — это «отрицательные обратные».</span>
+                        <span class="en-part">If one line is steeply climbing up, the one perpendicular to it must be slowly falling down. Their product must equal the special constant -1. In other words: perpendicular slopes are "negative reciprocals" of each other.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 30</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">方程组交点推取 (Точка пересечения системы уравнений)</span>
+                    <span class="ru-part">Точка пересечения системы уравнений</span>
+                    <span class="en-part">Finding Intersection Points</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">利用加减消元，将多个二元变一次的约束条框统一叠加，消除某未知量提取单一值后再行代回。</span>
+                        <span class="ru-part">Используя метод алгебраического сложения, объедините уравнения, чтобы исключить одну неизвестную, найдите ее значение и подставьте обратно.</span>
+                        <span class="en-part">The intersection point of two lines can be found by solving their system of equations using elimination or substitution.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">解方程组找交点，说白了就是在玩一盘名为“消除消相”的游戏！左式有+y，下式有-y，上下一起加起来，y就像反物质对撞一样灰飞烟灭了。剩下的全都是唯一确定的主变量 x 啦。</span>
+                        <span class="ru-part">Решение системы уравнений — это по сути игра в «исключение»! Если в одном уравнении есть +y, а в другом -y, сложите их вместе, и y аннигилирует, как антиматерия. Останется только переменная x.</span>
+                        <span class="en-part">Solving a system of equations to find an intersection is essentially a game of "annihilation". If one side has $+y$ and the other has $-y$, add them together and $y$ vanishes like matter-antimatter collision. All that's left is the clearly determined main variable $x$.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 31</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">简单共轴距离 (Расстояние на одной оси)</span>
+                    <span class="ru-part">Расстояние на одной оси</span>
+                    <span class="en-part">Distance on a Single Axis</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">同一方向上只有单维度差值时，直接取两者纯粹数轴位移差跨度即可，无需带入漫长的复合根式。</span>
+                        <span class="ru-part">Когда разница существует только в одном измерении на одной оси, просто возьмите разность координат, не используя сложную формулу корня.</span>
+                        <span class="en-part">When two points lie on the same coordinate axis, the distance is simply the absolute difference of their differing coordinates: $d = |x_2 - x_1|$ or $|y_2 - y_1|$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">这简直是在送大分！如果两点都在同一条斑马线上(比如都在x轴)，那用右边减左边就能得出长度。可千万别傻傻的把勾股定理解剖一大堆最后算出来发现还是等于减。</span>
+                        <span class="ru-part">Это простейшие баллы! Если обе точки лежат на одной прямой (например, на оси x), просто вычтите левую координату из правой. Не тратьте время на теорему Пифагора, она даст тот же результат.</span>
+                        <span class="en-part">This is essentially free points! If two points are on the same line (e.g., the x-axis), simply subtract left from right to get the length. Don't be silly and dissect the Pythagorean theorem only to find it equals a simple subtraction anyway.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="topic-card">
+                <div class="topic-meta">Topic 32</div>
+                <h2 class="topic-name">
+                    <span class="zh-part">勾股距离定线 (Расстояние по теореме Пифагора)</span>
+                    <span class="ru-part">Расстояние по теореме Пифагора</span>
+                    <span class="en-part">Distance Formula (Pythagorean Theorem)</span>
+                </h2>
+                <div class="concept-box">
+                    <div class="concept-text">
+                        <span class="zh-part">距离测算最高基定公式： $d = \sqrt{{(x_2 - x_1)^2 + (y_2 - y_1)^2}}$。</span>
+                        <span class="ru-part">Базовая формула вычисления расстояния: $d = \sqrt{{(x_2 - x_1)^2 + (y_2 - y_1)^2}}$.</span>
+                        <span class="en-part">The distance between any two points $(x_1, y_1)$ and $(x_2, y_2)$ is $d = \sqrt{{(x_2 - x_1)^2 + (y_2 - y_1)^2}}$.</span>
+                    </div>
+                    <div class="explain-text">
+                        <span class="zh-part">如果你和朋友不在一条直街上，而是处于对角线。你想知道直飞过去要多远？那就画出你们俩的横向横跨街区(X差)和纵向穿越层(Y差)，凑成个直角三角形斜边。平方相加再开根号。</span>
+                        <span class="ru-part">Если вы с другом находитесь не на одной прямой улице, а по диагонали, нарисуйте горизонтальные блоки (разница по X) и вертикальные (разница по Y), образовав прямоугольный треугольник. Сумма квадратов под корнем даст гипотенузу.</span>
+                        <span class="en-part">If you and a friend aren't on the same straight street but are at a diagonal: how far is the direct flight? Simply draw your horizontal blocks (X difference) and vertical layers (Y difference) to form the hypotenuse of a right triangle. Sum the squares and take the root.</span>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+        <section>
+            <div class="section-title">
+                <span class="zh-part">✍️ 专项强化训练 / Practice Lab</span>
+                <span class="ru-part">✍️ Практическая лаборатория</span>
+                <span class="en-part">✍️ Practice Lab</span>
+            </div>
+            <div class="homework-grid">
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q1</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">考量坐标点 $A(4, 3)$ 等距关于原点中心(0,0)而衍生出的对称点于：</span>
+                        <span class="ru-part">Рассмотрите симметричную точку, равноудаленную от точки $A(4, 3)$ относительно центра начала координат (0,0):</span>
+                        <span class="en-part">Consider the coordinate point $A(4, 3)$ and find its symmetric point reflected through the origin (0,0):</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(-4, 3)$</span>
+                        <span class="ru-part">$(-4, 3)$</span>
+                        <span class="en-part">$(-4, 3)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(4, -3)$</span>
+                        <span class="ru-part">$(4, -3)$</span>
+                        <span class="en-part">$(4, -3)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(0, 0)$</span>
+                        <span class="ru-part">$(0, 0)$</span>
+                        <span class="en-part">$(0, 0)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(-4, -3)$</span>
+                        <span class="ru-part">$(-4, -3)$</span>
+                        <span class="en-part">$(-4, -3)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**关于原点对称，横纵坐标各取相反数**：<br>按照坐标对称的基础守则，对原点呈现对称则意味着分别执行相对于X轴及Y轴的互位对调。<br>双重映射要求下：横轴将经由数值 $4$ 转折到 $-4$，同等操作也赋予纵轴由数值 $3$ 变成 $-3$。<br>得出对应等距对端应置于 $(-4, -3)$。</div>
+                            <div class="ru-part">**Симметрия относительно начала координат: обе координаты меняют знак на противоположный**:<br>Согласно основным правилам симметрии координат, симметрия относительно начала координат означает взаимную перестановку относительно осей X и Y.<br>При двойном отображении ось абсцисс переходит от значения $4$ к $-4$, аналогичная операция применяется к оси ординат, где значение $3$ меняется на $-3$.<br>В итоге противоположный конец находится в точке $(-4, -3)$.</div>
+                            <div class="en-part">**Symmetry about the origin: both coordinates take opposites**:<br>According to the basic rules, symmetry about the origin means performing reflections across both the X and Y axes.<br>The x-axis value $4$ flips to $-4$, and the y-axis value $3$ flips to $-3$.<br>Thus, the symmetric point is at $(-4, -3)$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(-4, 3)$ — 错误。该坐标仅构成并只实现了关于Y纵轴侧方位的单一翻折。</span>
+                            <span class="ru-part">$(-4, 3)$ — Ошибка. Данная координата осуществляет единственное отражение только относительно вертикальной оси Y.</span>
+                            <span class="en-part">$(-4, 3)$ — Incorrect. This coordinate only represents a reflection across the Y-axis.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(4, -3)$ — 错误。该坐标仅构成相对于X横轴方向向下的单一对称关系。</span>
+                            <span class="ru-part">$(4, -3)$ — Ошибка. Эта координата создает единственное симметричное отношение только вниз относительно горизонтальной оси X.</span>
+                            <span class="en-part">$(4, -3)$ — Incorrect. This coordinate only represents a reflection across the X-axis.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(0, 0)$ — 错误。选项错误地识别自身中枢点为对应对称结果。</span>
+                            <span class="ru-part">$(0, 0)$ — Ошибка. В данном варианте центральная точка ошибочно определяется как симметричный результат.</span>
+                            <span class="en-part">$(0, 0)$ — Incorrect. This option mistakenly identifies the center of symmetry as the result.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(-4, -3)$ — 正确答案。</span>
+                            <span class="ru-part">$(-4, -3)$ — Правильный ответ.</span>
+                            <span class="en-part">$(-4, -3)$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q2</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">考量坐标点 $A(5, 5)$ 等距关于原点中心(0,0)而衍生出的对称点于：</span>
+                        <span class="ru-part">Рассмотрите симметричную точку, равноудаленную от точки $A(5, 5)$ относительно центра начала координат (0,0):</span>
+                        <span class="en-part">Consider the coordinate point $A(5, 5)$ and find its symmetric point reflected through the origin (0,0):</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(5, -5)$</span>
+                        <span class="ru-part">$(5, -5)$</span>
+                        <span class="en-part">$(5, -5)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(-5, 5)$</span>
+                        <span class="ru-part">$(-5, 5)$</span>
+                        <span class="en-part">$(-5, 5)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(0, 0)$</span>
+                        <span class="ru-part">$(0, 0)$</span>
+                        <span class="en-part">$(0, 0)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(-5, -5)$</span>
+                        <span class="ru-part">$(-5, -5)$</span>
+                        <span class="en-part">$(-5, -5)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**关于原点对称，横纵坐标各取相反数**：<br>按照坐标对称的基础守则，对原点呈现对称则意味着分别执行相对于X轴及Y轴的互位对调。<br>双重映射要求下：横轴将经由数值 $5$ 转折到 $-5$，同等操作也赋予纵轴由数值 $5$ 变成 $-5$。<br>得出对应等距对端应置于 $(-5, -5)$。</div>
+                            <div class="ru-part">**Симметрия относительно начала координат: обе координаты меняют знак на противоположный**:<br>Согласно основным правилам симметрии координат, симметрия относительно начала координат означает взаимную перестановку относительно осей X и Y.<br>При двойном отображении ось абсцисс переходит от значения $5$ к $-5$, аналогичная операция применяется к оси ординат, где значение $5$ меняется на $-5$.<br>В итоге противоположный конец находится в точке $(-5, -5)$.</div>
+                            <div class="en-part">**Symmetry about the origin: both coordinates take opposites**:<br>According to the basic rules, symmetry about the origin means performing reflections across both the X and Y axes.<br>The x-axis value $5$ flips to $-5$, and the y-axis value $5$ flips to $-5$.<br>Thus, the symmetric point is at $(-5, -5)$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(5, -5)$ — 错误。该坐标仅构成相对于X横轴方向向下的单一对称关系。</span>
+                            <span class="ru-part">$(5, -5)$ — Ошибка. Эта координата создает единственное симметричное отношение только вниз относительно горизонтальной оси X.</span>
+                            <span class="en-part">$(5, -5)$ — Incorrect. This coordinate only represents a reflection across the X-axis.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(-5, 5)$ — 错误。该坐标仅构成并只实现了关于Y纵轴侧方位的单一翻折。</span>
+                            <span class="ru-part">$(-5, 5)$ — Ошибка. Данная координата осуществляет единственное отражение только относительно вертикальной оси Y.</span>
+                            <span class="en-part">$(-5, 5)$ — Incorrect. This coordinate only represents a reflection across the Y-axis.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(0, 0)$ — 错误。选项错误地识别自身中枢点为对应对称结果。</span>
+                            <span class="ru-part">$(0, 0)$ — Ошибка. В данном варианте центральная точка ошибочно определяется как симметричный результат.</span>
+                            <span class="en-part">$(0, 0)$ — Incorrect. This option mistakenly identifies the center of symmetry as the result.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(-5, -5)$ — 正确答案。</span>
+                            <span class="ru-part">$(-5, -5)$ — Правильный ответ.</span>
+                            <span class="en-part">$(-5, -5)$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q3</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">考量坐标点 $A(5, 3)$ 等距关于原点中心(0,0)而衍生出的对称点于：</span>
+                        <span class="ru-part">Рассмотрите симметричную точку, равноудаленную от точки $A(5, 3)$ относительно центра начала координат (0,0):</span>
+                        <span class="en-part">Consider the coordinate point $A(5, 3)$ and find its symmetric point reflected through the origin (0,0):</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(-5, 3)$</span>
+                        <span class="ru-part">$(-5, 3)$</span>
+                        <span class="en-part">$(-5, 3)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(-5, -3)$</span>
+                        <span class="ru-part">$(-5, -3)$</span>
+                        <span class="en-part">$(-5, -3)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(0, 0)$</span>
+                        <span class="ru-part">$(0, 0)$</span>
+                        <span class="en-part">$(0, 0)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(5, -3)$</span>
+                        <span class="ru-part">$(5, -3)$</span>
+                        <span class="en-part">$(5, -3)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**关于原点对称，横纵坐标各取相反数**：<br>按照坐标对称的基础守则，对原点呈现对称则意味着分别执行相对于X轴及Y轴的互位对调。<br>双重映射要求下：横轴将经由数值 $5$ 转折到 $-5$，同等操作也赋予纵轴由数值 $3$ 变成 $-3$。<br>得出对应等距对端应置于 $(-5, -3)$。</div>
+                            <div class="ru-part">**Симметрия относительно начала координат: обе координаты меняют знак на противоположный**:<br>Согласно основным правилам симметрии координат, симметрия относительно начала координат означает взаимную перестановку относительно осей X и Y.<br>При двойном отображении ось абсцисс переходит от значения $5$ к $-5$, аналогичная операция применяется к оси ординат, где значение $3$ меняется на $-3$.<br>В итоге противоположный конец находится в точке $(-5, -3)$.</div>
+                            <div class="en-part">**Symmetry about the origin: both coordinates take opposites**:<br>According to the basic rules, symmetry about the origin means performing reflections across both the X and Y axes.<br>The x-axis value $5$ flips to $-5$, and the y-axis value $3$ flips to $-3$.<br>Thus, the symmetric point is at $(-5, -3)$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(-5, 3)$ — 错误。该坐标仅构成并只实现了关于Y纵轴侧方位的单一翻折。</span>
+                            <span class="ru-part">$(-5, 3)$ — Ошибка. Данная координата осуществляет единственное отражение только относительно вертикальной оси Y.</span>
+                            <span class="en-part">$(-5, 3)$ — Incorrect. This coordinate only represents a reflection across the Y-axis.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(-5, -3)$ — 正确答案。</span>
+                            <span class="ru-part">$(-5, -3)$ — Правильный ответ.</span>
+                            <span class="en-part">$(-5, -3)$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(0, 0)$ — 错误。选项错误地识别自身中枢点为对应对称结果。</span>
+                            <span class="ru-part">$(0, 0)$ — Ошибка. В данном варианте центральная точка ошибочно определяется как симметричный результат.</span>
+                            <span class="en-part">$(0, 0)$ — Incorrect. This option mistakenly identifies the center of symmetry as the result.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(5, -3)$ — 错误。该坐标仅构成相对于X横轴方向向下的单一对称关系。</span>
+                            <span class="ru-part">$(5, -3)$ — Ошибка. Эта координата создает единственное симметричное отношение только вниз относительно горизонтальной оси X.</span>
+                            <span class="en-part">$(5, -3)$ — Incorrect. This coordinate only represents a reflection across the X-axis.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q4</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">试分析某待定直线从给定点 $(0,2)$延伸至点集 $(3,8)$ 时的基准斜率 k：</span>
+                        <span class="ru-part">Проанализируйте базовый угловой коэффициент k прямой от заданной точки $(0,2)$ до точки $(3,8)$:</span>
+                        <span class="en-part">Find the slope k of the line connecting the point $(0, 2)$ and the point $(3, 8)$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$2$</span>
+                        <span class="ru-part">$2$</span>
+                        <span class="en-part">$2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$0.5$</span>
+                        <span class="ru-part">$0.5$</span>
+                        <span class="en-part">$0.5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$-2$</span>
+                        <span class="ru-part">$-2$</span>
+                        <span class="en-part">$-2$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**直线斜率定义公式推导**：<br>依据定义：斜率 $k$ 即代表了直线的纵切位移差异与平移位移差异之比。<br>调用求解公式：$k = \frac{y_2 - y_1}{x_2 - x_1}$。<br>引入实际数据：$\frac{8 - 2}{3 - 0} = \frac{6}{3} = 2$。</div>
+                            <div class="ru-part">**Вывод формулы определения углового коэффициента прямой**:<br>По определению: угловой коэффициент $k$ представляет собой отношение разности вертикальных смещений к разности горизонтальных.<br>Применяем формулу решения: $k = \frac{y_2 - y_1}{x_2 - x_1}$.<br>Подставляем фактические данные: $\frac{8 - 2}{3 - 0} = \frac{6}{3} = 2$.</div>
+                            <div class="en-part">**Slope Formula Derivation**:<br>Slope $k$ represents the ratio of vertical displacement to horizontal displacement.<br>Using the formula: $k = \frac{y_2 - y_1}{x_2 - x_1}$.<br>Substitution: $\frac{8 - 2}{3 - 0} = \frac{6}{3} = 2$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$2$ — 正确答案。</span>
+                            <span class="ru-part">$2$ — Правильный ответ.</span>
+                            <span class="en-part">$2$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$0.5$ — 错误。错将结果计算为原斜率的倒数值。</span>
+                            <span class="ru-part">$0.5$ — Ошибка. Ошибочно вычислен результат как обратное значение исходного углового коэффициента.</span>
+                            <span class="en-part">$0.5$ — Incorrect. Mistakenly calculated the reciprocal of the actual slope.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$0$ — 错误。纵向坐标发生了位移，不存在斜率为常零的水平情况。</span>
+                            <span class="ru-part">$0$ — Ошибка. Произошло смещение вертикальной координаты, горизонтальная ситуация с нулевым наклоном исключена.</span>
+                            <span class="en-part">$0$ — Incorrect. There is a vertical shift, so the slope cannot be zero.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$-2$ — 错误。计算使得整体斜度属性发生符号颠倒逆转。</span>
+                            <span class="ru-part">$-2$ — Ошибка. При вычислении знак общего свойства наклона был полностью перевернут.</span>
+                            <span class="en-part">$-2$ — Incorrect. The sign of the slope was reversed during calculation.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q5</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">试分析某待定直线从给定点 $(0,5)$延伸至点集 $(1,8)$ 时的基准斜率 k：</span>
+                        <span class="ru-part">Проанализируйте базовый угловой коэффициент k прямой от заданной точки $(0,5)$ до точки $(1,8)$:</span>
+                        <span class="en-part">Find the slope k of the line connecting the point $(0, 5)$ and the point $(1, 8)$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$-3$</span>
+                        <span class="ru-part">$-3$</span>
+                        <span class="en-part">$-3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$3$</span>
+                        <span class="ru-part">$3$</span>
+                        <span class="en-part">$3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$0.3333333333333333$</span>
+                        <span class="ru-part">$0.3333333333333333$</span>
+                        <span class="en-part">$0.3333333333333333$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**直线斜率定义公式推导**：<br>依据定义：斜率 $k$ 即代表了直线的纵切位移差异与平移位移差异之比。<br>调用求解公式：$k = \frac{y_2 - y_1}{x_2 - x_1}$。<br>引入实际数据：$\frac{8 - 5}{1 - 0} = \frac{3}{1} = 3$。</div>
+                            <div class="ru-part">**Вывод формулы определения углового коэффициента прямой**:<br>По определению: угловой коэффициент $k$ представляет собой отношение разности вертикальных смещений к разности горизонтальных.<br>Применяем формулу решения: $k = \frac{y_2 - y_1}{x_2 - x_1}$.<br>Подставляем фактические данные: $\frac{8 - 5}{1 - 0} = \frac{3}{1} = 3$.</div>
+                            <div class="en-part">**Slope Formula Derivation**:<br>Slope $k$ represents the ratio of vertical displacement to horizontal displacement.<br>Using the formula: $k = \frac{y_2 - y_1}{x_2 - x_1}$.<br>Substitution: $\frac{8 - 5}{1 - 0} = \frac{3}{1} = 3$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$-3$ — 错误。计算使得整体斜度属性发生符号颠倒逆转。</span>
+                            <span class="ru-part">$-3$ — Ошибка. При вычислении знак общего свойства наклона был полностью перевернут.</span>
+                            <span class="en-part">$-3$ — Incorrect. The sign of the slope was reversed during calculation.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$3$ — 正确答案。</span>
+                            <span class="ru-part">$3$ — Правильный ответ.</span>
+                            <span class="en-part">$3$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$0$ — 错误。纵向坐标发生了位移，不存在斜率为常零的水平情况。</span>
+                            <span class="ru-part">$0$ — Ошибка. Произошло смещение вертикальной координаты, горизонтальная ситуация с нулевым наклоном исключена.</span>
+                            <span class="en-part">$0$ — Incorrect. There is a vertical shift, so the slope cannot be zero.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$0.3333333333333333$ — 错误。错将结果计算为原斜率的倒数值。</span>
+                            <span class="ru-part">$0.3333333333333333$ — Ошибка. Ошибочно вычислен результат как обратное значение исходного углового коэффициента.</span>
+                            <span class="en-part">$0.3333333333333333$ — Incorrect. Mistakenly calculated the reciprocal of the actual slope.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q6</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">已知直线的正向倾角为 $45^\circ$，相对应的其系数斜率为：</span>
+                        <span class="ru-part">Известно, что положительный угол наклона прямой равен $45^\circ$. Её соответствующий коэффициент наклона равен:</span>
+                        <span class="en-part">Given an inclination angle of $45^\circ$, find the corresponding slope:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\sqrt{3}$</span>
+                        <span class="ru-part">$\sqrt{3}$</span>
+                        <span class="en-part">$\sqrt{3}$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$\frac{\sqrt{2}}{2}$</span>
+                        <span class="ru-part">$\frac{\sqrt{2}}{2}$</span>
+                        <span class="en-part">$\frac{\sqrt{2}}{2}$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**基于倾角解析斜率关系模型 $k = \tan\theta$**：<br>正切函数的运用准则之一：直线截距斜率 $k$ 等于对其倾角 $\theta$ 取正切（即 $k = \tan\theta$）。<br>将参数 $45^\circ$ 并入此架构：$\tan(45^\circ)$ 在直角三角体系中比值为 $1$。<br>从而获取等价项：$k = 1$。</div>
+                            <div class="ru-part">**Анализ модели угла наклона по формуле $k = \tan\theta$**:<br>Правило тангенса: угловой коэффициент прямой $k$ вычисляется как тангенс её угла наклона $\theta$ (т. е., $k = \tan\theta$).<br>Включаем параметр $45^\circ$ в эту структуру: $\tan(45^\circ)$ дает соотношение сторон в прямоугольной системе координат как $1$.<br>Таким образом, получаем: $k = 1$.</div>
+                            <div class="en-part">**Slope from Inclination: $k = \tan\theta$**:<br>The slope $k$ is equal to the tangent of the inclination angle $\theta$.<br>For $45^\circ$: $\tan(45^\circ) = 1$.<br>Thus, $k = 1$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\sqrt{3}$ — 错误。该特征主要代表函数射线起倾角达到了 $60^\circ$。</span>
+                            <span class="ru-part">$\sqrt{3}$ — Ошибка. Эта характеристика представляет наклон луча под углом $60^\circ$.</span>
+                            <span class="en-part">$\sqrt{3}$ — Incorrect. This represents a $60^\circ$ inclination angle.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$1$ — 正确答案。</span>
+                            <span class="ru-part">$1$ — Правильный ответ.</span>
+                            <span class="en-part">$1$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$0$ — 错误。当平面内的直线无倾斜水平展开即等于 $0^\circ$ 时为零值。</span>
+                            <span class="ru-part">$0$ — Ошибка. Значение равно нулю, когда линия в плоскости не имеет наклона (развернута горизонтально, $0^\circ$).</span>
+                            <span class="en-part">$0$ — Incorrect. Zero refers to a horizontal line ($0^\circ$).</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$\frac{\sqrt{2}}{2}$ — 错误。该选型误带入了 $\sin 45^\circ$ 。</span>
+                            <span class="ru-part">$\frac{\sqrt{2}}{2}$ — Ошибка. В этот вариант неправильно подставлен $\sin 45^\circ$.</span>
+                            <span class="en-part">$\frac{\sqrt{2}}{2}$ — Incorrect. This value is $\sin 45^\circ$.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q7</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">一条空间射线的倾斜仰角测得为 $45^\circ$，由此反推得其代表的特征斜率值为：</span>
+                        <span class="ru-part">Угол наклона пространственного луча составляет $45^\circ$, вычислите его соответствующий угловой коэффициент:</span>
+                        <span class="en-part">The inclination angle of a ray is $45^\circ$; find its corresponding slope value:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\frac{\sqrt{2}}{2}$</span>
+                        <span class="ru-part">$\frac{\sqrt{2}}{2}$</span>
+                        <span class="en-part">$\frac{\sqrt{2}}{2}$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\sqrt{3}$</span>
+                        <span class="ru-part">$\sqrt{3}$</span>
+                        <span class="en-part">$\sqrt{3}$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**基于倾角解析斜率关系模型 $k = \tan\theta$**：<br>正切函数的运用准则之一：直线截距斜率 $k$ 等于对其倾角 $\theta$ 取正切（即 $k = \tan\theta$）。<br>将参数 $45^\circ$ 并入此架构：$\tan(45^\circ)$ 在直角三角体系中比值为 $1$。<br>从而获取等价项：$k = 1$。</div>
+                            <div class="ru-part">**Анализ модели угла наклона по формуле $k = \tan\theta$**:<br>Правило тангенса: угловой коэффициент прямой $k$ вычисляется как тангенс её угла наклона $\theta$ (т. е., $k = \tan\theta$).<br>Включаем параметр $45^\circ$ в эту структуру: $\tan(45^\circ)$ дает соотношение сторон в прямоугольной системе координат как $1$.<br>Таким образом, получаем: $k = 1$.</div>
+                            <div class="en-part">**Slope from Inclination: $k = \tan\theta$**:<br>The slope $k$ is equal to the tangent of the inclination angle $\theta$.<br>For $45^\circ$: $\tan(45^\circ) = 1$.<br>Thus, $k = 1$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\frac{\sqrt{2}}{2}$ — 错误。该选型误带入了 $\sin 45^\circ$ 。</span>
+                            <span class="ru-part">$\frac{\sqrt{2}}{2}$ — Ошибка. В этот вариант неправильно подставлен $\sin 45^\circ$.</span>
+                            <span class="en-part">$\frac{\sqrt{2}}{2}$ — Incorrect. This value is $\sin 45^\circ$.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$0$ — 错误。当平面内的直线无倾斜水平展开即等于 $0^\circ$ 时为零值。</span>
+                            <span class="ru-part">$0$ — Ошибка. Значение равно нулю, когда линия в плоскости не имеет наклона (развернута горизонтально, $0^\circ$).</span>
+                            <span class="en-part">$0$ — Incorrect. Zero refers to a horizontal line ($0^\circ$).</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\sqrt{3}$ — 错误。该特征主要代表函数射线起倾角达到了 $60^\circ$。</span>
+                            <span class="ru-part">$\sqrt{3}$ — Ошибка. Эта характеристика представляет наклон луча под углом $60^\circ$.</span>
+                            <span class="en-part">$\sqrt{3}$ — Incorrect. This represents a $60^\circ$ inclination angle.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$1$ — 正确答案。</span>
+                            <span class="ru-part">$1$ — Правильный ответ.</span>
+                            <span class="en-part">$1$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q8</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">计算斜率为 $2$ 并通过由y轴定点 $(0,3)$ 解析出的直线方程：</span>
+                        <span class="ru-part">Вычислите уравнение прямой с наклоном $2$, проходящей через фиксированную точку по оси y $(0,3)$:</span>
+                        <span class="en-part">Find the equation of the line with slope $2$ passing through the y-intercept $(0, 3)$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$y=2x+3$</span>
+                        <span class="ru-part">$y=2x+3$</span>
+                        <span class="en-part">$y=2x+3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$y=2x$</span>
+                        <span class="ru-part">$y=2x$</span>
+                        <span class="en-part">$y=2x$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$y=-2x+3$</span>
+                        <span class="ru-part">$y=-2x+3$</span>
+                        <span class="en-part">$y=-2x+3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$y=2x-3$</span>
+                        <span class="ru-part">$y=2x-3$</span>
+                        <span class="en-part">$y=2x-3$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**直线方程截距式**：<br>对于给定斜率并交Y轴截距，使用最佳推导形式“斜截式基础方程主体：$y = kx + b$”。<br>提取常数约束 $k = 2$；<br>根据指定过点坐标 $(0,3)$ 解析出常数项 $b = 3$。<br>替换合并后给出表示式 $y=2x+3$。</div>
+                            <div class="ru-part">**Уравнение с угловым коэффициентом и отрезком**:<br>Имея угловой коэффициент и пересечение с осью Y, используем базовую формулу $"Уравнение с угловым коэффициентом": y = kx + b$.<br>Извлекаем константу $k = 2$;<br>По заданной точке $(0,3)$ определяем параметр свободного члена $b = 3$.<br>После подстановки получаем уравнение $y=2x+3$.</div>
+                            <div class="en-part">**Slope-Intercept Form**:<br>For a given slope and y-intercept, use the form $y = kx + b$.<br>Slope $k = 2$ and intercept $b = 3$.<br>Combining them gives $y=2x+3$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$y=2x+3$ — 正确答案。</span>
+                            <span class="ru-part">$y=2x+3$ — Правильный ответ.</span>
+                            <span class="en-part">$y=2x+3$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$y=2x$ — 错误。强制要求等式尾项消除至零，从而错误构筑直过原点 $(0,0)$。</span>
+                            <span class="ru-part">$y=2x$ — Ошибка. Принудительное обнуление свободного члена ошибочно заставляет линию проходить через начало координат $(0,0)$.</span>
+                            <span class="en-part">$y=2x$ — Incorrect. Removing the constant term forces the line through the origin.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$y=-2x+3$ — 错误。违背基础题意所约束的斜率倾斜趋势。</span>
+                            <span class="ru-part">$y=-2x+3$ — Ошибка. Нарушает тенденцию наклона, заданную в основном условии задачи.</span>
+                            <span class="en-part">$y=-2x+3$ — Incorrect. Violates the slope trend specified in the problem.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$y=2x-3$ — 错误。错误判断致使在纵向截断点偏移至反方向负侧。</span>
+                            <span class="ru-part">$y=2x-3$ — Ошибка. Неверное суждение привело к смещению вертикальной точки пересечения в отрицательную сторону.</span>
+                            <span class="en-part">$y=2x-3$ — Incorrect. The y-intercept is shifted to the negative side.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q9</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">计算斜率为 $3$ 并通过由y轴定点 $(0,2)$ 解析出的直线方程：</span>
+                        <span class="ru-part">Вычислите уравнение прямой с наклоном $3$, проходящей через фиксированную точку по оси y $(0,2)$:</span>
+                        <span class="en-part">Find the equation of the line with slope $3$ passing through the y-intercept $(0, 2)$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$y=3x+2$</span>
+                        <span class="ru-part">$y=3x+2$</span>
+                        <span class="en-part">$y=3x+2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$y=3x-2$</span>
+                        <span class="ru-part">$y=3x-2$</span>
+                        <span class="en-part">$y=3x-2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$y=3x$</span>
+                        <span class="ru-part">$y=3x$</span>
+                        <span class="en-part">$y=3x$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$y=-3x+2$</span>
+                        <span class="ru-part">$y=-3x+2$</span>
+                        <span class="en-part">$y=-3x+2$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: A</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**直线方程截距式**：<br>对于给定斜率并交Y轴截距，使用最佳推导形式“斜截式基础方程主体：$y = kx + b$”。<br>提取常数约束 $k = 3$；<br>根据指定过点坐标 $(0,2)$ 解析出常数项 $b = 2$。<br>替换合并后给出表示式 $y=3x+2$。</div>
+                            <div class="ru-part">**Уравнение с угловым коэффициентом и отрезком**:<br>Имея угловой коэффициент и пересечение с осью Y, используем базовую формулу $"Уравнение с угловым коэффициентом": y = kx + b$.<br>Извлекаем константу $k = 3$;<br>По заданной точке $(0,2)$ определяем параметр свободного члена $b = 2$.<br>После подстановки получаем уравнение $y=3x+2$.</div>
+                            <div class="en-part">**Slope-Intercept Form**:<br>For a given slope and y-intercept, use the form $y = kx + b$.<br>Slope $k = 3$ and intercept $b = 2$.<br>Combining them gives $y=3x+2$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-correct">
+                            <b>(A)</b> 
+                            <span class="zh-part">$y=3x+2$ — 正确答案。</span>
+                            <span class="ru-part">$y=3x+2$ — Правильный ответ.</span>
+                            <span class="en-part">$y=3x+2$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$y=3x-2$ — 错误。错误判断致使在纵向截断点偏移至反方向负侧。</span>
+                            <span class="ru-part">$y=3x-2$ — Ошибка. Неверное суждение привело к смещению вертикальной точки пересечения в отрицательную сторону.</span>
+                            <span class="en-part">$y=3x-2$ — Incorrect. The y-intercept is shifted to the negative side.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$y=3x$ — 错误。强制要求等式尾项消除至零，从而错误构筑直过原点 $(0,0)$。</span>
+                            <span class="ru-part">$y=3x$ — Ошибка. Принудительное обнуление свободного члена ошибочно заставляет линию проходить через начало координат $(0,0)$.</span>
+                            <span class="en-part">$y=3x$ — Incorrect. Removing the constant term forces the line through the origin.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$y=-3x+2$ — 错误。违背基础题意所约束的斜率倾斜趋势。</span>
+                            <span class="ru-part">$y=-3x+2$ — Ошибка. Нарушает тенденцию наклона, заданную в основном условии задачи.</span>
+                            <span class="en-part">$y=-3x+2$ — Incorrect. Violates the slope trend specified in the problem.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q10</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">设定给定的直线 $y=3x$ 同另外一条直线 $y=kx$ 相互垂直，求参数斜率 k：</span>
+                        <span class="ru-part">Задана прямая $y=3x$, параллельная другой прямой $y=kx$. Найдите коэффициент наклона k:</span>
+                        <span class="en-part">If the line $y=3x$ is perpendicular to the line $y=kx$, find the slope k:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$1/3$</span>
+                        <span class="ru-part">$1/3$</span>
+                        <span class="en-part">$1/3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$3$</span>
+                        <span class="ru-part">$3$</span>
+                        <span class="en-part">$3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$-3$</span>
+                        <span class="ru-part">$-3$</span>
+                        <span class="en-part">$-3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$-1/3$</span>
+                        <span class="ru-part">$-1/3$</span>
+                        <span class="en-part">$-1/3$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**两直线交叉垂直定律（$k_1 \times k_2 = -1$）**：<br>对于任何呈现垂直关系 $(\perp)$ 的单向实线群，相互依赖公则为：$k_1 \times k_2 = -1$。<br>填补前值计算表达：$3 \times k = -1$，从而演变得出 $k = -\frac{1}{3}$。</div>
+                            <div class="ru-part">**Закон перпендикулярного пересечения двух прямых ($k_1 \times k_2 = -1$)**:<br>Для любых прямых, находящихся в перпендикулярном отношении $(\perp)$, действует правило взаимной зависимости: $k_1 \times k_2 = -1$.<br>Подставляем известное значение в выражение: $3 \times k = -1$, из чего получаем $k = -\frac{1}{3}$.</div>
+                            <div class="en-part">**Perpendicular Slopes Law ($k_1 \times k_2 = -1$)**:<br>Two lines are perpendicular iff the product of their slopes is -1.<br>Calculation: $3 \cdot k = -1 \Rightarrow k = -\frac{1}{3}$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$1/3$ — 错误。忽略并缺少了对于反向夹角要求的正负变号原则。</span>
+                            <span class="ru-part">$1/3$ — Ошибка. Игнорирует и пропускает принцип изменения знака, необходимого для обратного угла.</span>
+                            <span class="en-part">$1/3$ — Incorrect. Ignores the sign flip required for the negative reciprocal.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$3$ — 错误。等距斜率设定会导致形成无交点的直线平行关系。</span>
+                            <span class="ru-part">$3$ — Ошибка. Использование такого же наклона приведет к формированию параллельных линий, не имеющих точек пересечения.</span>
+                            <span class="en-part">$3$ — Incorrect. Identical slopes result in parallel lines, not perpendicular ones.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$-3$ — 错误。此条件并未完全反映互构直线呈现 $90^\circ$ 交叉垂直的限制规律。</span>
+                            <span class="ru-part">$-3$ — Ошибка. Это условие не полностью отражает ограничительное правило для перпендикулярного пересечения прямых под углом $90^\circ$.</span>
+                            <span class="en-part">$-3$ — Incorrect. This does not satisfy the condition for a $90^\circ$ intersection.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$-1/3$ — 正确答案。</span>
+                            <span class="ru-part">$-1/3$ — Правильный ответ.</span>
+                            <span class="en-part">$-1/3$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q11</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">设定给定的直线 $y=3x$ 同另外一条直线 $y=kx$ 相互垂直，求参数斜率 k：</span>
+                        <span class="ru-part">Задана прямая $y=3x$, параллельная другой прямой $y=kx$. Найдите коэффициент наклона k:</span>
+                        <span class="en-part">If the line $y=3x$ is perpendicular to the line $y=kx$, find the slope k:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$1/3$</span>
+                        <span class="ru-part">$1/3$</span>
+                        <span class="en-part">$1/3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$3$</span>
+                        <span class="ru-part">$3$</span>
+                        <span class="en-part">$3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$-3$</span>
+                        <span class="ru-part">$-3$</span>
+                        <span class="en-part">$-3$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$-1/3$</span>
+                        <span class="ru-part">$-1/3$</span>
+                        <span class="en-part">$-1/3$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**两直线交叉垂直定律（$k_1 \times k_2 = -1$）**：<br>对于任何呈现垂直关系 $(\perp)$ 的单向实线群，相互依赖公则为：$k_1 \times k_2 = -1$。<br>填补前值计算表达：$3 \times k = -1$，从而演变得出 $k = -\frac{1}{3}$。</div>
+                            <div class="ru-part">**Закон перпендикулярного пересечения двух прямых ($k_1 \times k_2 = -1$)**:<br>Для любых прямых, находящихся в перпендикулярном отношении $(\perp)$, действует правило взаимной зависимости: $k_1 \times k_2 = -1$.<br>Подставляем известное значение в выражение: $3 \times k = -1$, из чего получаем $k = -\frac{1}{3}$.</div>
+                            <div class="en-part">**Perpendicular Slopes Law ($k_1 \times k_2 = -1$)**:<br>Two lines are perpendicular iff the product of their slopes is -1.<br>Calculation: $3 \cdot k = -1 \Rightarrow k = -\frac{1}{3}$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$1/3$ — 错误。忽略并缺少了对于反向夹角要求的正负变号原则。</span>
+                            <span class="ru-part">$1/3$ — Ошибка. Игнорирует и пропускает принцип изменения знака, необходимого для обратного угла.</span>
+                            <span class="en-part">$1/3$ — Incorrect. Ignores the sign flip required for the negative reciprocal.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$3$ — 错误。等距斜率设定会导致形成无交点的直线平行关系。</span>
+                            <span class="ru-part">$3$ — Ошибка. Использование такого же наклона приведет к формированию параллельных линий, не имеющих точек пересечения.</span>
+                            <span class="en-part">$3$ — Incorrect. Identical slopes result in parallel lines, not perpendicular ones.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$-3$ — 错误。此条件并未完全反映互构直线呈现 $90^\circ$ 交叉垂直的限制规律。</span>
+                            <span class="ru-part">$-3$ — Ошибка. Это условие не полностью отражает ограничительное правило для перпендикулярного пересечения прямых под углом $90^\circ$.</span>
+                            <span class="en-part">$-3$ — Incorrect. This does not satisfy the condition for a $90^\circ$ intersection.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$-1/3$ — 正确答案。</span>
+                            <span class="ru-part">$-1/3$ — Правильный ответ.</span>
+                            <span class="en-part">$-1/3$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q12</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">设定给定的直线 $y=2x$ 同另外一条直线 $y=kx$ 相互垂直，求参数斜率 k：</span>
+                        <span class="ru-part">Задана прямая $y=2x$, параллельная другой прямой $y=kx$. Найдите коэффициент наклона k:</span>
+                        <span class="en-part">If the line $y=2x$ is perpendicular to the line $y=kx$, find the slope k:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$-2$</span>
+                        <span class="ru-part">$-2$</span>
+                        <span class="en-part">$-2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$2$</span>
+                        <span class="ru-part">$2$</span>
+                        <span class="en-part">$2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$-1/2$</span>
+                        <span class="ru-part">$-1/2$</span>
+                        <span class="en-part">$-1/2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$1/2$</span>
+                        <span class="ru-part">$1/2$</span>
+                        <span class="en-part">$1/2$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**两直线交叉垂直定律（$k_1 \times k_2 = -1$）**：<br>对于任何呈现垂直关系 $(\perp)$ 的单向实线群，相互依赖公则为：$k_1 \times k_2 = -1$。<br>填补前值计算表达：$2 \times k = -1$，从而演变得出 $k = -\frac{1}{2}$。</div>
+                            <div class="ru-part">**Закон перпендикулярного пересечения двух прямых ($k_1 \times k_2 = -1$)**:<br>Для любых прямых, находящихся в перпендикулярном отношении $(\perp)$, действует правило взаимной зависимости: $k_1 \times k_2 = -1$.<br>Подставляем известное значение в выражение: $2 \times k = -1$, из чего получаем $k = -\frac{1}{2}$.</div>
+                            <div class="en-part">**Perpendicular Slopes Law ($k_1 \times k_2 = -1$)**:<br>Two lines are perpendicular iff the product of their slopes is -1.<br>Calculation: $2 \cdot k = -1 \Rightarrow k = -\frac{1}{2}$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$-2$ — 错误。此条件并未完全反映互构直线呈现 $90^\circ$ 交叉垂直的限制规律。</span>
+                            <span class="ru-part">$-2$ — Ошибка. Это условие не полностью отражает ограничительное правило для перпендикулярного пересечения прямых под углом $90^\circ$.</span>
+                            <span class="en-part">$-2$ — Incorrect. This does not satisfy the condition for a $90^\circ$ intersection.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$2$ — 错误。等距斜率设定会导致形成无交点的直线平行关系。</span>
+                            <span class="ru-part">$2$ — Ошибка. Использование такого же наклона приведет к формированию параллельных линий, не имеющих точек пересечения.</span>
+                            <span class="en-part">$2$ — Incorrect. Identical slopes result in parallel lines, not perpendicular ones.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$-1/2$ — 正确答案。</span>
+                            <span class="ru-part">$-1/2$ — Правильный ответ.</span>
+                            <span class="en-part">$-1/2$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$1/2$ — 错误。忽略并缺少了对于反向夹角要求的正负变号原则。</span>
+                            <span class="ru-part">$1/2$ — Ошибка. Игнорирует и пропускает принцип изменения знака, необходимого для обратного угла.</span>
+                            <span class="en-part">$1/2$ — Incorrect. Ignores the sign flip required for the negative reciprocal.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q13</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">求解联立方程组 $x+y=6$ 以及 $x-y=0$ ，找到它们的交点：</span>
+                        <span class="ru-part">Решите систему уравнений $x+y=6$ и $x-y=0$, найдя их точку пересечения:</span>
+                        <span class="en-part">Solve the system of equations $x+y=6$ and $x-y=0$ to find their intersection point:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(4, 2)$</span>
+                        <span class="ru-part">$(4, 2)$</span>
+                        <span class="en-part">$(4, 2)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(3, 3)$</span>
+                        <span class="ru-part">$(3, 3)$</span>
+                        <span class="en-part">$(3, 3)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(3, 3)$</span>
+                        <span class="ru-part">$(3, 3)$</span>
+                        <span class="en-part">$(3, 3)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(-3, -3)$</span>
+                        <span class="ru-part">$(-3, -3)$</span>
+                        <span class="en-part">$(-3, -3)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**加减消元法分析**：<br>采用同加减手法予以提取。<br>式（1）：$x+y=6$<br>式（2）：$x-y=0$<br>式（1）与式（2）累加正负 y 项相消为 $2x = 6$，即 $x=3$。<br>代入得剩余变元 $y=3$。</div>
+                            <div class="ru-part">**Анализ методом алгебраического сложения**:<br>Применяем метод алгебраического сложения (вычитания) для решения.<br>Уравнение (1): $x+y=6$<br>Уравнение (2): $x-y=0$<br>Складываем Ур(1) и Ур(2), члены y взаимоуничтожаются: $2x = 6$, получаем $x=3$.<br>Подставляем x и находим оставшуюся переменную $y=3$.</div>
+                            <div class="en-part">**Elimination Method Analysis**:<br>(1) $x+y=6$<br>(2) $x-y=0$<br>Add (1) and (2) to eliminate y: $2x = 6 \Rightarrow x=3$.<br>Substitute x back to find $y=3$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(4, 2)$ — 错误。此推算使等值失效，不再达成左右相平的平衡。</span>
+                            <span class="ru-part">$(4, 2)$ — Ошибка. Этот расчет приводит к недействительности равенства, и равновесие между левой и правой частями нарушается.</span>
+                            <span class="en-part">$(4, 2)$ — Incorrect. This point does not satisfy the equations.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(3, 3)$ — 正确答案。</span>
+                            <span class="ru-part">$(3, 3)$ — Правильный ответ.</span>
+                            <span class="en-part">$(3, 3)$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(3, 3)$ — 错误。横纵交错后破坏二元对应结构。</span>
+                            <span class="ru-part">$(3, 3)$ — Ошибка. Перекрещивание горизонтальной и вертикальной осей разрушает бинарную структуру соответствия.</span>
+                            <span class="en-part">$(3, 3)$ — Incorrect. Swapping the coordinates violates the system.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(-3, -3)$ — 错误。代入负会导致系统加总呈现全盘差错状态。</span>
+                            <span class="ru-part">$(-3, -3)$ — Ошибка. Подстановка отрицательных значений приведет систему в состояние полной ошибки при суммировании.</span>
+                            <span class="en-part">$(-3, -3)$ — Incorrect. Negative values result in calculation errors.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q14</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">求解联立方程组 $x+y=2$ 以及 $x-y=0$ ，找到它们的交点：</span>
+                        <span class="ru-part">Решите систему уравнений $x+y=2$ и $x-y=0$, найдя их точку пересечения:</span>
+                        <span class="en-part">Solve the system of equations $x+y=2$ and $x-y=0$ to find their intersection point:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$(-1, -1)$</span>
+                        <span class="ru-part">$(-1, -1)$</span>
+                        <span class="en-part">$(-1, -1)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$(1, 1)$</span>
+                        <span class="ru-part">$(1, 1)$</span>
+                        <span class="en-part">$(1, 1)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$(1, 1)$</span>
+                        <span class="ru-part">$(1, 1)$</span>
+                        <span class="en-part">$(1, 1)$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$(2, 0)$</span>
+                        <span class="ru-part">$(2, 0)$</span>
+                        <span class="en-part">$(2, 0)$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**加减消元法分析**：<br>采用同加减手法予以提取。<br>式（1）：$x+y=2$<br>式（2）：$x-y=0$<br>式（1）与式（2）累加正负 y 项相消为 $2x = 2$，即 $x=1$。<br>代入得剩余变元 $y=1$。</div>
+                            <div class="ru-part">**Анализ методом алгебраического сложения**:<br>Применяем метод алгебраического сложения (вычитания) для решения.<br>Уравнение (1): $x+y=2$<br>Уравнение (2): $x-y=0$<br>Складываем Ур(1) и Ур(2), члены y взаимоуничтожаются: $2x = 2$, получаем $x=1$.<br>Подставляем x и находим оставшуюся переменную $y=1$.</div>
+                            <div class="en-part">**Elimination Method Analysis**:<br>(1) $x+y=2$<br>(2) $x-y=0$<br>Add (1) and (2) to eliminate y: $2x = 2 \Rightarrow x=1$.<br>Substitute x back to find $y=1$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$(-1, -1)$ — 错误。代入负会导致系统加总呈现全盘差错状态。</span>
+                            <span class="ru-part">$(-1, -1)$ — Ошибка. Подстановка отрицательных значений приведет систему в состояние полной ошибки при суммировании.</span>
+                            <span class="en-part">$(-1, -1)$ — Incorrect. Negative values result in calculation errors.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$(1, 1)$ — 正确答案。</span>
+                            <span class="ru-part">$(1, 1)$ — Правильный ответ.</span>
+                            <span class="en-part">$(1, 1)$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$(1, 1)$ — 错误。横纵交错后破坏二元对应结构。</span>
+                            <span class="ru-part">$(1, 1)$ — Ошибка. Перекрещивание горизонтальной и вертикальной осей разрушает бинарную структуру соответствия.</span>
+                            <span class="en-part">$(1, 1)$ — Incorrect. Swapping the coordinates violates the system.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$(2, 0)$ — 错误。此推算使等值失效，不再达成左右相平的平衡。</span>
+                            <span class="ru-part">$(2, 0)$ — Ошибка. Этот расчет приводит к недействительности равенства, и равновесие между левой и правой частями нарушается.</span>
+                            <span class="en-part">$(2, 0)$ — Incorrect. This point does not satisfy the equations.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q15</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">探究点 $(0,0)$ 与同轴给定点 $(2,0)$ 间的线段有效衡量间距：</span>
+                        <span class="ru-part">Определите эффективное расстояние между точкой $(0,0)$ и заданной точкой на той же оси $(2,0)$:</span>
+                        <span class="en-part">Determine the distance between point $(0,0)$ and point $(2,0)$ on the same axis:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$\sqrt{2}$</span>
+                        <span class="ru-part">$\sqrt{2}$</span>
+                        <span class="en-part">$\sqrt{2}$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$2$</span>
+                        <span class="ru-part">$2$</span>
+                        <span class="en-part">$2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$4$</span>
+                        <span class="ru-part">$4$</span>
+                        <span class="en-part">$4$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**直线双点共线求距定律计算**：<br>因两者均在固定纵向轴0的水平横轴（x轴），也即伴随横向距离均不带 Y偏离。<br>规避长公式计算，通过常数值相减进行直接算术测量衡量：$2 - 0 = 2$。</div>
+                            <div class="ru-part">**Правило нахождения расстояния между коллинеарными точками**:<br>Поскольку обе точки лежат на горизонтальной оси (ось x) с фиксированной координатой Y равной 0, отклонений по Y нет.<br>Избегаем громоздких вычислений и оцениваем прямую разницу между значениями: $2 - 0 = 2$.</div>
+                            <div class="en-part">**Distance between Collinear Points**:<br>Since both points are on the x-axis ($y=0$), there is no vertical displacement.<br>The distance is simply the difference in x-coordinates: $2 - 0 = 2$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$\sqrt{2}$ — 错误。执行了不匹配题意的无效冗余开方操作。</span>
+                            <span class="ru-part">$\sqrt{2}$ — Ошибка. Выполнена излишняя извлекающая корень операция, которая не соответствует требованиям задачи.</span>
+                            <span class="en-part">$\sqrt{2}$ — Incorrect. Unnecessary radical operation applied incorrectly.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$2$ — 正确答案。</span>
+                            <span class="ru-part">$2$ — Правильный ответ.</span>
+                            <span class="en-part">$2$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$0$ — 错误。已经发生了坐标点跨度位移不可归为零。</span>
+                            <span class="ru-part">$0$ — Ошибка. Координаты уже сместились, поэтому расстояние нельзя рассматривать как равное нулю.</span>
+                            <span class="en-part">$0$ — Incorrect. The coordinates have shifted; distance cannot be zero.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$4$ — 错误。因并未实行开方，从而错误报告了实际量程间隔段的平方值。</span>
+                            <span class="ru-part">$4$ — Ошибка. Поскольку квадратный корень не был извлечен, значение занижено, показан квадрат промежутка.</span>
+                            <span class="en-part">$4$ — Incorrect. This is the squared distance; forgot the root.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q16</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">探究点 $(0,0)$ 与同轴给定点 $(1,0)$ 间的线段有效衡量间距：</span>
+                        <span class="ru-part">Определите эффективное расстояние между точкой $(0,0)$ и заданной точкой на той же оси $(1,0)$:</span>
+                        <span class="en-part">Determine the distance between point $(0,0)$ and point $(1,0)$ on the same axis:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$\sqrt{1}$</span>
+                        <span class="ru-part">$\sqrt{1}$</span>
+                        <span class="en-part">$\sqrt{1}$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**直线双点共线求距定律计算**：<br>因两者均在固定纵向轴0的水平横轴（x轴），也即伴随横向距离均不带 Y偏离。<br>规避长公式计算，通过常数值相减进行直接算术测量衡量：$1 - 0 = 1$。</div>
+                            <div class="ru-part">**Правило нахождения расстояния между коллинеарными точками**:<br>Поскольку обе точки лежат на горизонтальной оси (ось x) с фиксированной координатой Y равной 0, отклонений по Y нет.<br>Избегаем громоздких вычислений и оцениваем прямую разницу между значениями: $1 - 0 = 1$.</div>
+                            <div class="en-part">**Distance between Collinear Points**:<br>Since both points are on the x-axis ($y=0$), there is no vertical displacement.<br>The distance is simply the difference in x-coordinates: $1 - 0 = 1$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$0$ — 错误。已经发生了坐标点跨度位移不可归为零。</span>
+                            <span class="ru-part">$0$ — Ошибка. Координаты уже сместились, поэтому расстояние нельзя рассматривать как равное нулю.</span>
+                            <span class="en-part">$0$ — Incorrect. The coordinates have shifted; distance cannot be zero.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$1$ — 正确答案。</span>
+                            <span class="ru-part">$1$ — Правильный ответ.</span>
+                            <span class="en-part">$1$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$1$ — 错误。因并未实行开方，从而错误报告了实际量程间隔段的平方值。</span>
+                            <span class="ru-part">$1$ — Ошибка. Поскольку квадратный корень не был извлечен, значение занижено, показан квадрат промежутка.</span>
+                            <span class="en-part">$1$ — Incorrect. This is the squared distance; forgot the root.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$\sqrt{1}$ — 错误。执行了不匹配题意的无效冗余开方操作。</span>
+                            <span class="ru-part">$\sqrt{1}$ — Ошибка. Выполнена излишняя извлекающая корень операция, которая не соответствует требованиям задачи.</span>
+                            <span class="en-part">$\sqrt{1}$ — Incorrect. Unnecessary radical operation applied incorrectly.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q17</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">探究点 $(0,0)$ 与同轴给定点 $(2,0)$ 间的线段有效衡量间距：</span>
+                        <span class="ru-part">Определите эффективное расстояние между точкой $(0,0)$ и заданной точкой на той же оси $(2,0)$:</span>
+                        <span class="en-part">Determine the distance between point $(0,0)$ and point $(2,0)$ on the same axis:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$0$</span>
+                        <span class="ru-part">$0$</span>
+                        <span class="en-part">$0$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$2$</span>
+                        <span class="ru-part">$2$</span>
+                        <span class="en-part">$2$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$\sqrt{2}$</span>
+                        <span class="ru-part">$\sqrt{2}$</span>
+                        <span class="en-part">$\sqrt{2}$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$4$</span>
+                        <span class="ru-part">$4$</span>
+                        <span class="en-part">$4$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**直线双点共线求距定律计算**：<br>因两者均在固定纵向轴0的水平横轴（x轴），也即伴随横向距离均不带 Y偏离。<br>规避长公式计算，通过常数值相减进行直接算术测量衡量：$2 - 0 = 2$。</div>
+                            <div class="ru-part">**Правило нахождения расстояния между коллинеарными точками**:<br>Поскольку обе точки лежат на горизонтальной оси (ось x) с фиксированной координатой Y равной 0, отклонений по Y нет.<br>Избегаем громоздких вычислений и оцениваем прямую разницу между значениями: $2 - 0 = 2$.</div>
+                            <div class="en-part">**Distance between Collinear Points**:<br>Since both points are on the x-axis ($y=0$), there is no vertical displacement.<br>The distance is simply the difference in x-coordinates: $2 - 0 = 2$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$0$ — 错误。已经发生了坐标点跨度位移不可归为零。</span>
+                            <span class="ru-part">$0$ — Ошибка. Координаты уже сместились, поэтому расстояние нельзя рассматривать как равное нулю.</span>
+                            <span class="en-part">$0$ — Incorrect. The coordinates have shifted; distance cannot be zero.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$2$ — 正确答案。</span>
+                            <span class="ru-part">$2$ — Правильный ответ.</span>
+                            <span class="en-part">$2$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$\sqrt{2}$ — 错误。执行了不匹配题意的无效冗余开方操作。</span>
+                            <span class="ru-part">$\sqrt{2}$ — Ошибка. Выполнена излишняя извлекающая корень операция, которая не соответствует требованиям задачи.</span>
+                            <span class="en-part">$\sqrt{2}$ — Incorrect. Unnecessary radical operation applied incorrectly.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$4$ — 错误。因并未实行开方，从而错误报告了实际量程间隔段的平方值。</span>
+                            <span class="ru-part">$4$ — Ошибка. Поскольку квадратный корень не был извлечен, значение занижено, показан квадрат промежутка.</span>
+                            <span class="en-part">$4$ — Incorrect. This is the squared distance; forgot the root.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q18</div>
+                        <div style="font-size:12px; color:#64748b;">同步基础 / Basic</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">提取坐标系定位点 $(3, 4)$ 位于核心原点勾连线段定长：</span>
+                        <span class="ru-part">Измерьте длину отрезка, соединяющего точку $(3, 4)$ с началом координат:</span>
+                        <span class="en-part">Find the distance from point $(3, 4)$ to the origin $(0,0)$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$25$</span>
+                        <span class="ru-part">$25$</span>
+                        <span class="en-part">$25$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$7$</span>
+                        <span class="ru-part">$7$</span>
+                        <span class="en-part">$7$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$5$</span>
+                        <span class="ru-part">$5$</span>
+                        <span class="en-part">$5$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: D</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**两点间距离公式（基于勾股定理）**：<br>原点位址明确化于 $(0,0)$，量算指定定点 $(3, 4)$ 到之斜面长度。<br>应用测距常规定理公式法则：$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$。<br>引入数据代为值换：$d = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25}$。<br>针对求定根值得出最后度量常量值 $5$。</div>
+                            <div class="ru-part">**Формула расстояния между двумя точками (на основе теоремы Пифагора)**:<br>Начало координат находится в точке $(0,0)$. Измеряется длина наклонной линии до точки $(3, 4)$.<br>Применяется правило стандартной формулы расстояния: $d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$.<br>Подстановка данных: $d = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25}$.<br>Квадратный корень вычисляет окончательное значение 5.</div>
+                            <div class="en-part">**Distance Formula (Pythagorean Theorem)**:<br>The origin is $(0,0)$. Find the distance to $(3, 4)$.<br>Use $d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$.<br>Substitution: $d = \sqrt{3^2 + 4^2} = \sqrt{25} = 5$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$1$ — 错误。误将勾股定式运用为绝对相减获取差距。</span>
+                            <span class="ru-part">$1$ — Ошибка. Ошибочно применена теорема Пифагора как прямое вычисление разницы.</span>
+                            <span class="en-part">$1$ — Incorrect. Mistakenly subtracted coordinates.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$25$ — 错误。停留在于平方值总和步骤未最后彻底得出二次开方的结果。</span>
+                            <span class="ru-part">$25$ — Ошибка. Расчет остановился на сумме квадратов без окончательного извлечения квадратного корня.</span>
+                            <span class="en-part">$25$ — Incorrect. Sum of squares; forgot the final square root step.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$7$ — 错误。未能套用求相距计算根式系统，而发生错误直接相加。($3+4$)</span>
+                            <span class="ru-part">$7$ — Ошибка. Не удалось применить систему корней для расчета расстояния, вследствие чего было выполнено неправильное сложение ($3+4$).</span>
+                            <span class="en-part">$7$ — Incorrect. Simply added coordinates ($3+4$) instead of using the formula.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(D)</b> 
+                            <span class="zh-part">$5$ — 正确答案。</span>
+                            <span class="ru-part">$5$ — Правильный ответ.</span>
+                            <span class="en-part">$5$ — Correct option.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q19</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">探询点 $(3, 4)$ 偏离主坐标系统初始极点（原点）之最短线段测量长：</span>
+                        <span class="ru-part">Определите кратчайшее измеренное расстояние от точки $(3, 4)$ до изначальной точки (начала координат):</span>
+                        <span class="en-part">Find the distance from point $(3, 4)$ to the origin $(0,0)$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$25$</span>
+                        <span class="ru-part">$25$</span>
+                        <span class="en-part">$25$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$5$</span>
+                        <span class="ru-part">$5$</span>
+                        <span class="en-part">$5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$7$</span>
+                        <span class="ru-part">$7$</span>
+                        <span class="en-part">$7$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: C</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**两点间距离公式（基于勾股定理）**：<br>原点位址明确化于 $(0,0)$，量算指定定点 $(3, 4)$ 到之斜面长度。<br>应用测距常规定理公式法则：$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$。<br>引入数据代为值换：$d = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25}$。<br>针对求定根值得出最后度量常量值 $5$。</div>
+                            <div class="ru-part">**Формула расстояния между двумя точками (на основе теоремы Пифагора)**:<br>Начало координат находится в точке $(0,0)$. Измеряется длина наклонной линии до точки $(3, 4)$.<br>Применяется правило стандартной формулы расстояния: $d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$.<br>Подстановка данных: $d = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25}$.<br>Квадратный корень вычисляет окончательное значение 5.</div>
+                            <div class="en-part">**Distance Formula (Pythagorean Theorem)**:<br>The origin is $(0,0)$. Find the distance to $(3, 4)$.<br>Use $d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$.<br>Substitution: $d = \sqrt{3^2 + 4^2} = \sqrt{25} = 5$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$1$ — 错误。误将勾股定式运用为绝对相减获取差距。</span>
+                            <span class="ru-part">$1$ — Ошибка. Ошибочно применена теорема Пифагора как прямое вычисление разницы.</span>
+                            <span class="en-part">$1$ — Incorrect. Mistakenly subtracted coordinates.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(B)</b> 
+                            <span class="zh-part">$25$ — 错误。停留在于平方值总和步骤未最后彻底得出二次开方的结果。</span>
+                            <span class="ru-part">$25$ — Ошибка. Расчет остановился на сумме квадратов без окончательного извлечения квадратного корня.</span>
+                            <span class="en-part">$25$ — Incorrect. Sum of squares; forgot the final square root step.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(C)</b> 
+                            <span class="zh-part">$5$ — 正确答案。</span>
+                            <span class="ru-part">$5$ — Правильный ответ.</span>
+                            <span class="en-part">$5$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$7$ — 错误。未能套用求相距计算根式系统，而发生错误直接相加。($3+4$)</span>
+                            <span class="ru-part">$7$ — Ошибка. Не удалось применить систему корней для расчета расстояния, вследствие чего было выполнено неправильное сложение ($3+4$).</span>
+                            <span class="en-part">$7$ — Incorrect. Simply added coordinates ($3+4$) instead of using the formula.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="q-card">
+                    <div class="q-header">
+                        <div class="q-num">Q20</div>
+                        <div style="font-size:12px; color:#64748b;">变式强化 / Advanced</div>
+                    </div>
+                    <div class="q-text">
+                        <span class="zh-part">探询点 $(3, 4)$ 偏离主坐标系统初始极点（原点）之最短线段测量长：</span>
+                        <span class="ru-part">Определите кратчайшее измеренное расстояние от точки $(3, 4)$ до изначальной точки (начала координат):</span>
+                        <span class="en-part">Find the distance from point $(3, 4)$ to the origin $(0,0)$:</span>
+                    </div>
+                    <div class="option-grid">
+                        
+                    <div class="opt">
+                        <b>A</b>
+                        <span class="zh-part">$25$</span>
+                        <span class="ru-part">$25$</span>
+                        <span class="en-part">$25$</span>
+                    </div>
+                    <div class="opt">
+                        <b>B</b>
+                        <span class="zh-part">$5$</span>
+                        <span class="ru-part">$5$</span>
+                        <span class="en-part">$5$</span>
+                    </div>
+                    <div class="opt">
+                        <b>C</b>
+                        <span class="zh-part">$1$</span>
+                        <span class="ru-part">$1$</span>
+                        <span class="en-part">$1$</span>
+                    </div>
+                    <div class="opt">
+                        <b>D</b>
+                        <span class="zh-part">$7$</span>
+                        <span class="ru-part">$7$</span>
+                        <span class="en-part">$7$</span>
+                    </div>
+                    </div>
+                    <button class="analysis-btn" onclick="toggleAnalysis(this)">查看详尽解析 / FULL ANALYSIS</button>
+                    <div class="analysis-panel">
+                        <h4 style="margin:0 0 15px 0; color:#10b981;">Correct Answer: B</h4>
+                        <div class="step-bubble">
+                            <div style="font-size:12px; font-weight:800; color:#059669; margin-bottom:8px;">推演过程 / SOLUTIONS</div>
+                            <div class="zh-part">**两点间距离公式（基于勾股定理）**：<br>原点位址明确化于 $(0,0)$，量算指定定点 $(3, 4)$ 到之斜面长度。<br>应用测距常规定理公式法则：$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$。<br>引入数据代为值换：$d = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25}$。<br>针对求定根值得出最后度量常量值 $5$。</div>
+                            <div class="ru-part">**Формула расстояния между двумя точками (на основе теоремы Пифагора)**:<br>Начало координат находится в точке $(0,0)$. Измеряется длина наклонной линии до точки $(3, 4)$.<br>Применяется правило стандартной формулы расстояния: $d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$.<br>Подстановка данных: $d = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25}$.<br>Квадратный корень вычисляет окончательное значение 5.</div>
+                            <div class="en-part">**Distance Formula (Pythagorean Theorem)**:<br>The origin is $(0,0)$. Find the distance to $(3, 4)$.<br>Use $d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$.<br>Substitution: $d = \sqrt{3^2 + 4^2} = \sqrt{25} = 5$.</div>
+                        </div>
+                        <div class="audit-wrap">
+                            <div style="font-size:12px; font-weight:800; color:#64748b; margin-bottom:8px;">选项剖析 / AUDIT</div>
+                            
+                        <div class="audit-item audit-wrong">
+                            <b>(A)</b> 
+                            <span class="zh-part">$25$ — 错误。停留在于平方值总和步骤未最后彻底得出二次开方的结果。</span>
+                            <span class="ru-part">$25$ — Ошибка. Расчет остановился на сумме квадратов без окончательного извлечения квадратного корня.</span>
+                            <span class="en-part">$25$ — Incorrect. Sum of squares; forgot the final square root step.</span>
+                        </div>
+                        <div class="audit-item audit-correct">
+                            <b>(B)</b> 
+                            <span class="zh-part">$5$ — 正确答案。</span>
+                            <span class="ru-part">$5$ — Правильный ответ.</span>
+                            <span class="en-part">$5$ — Correct option.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(C)</b> 
+                            <span class="zh-part">$1$ — 错误。误将勾股定式运用为绝对相减获取差距。</span>
+                            <span class="ru-part">$1$ — Ошибка. Ошибочно применена теорема Пифагора как прямое вычисление разницы.</span>
+                            <span class="en-part">$1$ — Incorrect. Mistakenly subtracted coordinates.</span>
+                        </div>
+                        <div class="audit-item audit-wrong">
+                            <b>(D)</b> 
+                            <span class="zh-part">$7$ — 错误。未能套用求相距计算根式系统，而发生错误直接相加。($3+4$)</span>
+                            <span class="ru-part">$7$ — Ошибка. Не удалось применить систему корней для расчета расстояния, вследствие чего было выполнено неправильное сложение ($3+4$).</span>
+                            <span class="en-part">$7$ — Incorrect. Simply added coordinates ($3+4$) instead of using the formula.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+    </div>
+</body>
+</html>
