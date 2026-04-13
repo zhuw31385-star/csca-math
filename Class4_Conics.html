@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSCA数学冲刺课件 4/6: 【圆锥曲线定型】</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+<style>
+    body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; color: #333; }
+    .header { text-align: center; border-bottom: 3px solid #f39c12; margin-bottom: 20px; }
+    .header h1 { color: #d35400; }
+    .box { background: #fdf2e9; padding: 15px; border-left: 5px solid #d35400; margin-bottom: 20px; }
+    .rule { background: #f4ecf7; padding: 15px; border-left: 5px solid #8e44ad; margin-bottom: 20px; font-weight: bold; }
+    .hw-section { margin-top: 40px; padding-top: 20px; border-top: 2px dashed #ccc; }
+    .q-block { margin-bottom: 15px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .options { display: flex; flex-wrap: wrap; margin-top: 10px; }
+    .opt { width: 50%; margin-bottom: 8px; }
+    .ans-btn { background: #f39c12; color: white; padding: 3px 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; margin-top: 10px; }
+    .ans-text { display: none; margin-top: 10px; color: #c0392b; font-weight: bold; border-left: 3px solid #c0392b; padding-left: 10px; }
+</style>
+<script>
+    function toggleAns(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none" || x.style.display === "") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+</head>
+<body>
+<div class="header">
+    <h1>第四课时 (Lesson 4)：圆锥曲线认脸大全</h1>
+    <p>时长：60分钟 | 目标得点：4-5 题</p>
+</div>
+
+<h2>一、 本课考情指南 (Strategy)</h2>
+<p>我们完全不要去理会圆锥曲线的高阶特性。因为CSCA只考最基础的“看到原公式，说出各个组件长啥样”！教学生通过特定的模板公式套出对应的选项。</p>
+
+<h2>二、 核心知识点与可视系统化 (Visualized Core Rules)</h2>
+<div class="box">
+    <h3>系统扩展：圆锥曲线的三大脸谱与参数图解</h3>
+    <p>通过下方图像建立最直观的肌肉记忆：</p>
+    
+    <div style="display:flex; justify-content:space-around; align-items:flex-end; text-align:center; flex-wrap:wrap; margin-bottom: 20px;">
+        <!-- Ellipse -->
+        <div style="width: 30%; background: #fff; padding: 10px; border-radius: 8px;">
+            <svg width="150" height="150" viewBox="0 0 150 150">
+                <line x1="10" y1="75" x2="140" y2="75" stroke="#ccc"/>
+                <line x1="75" y1="10" x2="75" y2="140" stroke="#ccc"/>
+                <ellipse cx="75" cy="75" rx="60" ry="30" stroke="#3498db" fill="none" stroke-width="2"/>
+                <circle cx="45" cy="75" r="3" fill="#e74c3c"/>
+                <circle cx="105" cy="75" r="3" fill="#e74c3c"/>
+                <text x="45" y="90" font-size="10">焦点</text>
+                <text x="135" y="65" font-size="12">x</text>
+            </svg>
+            <p style="margin:5px 0 0 0; font-size:14px; font-weight:bold; color: #2980b9;">椭圆 Ellipse (+号)</p>
+            <p style="margin:0; font-size:12px;">$\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$<br>(长轴压在数值大的底下)</p>
+        </div>
+        
+        <!-- Parabola -->
+        <div style="width: 30%; background: #fff; padding: 10px; border-radius: 8px;">
+            <svg width="150" height="150" viewBox="0 0 150 150">
+                <line x1="10" y1="75" x2="140" y2="75" stroke="#ccc"/>
+                <line x1="75" y1="10" x2="75" y2="140" stroke="#ccc"/>
+                <path d="M120,20 Q40,75 120,130" stroke="#2ecc71" fill="none" stroke-width="2"/>
+                <line x1="45" y1="10" x2="45" y2="140" stroke="#e74c3c" stroke-dasharray="4"/>
+                <circle cx="105" cy="75" r="3" fill="#e74c3c"/>
+                <text x="95" y="90" font-size="10">焦点</text>
+                <text x="20" y="60" font-size="10" fill="#e74c3c">准线</text>
+            </svg>
+            <p style="margin:5px 0 0 0; font-size:14px; font-weight:bold; color: #27ae60;">抛物线 Parabola (一次)</p>
+            <p style="margin:0; font-size:12px;">$y^2 = 2px$<br>准线永远在开口反放向！(x=-p/2)</p>
+        </div>
+        
+        <!-- Hyperbola -->
+        <div style="width: 30%; background: #fff; padding: 10px; border-radius: 8px;">
+            <svg width="150" height="150" viewBox="0 0 150 150">
+                <line x1="10" y1="75" x2="140" y2="75" stroke="#ccc"/>
+                <line x1="75" y1="10" x2="75" y2="140" stroke="#ccc"/>
+                <path d="M30,10 Q60,75 30,140" stroke="#9b59b6" fill="none" stroke-width="2"/>
+                <path d="M120,10 Q90,75 120,140" stroke="#9b59b6" fill="none" stroke-width="2"/>
+                <line x1="20" y1="20" x2="130" y2="130" stroke="#ccc" stroke-dasharray="2"/>
+                <line x1="20" y1="130" x2="130" y2="20" stroke="#ccc" stroke-dasharray="2"/>
+            </svg>
+            <p style="margin:5px 0 0 0; font-size:14px; font-weight:bold; color: #8e44ad;">双曲线 Hyperbola (-号)</p>
+            <p style="margin:0; font-size:12px;">$\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1$<br>(极其醒目的“-号”相伴)</p>
+        </div>
+    </div>
+
+    <ol>
+        <li><strong>最简圆模子：</strong> $(x - a)^2 + (y - b)^2 = r^2$。圆心反转符号是 $(a, b)$，等号右侧开平方是半径。</li>
+        <li><strong>判定法则总结：</strong> 全部正数平方和是圆/椭圆；一正一负是双曲线；只有一边平方而另一边是一次项，必是抛物线！</li>
+    </ol>
+</div>
+
+<div class="hw-section">
+    <h2>四、 课内突击作业 (Homework)</h2>
+    <p>本课核心测试图形公式的标准记忆。以下为精心设计的 20 道 CSCA 相似度极高选择题。</p>
+
+    <h3>专项突破一：圆的方程识别（10题盲选训练）</h3>
+
+    <div class="q-block">
+        <p><strong>1. 圆 $(x-3)^2 + (y+2)^2 = 16$ 的圆心坐标和半径是：</strong></p>
+        <div class="options"><div class="opt">(A) $(-3, 2), 16$</div><div class="opt">(B) $(3, -2), 4$</div><div class="opt">(C) $(3, 2), 4$</div><div class="opt">(D) $(-3, -2), 16$</div></div>
+        <button class="ans-btn" onclick="toggleAns('g1')">显示答案</button>
+        <div id="g1" class="ans-text">答案：(B)<br>解析：括号内减谁谁就是坐标，3和-2。数字开方是半径即4。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>2. 以原点 $(0,0)$ 为圆心，半径 $r=5$ 的圆方程是：</strong></p>
+        <div class="options"><div class="opt">(A) $x^2 + y^2 = 5$</div><div class="opt">(B) $x^2 + y^2 = 10$</div><div class="opt">(C) $x^2 + y^2 = 25$</div><div class="opt">(D) $x+y=25$</div></div>
+        <button class="ans-btn" onclick="toggleAns('g2')">显示答案</button>
+        <div id="g2" class="ans-text">答案：(C)<br>解析：$x^2+y^2=r^2 \Rightarrow 25$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>3. 圆 $x^2 + (y-1)^2 = 9$ 与 Y轴 交点的横坐标是：</strong></p>
+        <div class="options"><div class="opt">(A) 0</div><div class="opt">(B) 3</div><div class="opt">(C) $\pm3$</div><div class="opt">(D) -1</div></div>
+        <button class="ans-btn" onclick="toggleAns('g3')">显示答案</button>
+        <div id="g3" class="ans-text">答案：(A)<br>解析：所有落在Y轴上的点，其X即横坐标永远为 $0$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>4. 把圆的一般方程 $x^2+y^2-2x-4y-4=0$ 化成标准方程为：</strong></p>
+        <div class="options"><div class="opt">(A) $(x-1)^2+(y-2)^2=9$</div><div class="opt">(B) $(x+1)^2+(y+2)^2=4$</div><div class="opt">(C) $(x-2)^2+(y-4)^2=9$</div><div class="opt">(D) $(x+2)^2+(y+4)^2=16$</div></div>
+        <button class="ans-btn" onclick="toggleAns('g4')">显示答案</button>
+        <div id="g4" class="ans-text">答案：(A)<br>解析：配方法：$(x-1)^2 - 1 + (y-2)^2 - 4 - 4 = 0 \Rightarrow (x-1)^2+(y-2)^2=9$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>5. 判定点 $(1, 2)$ 与圆 $x^2 + y^2 = 4$ 的关系：</strong></p>
+        <div class="options"><div class="opt">(A) 在圆上</div><div class="opt">(B) 在圆内</div><div class="opt">(C) 在圆外</div><div class="opt">(D) 无法确定</div></div>
+        <button class="ans-btn" onclick="toggleAns('g5')">显示答案</button>
+        <div id="g5" class="ans-text">答案：(C)<br>解析：将点代入方程：$1^2 + 2^2 = 5$，$5 > 4$ 说明点在半径外圈，圆外。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>6. 圆心在 $(1, -2)$ 且过点 $(1, 2)$ 的圆方程是：</strong></p>
+        <div class="options"><div class="opt">(A) $(x-1)^2+(y+2)^2=4$</div><div class="opt">(B) $(x-1)^2+(y+2)^2=16$</div><div class="opt">(C) $(x+1)^2+(y-2)^2=16$</div><div class="opt">(D) $(x+1)^2+(y-2)^2=4$</div></div>
+        <button class="ans-btn" onclick="toggleAns('g6')">显示答案</button>
+        <div id="g6" class="ans-text">答案：(B)<br>解析：圆心为$(1,-2)$，半径即到点$(1,2)$的距离，为$4$。右侧是 $4^2=16$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>7. 下列方程哪个表示圆？</strong></p>
+        <div class="options"><div class="opt">(A) $x^2+2y^2=1$</div><div class="opt">(B) $x^2-y^2=1$</div><div class="opt">(C) $x^2+y^2+2x+2y+5=0$</div><div class="opt">(D) $(x-1)^2+(y+1)^2=0.5$</div></div>
+        <button class="ans-btn" onclick="toggleAns('g7')">显示答案</button>
+        <div id="g7" class="ans-text">答案：(D)<br>解析：A系数不同(椭圆)，B负号(双曲线)，C配方后右侧为负数$-3$(虚无)，D是标准圆。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>8. 两圆 $x^2+y^2=1$ 与 $(x-3)^2+y^2=1$ 有多少个交点？</strong></p>
+        <div class="options"><div class="opt">(A) 0个</div><div class="opt">(B) 1个</div><div class="opt">(C) 2个</div><div class="opt">(D) 无数个</div></div>
+        <button class="ans-btn" onclick="toggleAns('g8')">显示答案</button>
+        <div id="g8" class="ans-text">答案：(A)<br>解析：圆心分别是$(0,0)$与$(3,0)$，距离为3；两圆半径均为1。$r_1+r_2=2 < 3$，故外离无交点。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>9. $(x-a)^2+y^2=4$，该圆心的轨迹是：</strong></p>
+        <div class="options"><div class="opt">(A) 整个X轴</div><div class="opt">(B) 整个Y轴</div><div class="opt">(C) 一条斜线</div><div class="opt">(D) 一个点</div></div>
+        <button class="ans-btn" onclick="toggleAns('g9')">显示答案</button>
+        <div id="g9" class="ans-text">答案：(A)<br>解析：圆心是 $(a, 0)$，由于纵坐标永远是 $0$，所以随 $a$ 变化其必在 X 轴上。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>10. 圆 $x^2+y^2=9$ 的最大弦长是：</strong></p>
+        <div class="options"><div class="opt">(A) 3</div><div class="opt">(B) 4.5</div><div class="opt">(C) 6</div><div class="opt">(D) 9</div></div>
+        <button class="ans-btn" onclick="toggleAns('g10')">显示答案</button>
+        <div id="g10" class="ans-text">答案：(C)<br>解析：圆里最长的弦就是直径。半径为$3$，直径为$6$。</div>
+    </div>
+
+    <br>
+    <h3>专项突破二：其他圆锥曲线基础属性（10题盲选训练）</h3>
+
+    <div class="q-block">
+        <p><strong>1. 抛物线 $y^2 = 8x$ 的准线方程是：</strong></p>
+        <div class="options"><div class="opt">(A) $x = 2$</div><div class="opt">(B) $x = -2$</div><div class="opt">(C) $y = -2$</div><div class="opt">(D) $x = -4$</div></div>
+        <button class="ans-btn" onclick="toggleAns('h1')">显示答案</button>
+        <div id="h1" class="ans-text">答案：(B)<br>解析：公式 $2p=8 \Rightarrow p=4$。准线 $x = -p/2 = -2$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>2. 抛物线 $x^2 = -4y$ 的焦点坐标为：</strong></p>
+        <div class="options"><div class="opt">(A) $(0, 1)$</div><div class="opt">(B) $(0, -1)$</div><div class="opt">(C) $(-1, 0)$</div><div class="opt">(D) $(1, 0)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('h2')">显示答案</button>
+        <div id="h2" class="ans-text">答案：(B)<br>解析：对应 $x^2=-2py$，开口向下，焦点在Y轴负半轴为 $(0, -p/2)$。由于 $2p=4 \Rightarrow p=2$，故焦点是 $(0, -1)$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>3. 设方程 $mx^2 + ny^2 = 1 (m>0, n>0, m \ne n)$，它表示什么图形？</strong></p>
+        <div class="options"><div class="opt">(A) 圆</div><div class="opt">(B) 双曲线</div><div class="opt">(C) 抛物线</div><div class="opt">(D) 椭圆</div></div>
+        <button class="ans-btn" onclick="toggleAns('h3')">显示答案</button>
+        <div id="h3" class="ans-text">答案：(D)<br>解析：正系数相加且系数不同，必定是椭圆。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>4. 椭圆 $\frac{x^2}{25} + \frac{y^2}{16} = 1$ 的半焦距 $c$ 是：</strong></p>
+        <div class="options"><div class="opt">(A) $\sqrt{41}$</div><div class="opt">(B) 3</div><div class="opt">(C) 4</div><div class="opt">(D) 5</div></div>
+        <button class="ans-btn" onclick="toggleAns('h4')">显示答案</button>
+        <div id="h4" class="ans-text">答案：(B)<br>解析：$a^2=25, b^2=16 \Rightarrow c^2 = a^2-b^2 = 9 \Rightarrow c=3$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>5. 椭圆 $\frac{x^2}{9} + \frac{y^2}{16} = 1$ 的焦点位于那个坐标轴上？</strong></p>
+        <div class="options"><div class="opt">(A) X轴</div><div class="opt">(B) Y轴</div><div class="opt">(C) 斜线上</div><div class="opt">(D) 无法判断</div></div>
+        <button class="ans-btn" onclick="toggleAns('h5')">显示答案</button>
+        <div id="h5" class="ans-text">答案：(B)<br>解析：看分母，$y^2$ 下面的 $16$ 更大，因此焦点位于Y轴（长轴为Y轴）。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>6. 若双曲线方程为 $\frac{x^2}{16} - \frac{y^2}{9} = 1$，则该双曲线的焦距 $2c$ 为：</strong></p>
+        <div class="options"><div class="opt">(A) 5</div><div class="opt">(B) 10</div><div class="opt">(C) 7</div><div class="opt">(D) $2\sqrt{7}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('h6')">显示答案</button>
+        <div id="h6" class="ans-text">答案：(B)<br>解析：双曲线特性 $c^2 = a^2+b^2 = 16+9 = 25 \Rightarrow c=5$。焦距是 $2c = 10$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>7. 离心率公式是 $e = c/a$。对于某个椭圆，其离心率的范围必是：</strong></p>
+        <div class="options"><div class="opt">(A) $e > 1$</div><div class="opt">(B) $e = 1$</div><div class="opt">(C) $0 < e < 1$</div><div class="opt">(D) $e=0$</div></div>
+        <button class="ans-btn" onclick="toggleAns('h7')">显示答案</button>
+        <div id="h7" class="ans-text">答案：(C)<br>解析：因为对于椭圆 $c < a$，所以 $e$ 一定是小于1的正小数。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>8. 若椭圆上任意点到两焦点的距离和等于 $10$，则其中 $a$ 的值为：</strong></p>
+        <div class="options"><div class="opt">(A) 2.5</div><div class="opt">(B) 5</div><div class="opt">(C) 10</div><div class="opt">(D) 100</div></div>
+        <button class="ans-btn" onclick="toggleAns('h8')">显示答案</button>
+        <div id="h8" class="ans-text">答案：(B)<br>解析：基于打桩几何定义，距离之和恒等于长轴 $2a$。故 $2a=10 \Rightarrow a=5$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>9. $x^2 - y^2 = 1$ 表示的是：</strong></p>
+        <div class="options"><div class="opt">(A) 抛物线</div><div class="opt">(B) 正圆</div><div class="opt">(C) 椭圆</div><div class="opt">(D) 等轴双曲线</div></div>
+        <button class="ans-btn" onclick="toggleAns('h9')">显示答案</button>
+        <div id="h9" class="ans-text">答案：(D)<br>解析：具备负号 $a^2=b^2=1$，故其是最经典的等轴双曲线。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>10. 抛物线 $y = ax^2 (a>0)$ 的开口方向是：</strong></p>
+        <div class="options"><div class="opt">(A) 向左</div><div class="opt">(B) 向右</div><div class="opt">(C) 向上</div><div class="opt">(D) 向下</div></div>
+        <button class="ans-btn" onclick="toggleAns('h10')">显示答案</button>
+        <div id="h10" class="ans-text">答案：(C)<br>解析：等比例变换为 $x^2 = \frac{1}{a}y$，对于正常的二次函数，正系数必为开口向上抛物线。</div>
+    </div>
+</div>
+</body>
+</html>

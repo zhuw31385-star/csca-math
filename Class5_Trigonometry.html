@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSCA数学冲刺课件 5/6: 【三角函数终结者】</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+<style>
+    body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; color: #333; }
+    .header { text-align: center; border-bottom: 3px solid #8e44ad; margin-bottom: 20px; }
+    .header h1 { color: #9b59b6; }
+    .box { background: #fdf2e9; padding: 15px; border-left: 5px solid #d35400; margin-bottom: 20px; }
+    .rule { background: #f2f3f4; padding: 15px; border-left: 5px solid #34495e; margin-bottom: 20px; font-weight: bold; color: #2c3e50;}
+    .hw-section { margin-top: 40px; padding-top: 20px; border-top: 2px dashed #ccc; }
+    .q-block { margin-bottom: 15px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .options { display: flex; flex-wrap: wrap; margin-top: 10px; }
+    .opt { width: 50%; margin-bottom: 8px; }
+    .ans-btn { background: #8e44ad; color: white; padding: 3px 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; margin-top: 10px; }
+    .ans-text { display: none; margin-top: 10px; color: #2c3e50; font-weight: bold; border-left: 3px solid #2c3e50; padding-left: 10px; }
+</style>
+<script>
+    function toggleAns(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none" || x.style.display === "") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+</head>
+<body>
+<div class="header">
+    <h1>第五课时 (Lesson 5)：三角函数防雷区</h1>
+    <p>时长：60分钟 | 目标得点：4 题</p>
+</div>
+
+<h2>一、 本课考情指南 (Strategy)</h2>
+<p>三角函数是所有考生极易踩坑暴毙的死亡地带。这节课不求学深，只要求做到一件事：<strong>坚决不能搞错正负号符号！</strong>如果遇到极其复杂的变角推演且耗时，直接跳过蒙题。</p>
+
+<h2>二、 核心知识点与可视系统化 (Visualized Core Rules)</h2>
+<div class="box">
+    <h3>1. 系统扩展：ASTC 四象限生死转轮图</h3>
+    <p>每次遇到求 $\sin, \cos, \tan$ 题目的第一件事，就是在草稿纸上画出下面这个轮盘：</p>
+    
+    <div style="text-align:center; margin: 20px 0;">
+        <svg width="300" height="300" viewBox="0 0 300 300">
+            <!-- Background Circle -->
+            <circle cx="150" cy="150" r="120" fill="none" stroke="#ccc" stroke-width="2"/>
+            <!-- Axes -->
+            <line x1="10" y1="150" x2="290" y2="150" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+            <line x1="150" y1="290" x2="150" y2="10" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+            <defs>
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#333" />
+                </marker>
+            </defs>
+            
+            <!-- Highlight Sectors & Labels -->
+            <!-- Quadrant 1 -->
+            <path d="M150,150 L270,150 A120,120 0 0,0 150,30 Z" fill="#2ecc71" opacity="0.2"/>
+            <text x="200" y="80" font-size="28" font-weight="bold" fill="#27ae60">A (全正)</text>
+            <text x="180" y="110" font-size="14" fill="#27ae60">All Positive (+)</text>
+            
+            <!-- Quadrant 2 -->
+            <path d="M150,150 L150,30 A120,120 0 0,0 30,150 Z" fill="#e74c3c" opacity="0.2"/>
+            <text x="50" y="80" font-size="28" font-weight="bold" fill="#c0392b">S (正弦)</text>
+            <text x="40" y="110" font-size="12" fill="#c0392b">只有 Sin 正 (+)</text>
+            
+            <!-- Quadrant 3 -->
+            <path d="M150,150 L30,150 A120,120 0 0,0 150,270 Z" fill="#3498db" opacity="0.2"/>
+            <text x="50" y="240" font-size="28" font-weight="bold" fill="#2980b9">T (正切)</text>
+            <text x="40" y="270" font-size="12" fill="#2980b9">只有 Tan 正 (+)</text>
+            
+            <!-- Quadrant 4 -->
+            <path d="M150,150 L150,270 A120,120 0 0,0 270,150 Z" fill="#f1c40f" opacity="0.2"/>
+            <text x="200" y="240" font-size="28" font-weight="bold" fill="#f39c12">C (余弦)</text>
+            <text x="180" y="270" font-size="12" fill="#f39c12">只有 Cos 正 (+)</text>
+            
+            <!-- Angles -->
+            <text x="275" y="145" font-size="14">0 (2π)</text>
+            <text x="155" y="25" font-size="14">π/2</text>
+            <text x="10" y="145" font-size="14">π</text>
+            <text x="155" y="285" font-size="14">3π/2</text>
+        </svg>
+    </div>
+    <ul style="border-top: 1px solid #ccc; padding-top: 10px;">
+        <li><strong>A</strong> (All): 第一象限内，$\sin, \cos, \tan$ 全部大于0</li>
+        <li><strong>S</strong> (Sin): 第二象限内，<strong>只有</strong> $\sin > 0$（其余皆为负号）</li>
+        <li><strong>T</strong> (Tan): 第三象限内，<strong>只有</strong> $\tan > 0$（其余皆为负号）</li>
+        <li><strong>C</strong> (Cos): 第四象限内，<strong>只有</strong> $\cos > 0$（其余皆为负号）</li>
+    </ul>
+    <strong>这步永远必须放在所有解题的极开始！判断错误直接出局！</strong>
+</div>
+
+<div class="rule">
+    <h3>2. 救命三公式</h3>
+    <ol>
+        <li>平方相消： $\sin^2\alpha + \cos^2\alpha = 1$ （已知其一求其二必备）。</li>
+        <li>二倍角： $\cos 2\alpha = 1 - 2\sin^2\alpha$。</li>
+        <li>奇变偶不变，符号看象限（$\sin(\pi + x) = -\sin x$ 等）。</li>
+    </ol>
+</div>
+
+<div class="hw-section">
+    <h2>四、 课内突击作业 (Homework)</h2>
+    <p>以下为精心设计的 20 道 CSCA 仿真选择题。要求每个学生准备纸，第一步先画个十字，判断落笔区域是正还是负！</p>
+
+    <h3>专项突破一：特殊角与象限符号辨析（10题盲选训练）</h3>
+
+    <div class="q-block">
+        <p><strong>1. 角 $120^\circ$ 位于哪个象限？</strong></p>
+        <div class="options"><div class="opt">(A) 第一象限</div><div class="opt">(B) 第二象限</div><div class="opt">(C) 第三象限</div><div class="opt">(D) 第四象限</div></div>
+        <button class="ans-btn" onclick="toggleAns('i1')">显示答案</button>
+        <div id="i1" class="ans-text">答案：(B)<br>解析：处于 $90 \sim 180$ 度之间。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>2. 设 $\alpha = 5\pi/6$，则 $\cos \alpha$ 的值是：</strong></p>
+        <div class="options"><div class="opt">(A) $1/2$</div><div class="opt">(B) $\sqrt{3} / 2$</div><div class="opt">(C) $-1/2$</div><div class="opt">(D) $-\sqrt{3} / 2$</div></div>
+        <button class="ans-btn" onclick="toggleAns('i2')">显示答案</button>
+        <div id="i2" class="ans-text">答案：(D)<br>解析：位于第二象限，Cosine 必为负。<br>只剩C和D，这是150度角，绝对值与30度一致，即 $-\sqrt{3}/2$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>3. 若 $\sin \theta < 0$ 且 $\tan \theta > 0$，则 $\theta$ 位于：</strong></p>
+        <div class="options"><div class="opt">(A) 第一象限</div><div class="opt">(B) 第二象限</div><div class="opt">(C) 第三象限</div><div class="opt">(D) 第四象限</div></div>
+        <button class="ans-btn" onclick="toggleAns('i3')">显示答案</button>
+        <div id="i3" class="ans-text">答案：(C)<br>解析：Tan为正，必在一三象限。能同时满足Sine为负的，只有第三象限。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>4. 计算 $\sin(-\pi/6) =$</strong></p>
+        <div class="options"><div class="opt">(A) $1/2$</div><div class="opt">(B) $-1/2$</div><div class="opt">(C) $\sqrt{3}/2$</div><div class="opt">(D) $-\sqrt{3}/2$</div></div>
+        <button class="ans-btn" onclick="toggleAns('i4')">显示答案</button>
+        <div id="i4" class="ans-text">答案：(B)<br>解析：即 $-30$ 度，在第四象限Sine为负；或利用奇函数 $\sin(-x) = -\sin x = -1/2$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>5. 已知 $\alpha \in (\pi, 3\pi/2)$ 且 $\cos \alpha = -3/5$，则 $\sin \alpha =$</strong></p>
+        <div class="options"><div class="opt">(A) $4/5$</div><div class="opt">(B) $-4/5$</div><div class="opt">(C) $3/5$</div><div class="opt">(D) $-3/5$</div></div>
+        <button class="ans-btn" onclick="toggleAns('i5')">显示答案</button>
+        <div id="i5" class="ans-text">答案：(B)<br>解析：第三象限内 Sine 也必为负。直接用勾股法 $\sqrt{1-(3/5)^2}$ 加个负号获得。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>6. 下列关系式中错误的是：</strong></p>
+        <div class="options"><div class="opt">(A) $\sin 30^\circ = \cos 60^\circ$</div><div class="opt">(B) $\sin^2 45^\circ = 0.5$</div><div class="opt">(C) $\tan 45^\circ = 1$</div><div class="opt">(D) $\cos 90^\circ = 1$</div></div>
+        <button class="ans-btn" onclick="toggleAns('i6')">显示答案</button>
+        <div id="i6" class="ans-text">答案：(D)<br>解析：因为 $\cos 90^\circ$ 其实等于 $0$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>7. 若点 $(-\sqrt{3}, 1)$ 落在角 $\alpha$ 的终边上，则 $\alpha$ 是第几象限角？</strong></p>
+        <div class="options"><div class="opt">(A) 第一</div><div class="opt">(B) 第二</div><div class="opt">(C) 第三</div><div class="opt">(D) 第四</div></div>
+        <button class="ans-btn" onclick="toggleAns('i7')">显示答案</button>
+        <div id="i7" class="ans-text">答案：(B)<br>解析：该点横坐标为负号，纵向为正。就是标准的左上方第二象限点。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>8. $\tan \theta = \sin \theta / \cos \theta$ 成立的条件是：</strong></p>
+        <div class="options"><div class="opt">(A) $\sin \theta \ne 0$</div><div class="opt">(B) $\cos \theta \ne 0$</div><div class="opt">(C) $\theta > 0$</div><div class="opt">(D) 无条件</div></div>
+        <button class="ans-btn" onclick="toggleAns('i8')">显示答案</button>
+        <div id="i8" class="ans-text">答案：(B)<br>解析：任何算式里的分母都绝对不能为 $0$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>9. 函数 $y = \sin x$ 单调递减的区间是：</strong></p>
+        <div class="options"><div class="opt">(A) $(0, \pi)$</div><div class="opt">(B) $(-\pi/2, \pi/2)$</div><div class="opt">(C) $(\pi/2, 3\pi/2)$</div><div class="opt">(D) $(\pi, 2\pi)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('i9')">显示答案</button>
+        <div id="i9" class="ans-text">答案：(C)<br>解析：Sine最高点在 $\pi/2$，最低点在 $3\pi/2$。这中间一路都在往下走。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>10. 已知 $\tan \alpha = 1$，$\alpha$ 是锐角。求 $\cos \alpha =$</strong></p>
+        <div class="options"><div class="opt">(A) $1$</div><div class="opt">(B) $\sqrt{2}/2$</div><div class="opt">(C) $\sqrt{3}/2$</div><div class="opt">(D) $1/2$</div></div>
+        <button class="ans-btn" onclick="toggleAns('i10')">显示答案</button>
+        <div id="i10" class="ans-text">答案：(B)<br>解析：正切为 1 对应的经典 45° 锐角。其 Cosine 与 Sine 一致均为 $\sqrt{2}/2$。</div>
+    </div>
+
+    <br>
+    <h3>专项突破二：诱导公式与二倍角变形（10题盲选训练）</h3>
+
+    <div class="q-block">
+        <p><strong>1. 化简 $\cos(x + 2\pi) =$ </strong></p>
+        <div class="options"><div class="opt">(A) $\cos x$</div><div class="opt">(B) $-\cos x$</div><div class="opt">(C) $\sin x$</div><div class="opt">(D) $-\sin x$</div></div>
+        <button class="ans-btn" onclick="toggleAns('j1')">显示答案</button>
+        <div id="j1" class="ans-text">答案：(A)<br>解析：加上整数个周期（即360度）等于不动，依然还是 $\cos x$ 本身。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>2. 诱导变形 $\sin(x + \pi/2) =$</strong></p>
+        <div class="options"><div class="opt">(A) $\sin x$</div><div class="opt">(B) $-\sin x$</div><div class="opt">(C) $\cos x$</div><div class="opt">(D) $-\cos x$</div></div>
+        <button class="ans-btn" onclick="toggleAns('j2')">显示答案</button>
+        <div id="j2" class="ans-text">答案：(C)<br>解析：根据奇变偶不变，$90$度为奇数倍所以变 Cosine；正负方面，设 x 为极小角，加上后进入第二象限Sine为正号。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>3. 已知 $\sin x = 1/4$，则 $\cos(2x) = $</strong></p>
+        <div class="options"><div class="opt">(A) $7/8$</div><div class="opt">(B) $15/16$</div><div class="opt">(C) $1/8$</div><div class="opt">(D) $1/16$</div></div>
+        <button class="ans-btn" onclick="toggleAns('j3')">显示答案</button>
+        <div id="j3" class="ans-text">答案：(A)<br>解析：$\cos 2x = 1 - 2\sin^2 x = 1 - 2(1/16) = 1 - 1/8 = 7/8$。完全不需考虑象限。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>4. 在化简表达式 $\tan(\pi - x)$ 后，得出的是：</strong></p>
+        <div class="options"><div class="opt">(A) $\tan x$</div><div class="opt">(B) $-\tan x$</div><div class="opt">(C) $\cot x$</div><div class="opt">(D) $-\cot x$</div></div>
+        <button class="ans-btn" onclick="toggleAns('j4')">显示答案</button>
+        <div id="j4" class="ans-text">答案：(B)<br>解析：偶数倍直角（$180$ 不变字面），因在第二象限Tan为负。故 $-\tan x$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>5. 若 $\cos 2\alpha = 1/3$，则 $\sin^2 \alpha =$</strong></p>
+        <div class="options"><div class="opt">(A) $1/3$</div><div class="opt">(B) $2/3$</div><div class="opt">(C) $1/6$</div><div class="opt">(D) $5/6$</div></div>
+        <button class="ans-btn" onclick="toggleAns('j5')">显示答案</button>
+        <div id="j5" class="ans-text">答案：(A)<br>解析：$1/3 = 1 - 2\sin^2\alpha \Rightarrow 2\sin^2\alpha = 2/3 \Rightarrow \sin^2\alpha=1/3$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>6. 函数 $y = 3\sin(2x - \pi/4)$ 的最小正周期是：</strong></p>
+        <div class="options"><div class="opt">(A) $2\pi$</div><div class="opt">(B) $\pi$</div><div class="opt">(C) $\pi/2$</div><div class="opt">(D) $4\pi$</div></div>
+        <button class="ans-btn" onclick="toggleAns('j6')">显示答案</button>
+        <div id="j6" class="ans-text">答案：(B)<br>解析：周期 $T = 2\pi / |\omega|$。这里 $x$ 的系数 $\omega = 2$，$2\pi/2 = \pi$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>7. 求 $\cos(17\pi/6)$ 的值：</strong></p>
+        <div class="options"><div class="opt">(A) $\sqrt{3}/2$</div><div class="opt">(B) $-\sqrt{3}/2$</div><div class="opt">(C) $1/2$</div><div class="opt">(D) $-1/2$</div></div>
+        <button class="ans-btn" onclick="toggleAns('j7')">显示答案</button>
+        <div id="j7" class="ans-text">答案：(B)<br>解析：拆分为 $\cos(2\pi + 5\pi/6) = \cos(5\pi/6)$。$150$度的余弦是在第二象限的负号即 $-\sqrt{3}/2$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>8. 下面两个值大小的对比，正确的是：</strong></p>
+        <div class="options"><div class="opt">(A) $\sin 10^\circ > \sin 20^\circ$</div><div class="opt">(B) $\cos 10^\circ < \cos 20^\circ$</div><div class="opt">(C) $\sin 50^\circ < \cos 50^\circ$</div><div class="opt">(D) $\tan 40^\circ < \tan 50^\circ$</div></div>
+        <button class="ans-btn" onclick="toggleAns('j8')">显示答案</button>
+        <div id="j8" class="ans-text">答案：(D)<br>解析：在第一象限，正切Tan绝对递增。所以 $50$ 度一定大于 $40$ 度。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>9. $\sin(x) \cdot \cos(x)$ 可用二倍角简化为：</strong></p>
+        <div class="options"><div class="opt">(A) $\sin(2x)$</div><div class="opt">(B) $0.5\sin(2x)$</div><div class="opt">(C) $2\sin(2x)$</div><div class="opt">(D) $\cos(2x)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('j9')">显示答案</button>
+        <div id="j9" class="ans-text">答案：(B)<br>解析：由于 $\sin 2x = 2 \sin x \cos x$。两边除以 $2$ 即得到它等价于 $1/2\sin 2x$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>10. 已知 $\cos x = 1/2$，则 $\cos^2 x + \sin^2 x =$</strong></p>
+        <div class="options"><div class="opt">(A) $1/2$</div><div class="opt">(B) $1$</div><div class="opt">(C) $3/4$</div><div class="opt">(D) $1/4$</div></div>
+        <button class="ans-btn" onclick="toggleAns('j10')">显示答案</button>
+        <div id="j10" class="ans-text">答案：(B)<br>解析：无论 $x$ 是多少，这是永远等于 $1$ 的宇宙第一铁律。</div>
+    </div>
+
+</div>
+</body>
+</html>

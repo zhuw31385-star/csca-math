@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSCA数学冲刺课件 2/6: 【函数指对数】</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+<style>
+    body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; color: #333; }
+    .header { text-align: center; border-bottom: 3px solid #3498db; margin-bottom: 20px; }
+    .header h1 { color: #2980b9; }
+    .box { background: #eaf2f8; padding: 15px; border-left: 5px solid #2980b9; margin-bottom: 20px; }
+    .rule { background: #fdf2e9; padding: 15px; border-left: 5px solid #e67e22; margin-bottom: 20px; font-weight: bold; }
+    .hw-section { margin-top: 40px; padding-top: 20px; border-top: 2px dashed #ccc; }
+    .q-block { margin-bottom: 15px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .options { display: flex; flex-wrap: wrap; margin-top: 10px; }
+    .opt { width: 50%; margin-bottom: 8px; }
+    .ans-btn { background: #2980b9; color: white; padding: 3px 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; margin-top: 10px; }
+    .ans-text { display: none; margin-top: 10px; color: #e67e22; font-weight: bold; border-left: 3px solid #e67e22; padding-left: 10px; }
+</style>
+<script>
+    function toggleAns(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none" || x.style.display === "") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+</head>
+<body>
+<div class="header">
+    <h1>第二课时 (Lesson 2)：函数基础与指对数</h1>
+    <p>时长：60分钟 | 目标得点：5-6 题</p>
+</div>
+
+<h2>一、 本课考情指南 (Strategy)</h2>
+<p>函数的题目看起来式子很长，但实际上只考定义域的“三个不准”以及背诵对数运算法则。计算极为简化，这节课只需学生牢记三大死亡禁区（Domain rules）和四大公式（Log rules）。</p>
+
+<h2>二、 核心知识点与可视系统化 (Visualized Core Rules)</h2>
+<div class="box">
+    <h3>1. 系统扩展：函数的奇偶性视像化 (Parity)</h3>
+    <p>看到提问奇函数/偶函数，请直接脑补下面这两张极其经典的图解：</p>
+    <div style="display:flex; justify-content:space-around; align-items:flex-end; text-align:center; margin-bottom: 20px;">
+        <!-- Even Function -->
+        <div style="width: 45%; background: #fff; padding: 10px; border-radius: 8px;">
+            <svg width="150" height="150" viewBox="0 0 150 150">
+                <line x1="10" y1="120" x2="140" y2="120" stroke="#ccc"/>
+                <line x1="75" y1="10" x2="75" y2="140" stroke="#ccc"/>
+                <path d="M20,20 Q75,180 130,20" stroke="#3498db" fill="none" stroke-width="2"/>
+            </svg>
+            <p style="margin:5px 0 0 0; font-size:14px; font-weight:bold; color: #2980b9;">偶函数 Even $(y=x^2)$</p>
+            <p style="margin:0; font-size:12px;"><strong>左右如镜子，关于 Y 轴对称！</strong><br>$f(-x) = f(x)$</p>
+        </div>
+        <!-- Odd Function -->
+        <div style="width: 45%; background: #fff; padding: 10px; border-radius: 8px;">
+            <svg width="150" height="150" viewBox="0 0 150 150">
+                <line x1="10" y1="75" x2="140" y2="75" stroke="#ccc"/>
+                <line x1="75" y1="10" x2="75" y2="140" stroke="#ccc"/>
+                <path d="M20,130 C60,130 65,75 75,75 C85,75 90,20 130,20" stroke="#e74c3c" fill="none" stroke-width="2"/>
+                <circle cx="75" cy="75" r="4" fill="#333"/>
+            </svg>
+            <p style="margin:5px 0 0 0; font-size:14px; font-weight:bold; color: #c0392b;">奇函数 Odd $(y=x^3, y=1/x)$</p>
+            <p style="margin:0; font-size:12px;"><strong>上下左右颠倒，关于原点对称！</strong><br>$f(-x) = -f(x)$</p>
+        </div>
+    </div>
+    
+    <h3 style="border-top: 1px dashed #ccc; padding-top:15px;">2. 函数定义域“三大禁忌”</h3>
+    <ul>
+        <li>见到分母：分母不能为 $0$ (即 $x \neq 0$)</li>
+        <li>见到偶数次根号 $\sqrt{...}$：根号内的东西必须 $\ge 0$</li>
+        <li>见到对数 $\log_a(...) $：括号里的真数必须 $> 0$</li>
+    </ul>
+    遇到混合题，三者同时求交集。
+</div>
+
+<div class="rule">
+    <h3>2. 对数操作四大终极变形 (Logarithms)</h3>
+    <ol>
+        <li>$\log_a (xy) = \log_a x + \log_a y$</li>
+        <li>$\log_a (x/y) = \log_a x - \log_a y$</li>
+        <li>$\log_a (x^n) = n \cdot \log_a x$</li>
+        <li>特殊换底： $\log_a b = \frac{\ln b}{\ln a}$</li>
+    </ol>
+</div>
+
+<div class="hw-section">
+    <h2>四、 课内突击作业 (Homework)</h2>
+    <p>以下为针对本课知识点专门设计的 20 道 CSCA 仿真选择题，请在规定时间内验证自己的肌肉记忆。</p>
+
+    <h3>专项突破一：函数性质（定义域、奇偶性、值域）10题</h3>
+    
+    <div class="q-block">
+        <p><strong>1. 函数 $f(x) = \frac{1}{x-3} + \sqrt{x+2}$ 的定义域是：</strong></p>
+        <div class="options"><div class="opt">(A) $[-2, 3) \cup (3, +\infty)$</div><div class="opt">(B) $[-2, +\infty)$</div><div class="opt">(C) $(-\infty, 3) \cup (3, +\infty)$</div><div class="opt">(D) $(-2, 3)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('c1')">显示答案</button>
+        <div id="c1" class="ans-text">答案：(A)<br>解析：分母 $x \neq 3$，根号 $x \ge -2$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>2. 关于函数 $f(x) = x^3 + x$，下列说法中正确的是：</strong></p>
+        <div class="options"><div class="opt">(A) 是偶函数</div><div class="opt">(B) 是奇函数</div><div class="opt">(C) 非奇非偶函数</div><div class="opt">(D) 既是奇函数又是偶函数</div></div>
+        <button class="ans-btn" onclick="toggleAns('c2')">显示答案</button>
+        <div id="c2" class="ans-text">答案：(B)<br>解析：$f(-x) = (-x)^3 + (-x) = -x^3 - x = -f(x)$，故为奇函数。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>3. 函数 $y = \frac{x}{x^2+1}$ 的奇偶性为：</strong></p>
+        <div class="options"><div class="opt">(A) 奇函数</div><div class="opt">(B) 偶函数</div><div class="opt">(C) 非奇非偶</div><div class="opt">(D) 不确定</div></div>
+        <button class="ans-btn" onclick="toggleAns('c3')">显示答案</button>
+        <div id="c3" class="ans-text">答案：(A)<br>解析：$f(-x) = -x / (x^2+1) = -f(x)$，奇函数。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>4. 函数 $f(x) = \frac{x+1}{x-1}$ 的反函数是：</strong></p>
+        <div class="options"><div class="opt">(A) $y = \frac{x-1}{x+1}$</div><div class="opt">(B) $y = \frac{x+1}{x-1}$</div><div class="opt">(C) $y = -\frac{x+1}{x-1}$</div><div class="opt">(D) $y = 1$</div></div>
+        <button class="ans-btn" onclick="toggleAns('c4')">显示答案</button>
+        <div id="c4" class="ans-text">答案：(B)<br>解析：解 $x(y-1) = y+1 \Rightarrow x = (y+1)/(y-1)$，互换后与原函数一模一样。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>5. 已知 $y = f(x)$ 是偶函数，且 $f(-2) = 4$，则 $f(2) =$</strong></p>
+        <div class="options"><div class="opt">(A) -4</div><div class="opt">(B) 4</div><div class="opt">(C) 0</div><div class="opt">(D) 2</div></div>
+        <button class="ans-btn" onclick="toggleAns('c5')">显示答案</button>
+        <div id="c5" class="ans-text">答案：(B)<br>解析：偶函数 $f(-x) = f(x)$，故等号左右对称，结果相等。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>6. 函数 $f(x) = \sqrt{4-x^2}$ 的定义域是：</strong></p>
+        <div class="options"><div class="opt">(A) $[-2, 2]$</div><div class="opt">(B) $(-2, 2)$</div><div class="opt">(C) $(-\infty, -2] \cup [2, +\infty)$</div><div class="opt">(D) $\mathbb{R}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('c6')">显示答案</button>
+        <div id="c6" class="ans-text">答案：(A)<br>解析：$4-x^2 \ge 0 \Rightarrow x^2 \le 4 \Rightarrow -2 \le x \le 2$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>7. 下面四个函数中，在 $(0, +\infty)$ 上单调递增的是：</strong></p>
+        <div class="options"><div class="opt">(A) $y = -x^2$</div><div class="opt">(B) $y = 1/x$</div><div class="opt">(C) $y = \log_{0.5} x$</div><div class="opt">(D) $y = x^3$</div></div>
+        <button class="ans-btn" onclick="toggleAns('c7')">显示答案</button>
+        <div id="c7" class="ans-text">答案：(D)<br>解析：A和B和C都单调递减。只有三次函数在正数域内越变越大。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>8. 已知函数 $f(x) = |x - 1|$，在下列哪个区间上单调递增？</strong></p>
+        <div class="options"><div class="opt">(A) $(-\infty, 1)$</div><div class="opt">(B) $(0, +\infty)$</div><div class="opt">(C) $(1, +\infty)$</div><div class="opt">(D) $(-\infty, 0)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('c8')">显示答案</button>
+        <div id="c8" class="ans-text">答案：(C)<br>解析：绝对值函数的转折点在 $x=1$，其右侧即 $>1$ 的部分单调递增。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>9. 函数 $y = -2x+3$ 的反函数是：</strong></p>
+        <div class="options"><div class="opt">(A) $y = -\frac{1}{2}x + \frac{3}{2}$</div><div class="opt">(B) $y = \frac{1}{2}x - \frac{3}{2}$</div><div class="opt">(C) $y = -2x-3$</div><div class="opt">(D) $y = 2x-3$</div></div>
+        <button class="ans-btn" onclick="toggleAns('c9')">显示答案</button>
+        <div id="c9" class="ans-text">答案：(A)<br>解析：反解 $x = (3-y)/2 = -\frac{1}{2}y + \frac{3}{2}$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>10. 函数 $y = \frac{1}{1+x^2}$ 的最大值是：</strong></p>
+        <div class="options"><div class="opt">(A) 0</div><div class="opt">(B) 1</div><div class="opt">(C) 2</div><div class="opt">(D) 不存在</div></div>
+        <button class="ans-btn" onclick="toggleAns('c10')">显示答案</button>
+        <div id="c10" class="ans-text">答案：(B)<br>解析：分母最小为1（当x=0时），则整体分式达到最大值 $1/1 = 1$。</div>
+    </div>
+
+    <br>
+    <h3>专项突破二：指对数恒等变形（10题盲选训练）</h3>
+
+    <div class="q-block">
+        <p><strong>1. 已知 $a>0, a \ne 1$，对数 $\log_a 1 =$</strong></p>
+        <div class="options"><div class="opt">(A) $a$</div><div class="opt">(B) $1$</div><div class="opt">(C) $0$</div><div class="opt">(D) 不存在</div></div>
+        <button class="ans-btn" onclick="toggleAns('d1')">显示答案</button>
+        <div id="d1" class="ans-text">答案：(C)<br>解析：任何正数非1的0次方都等于1，即 $\log_a 1 = 0$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>2. 计算 $\log_2 4 + \log_2 8 =$</strong></p>
+        <div class="options"><div class="opt">(A) 2</div><div class="opt">(B) 3</div><div class="opt">(C) 5</div><div class="opt">(D) 32</div></div>
+        <button class="ans-btn" onclick="toggleAns('d2')">显示答案</button>
+        <div id="d2" class="ans-text">答案：(C)<br>解析：相加等于 $2 + 3 = 5$ 或是化为 $\log_2 32 = 5$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>3. 比较大小：$2^{0.5}$ 与 $2^{0.6}$</strong></p>
+        <div class="options"><div class="opt">(A) $2^{0.5} > 2^{0.6}$</div><div class="opt">(B) $2^{0.5} < 2^{0.6}$</div><div class="opt">(C) 相等</div><div class="opt">(D) 无法比较</div></div>
+        <button class="ans-btn" onclick="toggleAns('d3')">显示答案</button>
+        <div id="d3" class="ans-text">答案：(B)<br>解析：底数 $2>1$，指数函数单调递增，指数大的大。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>4. 下列等式正确的是：</strong></p>
+        <div class="options"><div class="opt">(A) $\ln(x+y) = \ln x + \ln y$</div><div class="opt">(B) $\lg x^2 = (\lg x)^2$</div><div class="opt">(C) $\ln(xy) = \ln x + \ln y \ (x>0,y>0)$</div><div class="opt">(D) $\log_2 (-4) = -2$</div></div>
+        <button class="ans-btn" onclick="toggleAns('d4')">显示答案</button>
+        <div id="d4" class="ans-text">答案：(C)<br>解析：标准的对数乘积化加和公式。真数不能为负。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>5. 若指数函数 $y = a^x$ 在定义域内单调递减，则底数 $a$ 的范围是：</strong></p>
+        <div class="options"><div class="opt">(A) $a > 1$</div><div class="opt">(B) $0 < a < 1$</div><div class="opt">(C) $a < 1$</div><div class="opt">(D) $a > 0$</div></div>
+        <button class="ans-btn" onclick="toggleAns('d5')">显示答案</button>
+        <div id="d5" class="ans-text">答案：(B)<br>解析：底数在 $0$ 到 $1$ 之间时，指数函数递减。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>6. 计算 $e^{\ln 5} =$</strong></p>
+        <div class="options"><div class="opt">(A) $e$</div><div class="opt">(B) $\ln 5$</div><div class="opt">(C) $5$</div><div class="opt">(D) $1$</div></div>
+        <button class="ans-btn" onclick="toggleAns('d6')">显示答案</button>
+        <div id="d6" class="ans-text">答案：(C)<br>解析：指数与自然对数抵消性质 $a^{\log_a x} = x$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>7. 已知 $\lg 2 = a$，$ \lg 3 = b$，则 $\lg 6 =$</strong></p>
+        <div class="options"><div class="opt">(A) $a+b$</div><div class="opt">(B) $a \cdot b$</div><div class="opt">(C) $a^b$</div><div class="opt">(D) $b/a$</div></div>
+        <button class="ans-btn" onclick="toggleAns('d7')">显示答案</button>
+        <div id="d7" class="ans-text">答案：(A)<br>解析：$\lg 6 = \lg(2 \times 3) = \lg 2 + \lg 3 = a + b$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>8. 不等式 $(0.5)^x < (0.5)^3$ 的解集是：</strong></p>
+        <div class="options"><div class="opt">(A) $x < 3$</div><div class="opt">(B) $x > 3$</div><div class="opt">(C) $x = 3$</div><div class="opt">(D) $x > -3$</div></div>
+        <button class="ans-btn" onclick="toggleAns('d8')">显示答案</button>
+        <div id="d8" class="ans-text">答案：(B)<br>解析：底数 $0.5 < 1$，为递减函数。因此去掉底数要反转不等号，即 $x>3$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>9. 函数 $y = \log_2 (x-1)$ 的定义域是：</strong></p>
+        <div class="options"><div class="opt">(A) $(1, +\infty)$</div><div class="opt">(B) $[1, +\infty)$</div><div class="opt">(C) $(0, +\infty)$</div><div class="opt">(D) $\mathbb{R}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('d9')">显示答案</button>
+        <div id="d9" class="ans-text">答案：(A)<br>解析：真数需要大于$0$，即 $x-1 > 0 \Rightarrow x > 1$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>10. 函数 $y = 3^x$ 的值域是：</strong></p>
+        <div class="options"><div class="opt">(A) $\mathbb{R}$</div><div class="opt">(B) $[0, +\infty)$</div><div class="opt">(C) $(0, +\infty)$</div><div class="opt">(D) $(-\infty, 0)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('d10')">显示答案</button>
+        <div id="d10" class="ans-text">答案：(C)<br>解析：指数函数的值域永远恒为正数域（大于0，且不含0）。</div>
+    </div>
+</div>
+</body>
+</html>

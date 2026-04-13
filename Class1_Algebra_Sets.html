@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSCA数学冲刺课件 1/6: 【代数与集合】</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+<style>
+    body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; color: #333; }
+    .header { text-align: center; border-bottom: 3px solid #e74c3c; margin-bottom: 20px; }
+    .header h1 { color: #c0392b; }
+    .box { background: #fdf2e9; padding: 15px; border-left: 5px solid #d35400; margin-bottom: 20px; }
+    .rule { background: #e8f8f5; padding: 15px; border-left: 5px solid #1abc9c; margin-bottom: 20px; font-weight: bold; }
+    .hw-section { margin-top: 40px; padding-top: 20px; border-top: 2px dashed #ccc; }
+    .q-block { margin-bottom: 15px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .options { display: flex; flex-wrap: wrap; margin-top: 10px; }
+    .opt { width: 50%; margin-bottom: 8px; }
+    .ans-btn { background: #e74c3c; color: white; padding: 3px 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; margin-top: 10px; }
+    .ans-text { display: none; margin-top: 10px; color: #27ae60; font-weight: bold; border-left: 3px solid #27ae60; padding-left: 10px; }
+</style>
+<script>
+    function toggleAns(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none" || x.style.display === "") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+</head>
+<body>
+<div class="header">
+    <h1>第一课时 (Lesson 1)：代数与集合</h1>
+    <p>时长：60分钟 | 目标得点：4-5 题 (绝对不丢分)</p>
+</div>
+
+<h2>一、 本课考情指南 (Strategy)</h2>
+<p>集合与简单的二次不等式是考试中<strong>最容易拿到分</strong>的部分。难点在于俄语学生对于各类集合符号（开闭区间组合）的理解以及中文描述的辨识。我们不讲深层原理，只练“看算式、拿分”。</p>
+
+<h2>二、 核心知识点与可视系统化 (Visualized Core Rules)</h2>
+<div class="box">
+    <h3>1. 系统扩展：集合与韦恩图 (Venn Diagrams)</h3>
+    <p>做集合题时，直接把集合想象成圈圈，找重叠或者合并的部分：</p>
+    <div style="display:flex; justify-content:space-around; text-align:center;">
+        <div>
+            <svg width="150" height="150" viewBox="0 0 150 150">
+                <circle cx="55" cy="75" r="40" fill="#3498db" opacity="0.5" />
+                <circle cx="95" cy="75" r="40" fill="#e74c3c" opacity="0.5" />
+                <path d="M75,41 A40,40 0 0,0 75,109 A40,40 0 0,0 75,41 Z" fill="#8e44ad" />
+                <text x="35" y="75" font-size="20">A</text>
+                <text x="105" y="75" font-size="20">B</text>
+            </svg>
+            <p style="margin:0;"><strong>A ∩ B (交集)</strong><br>重叠区域 (同时满足)</p>
+        </div>
+        <div>
+            <svg width="150" height="150" viewBox="0 0 150 150">
+                <circle cx="55" cy="75" r="40" fill="#2ecc71" opacity="0.8" />
+                <circle cx="95" cy="75" r="40" fill="#2ecc71" opacity="0.8" />
+                <text x="35" y="75" font-size="20">A</text>
+                <text x="105" y="75" font-size="20">B</text>
+            </svg>
+            <p style="margin:0;"><strong>A ∪ B (并集)</strong><br>两大圈合并体</p>
+        </div>
+    </div>
+    <ul style="border-top: 1px solid #ccc; padding-top: 10px; margin-top: 10px;">
+        <li>$\in$ : 是元素 (单个数字属于圈，e.g., $3 \in \{1, 2, 3\}$)</li>
+        <li>$\subseteq$ : 是子集 (小圈被大圈包裹住)</li>
+    </ul>
+    <strong>俄语提示词:</strong> 集合 = множество, 交集 = пересечение, 并集 = объединение
+</div>
+
+<div class="rule">
+    <h3>2. 简单二元不等式与数轴图解 (Number Line)</h3>
+    <p>形如 $(x-A)(x-B) > 0$ 或 $< 0$ (假设 $A<B$)</p>
+    <div style="text-align:center; margin: 15px 0;">
+        <svg width="400" height="120" viewBox="0 0 400 120">
+            <defs>
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#333" />
+                </marker>
+            </defs>
+            <!-- Axis -->
+            <line x1="20" y1="80" x2="380" y2="80" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+            <circle cx="150" cy="80" r="5" fill="white" stroke="#333" stroke-width="2" />
+            <circle cx="250" cy="80" r="5" fill="white" stroke="#333" stroke-width="2" />
+            <text x="145" y="105" font-size="14" font-weight="bold">根 A</text>
+            <text x="245" y="105" font-size="14" font-weight="bold">根 B</text>
+            <!-- Highlight regions -->
+            <path d="M145,75 C120,40 80,40 40,75" stroke="#e74c3c" stroke-width="2" fill="none" />
+            <path d="M255,75 C280,40 320,40 360,75" stroke="#e74c3c" stroke-width="2" fill="none" />
+            <path d="M155,75 C180,40 220,40 245,75" stroke="#3498db" stroke-width="2" fill="none" />
+            <text x="50" y="35" font-size="14" font-weight="bold" fill="#e74c3c">>0 取两边</text>
+            <text x="270" y="35" font-size="14" font-weight="bold" fill="#e74c3c">>0 取两边</text>
+            <text x="165" y="45" font-size="14" font-weight="bold" fill="#3498db"><0 取中间</text>
+        </svg>
+    </div>
+    <ul>
+        <li><strong>">" 取两边：</strong> 在数轴的外围（如上图红线），解集为 $x < A$ 或 $x > B$</li>
+        <li><strong>"<" 取中间：</strong> 在两个根的夹缝中（如上图蓝线），解集为 $A < x < B$</li>
+    </ul>
+    对于分式 $\frac{x-A}{x-B} \le 0$，直接当成 $(x-A)(x-B) \le 0$ 计算大方向即可。<br>
+    <em>【陷阱注意！】</em> 分式分母无论如何绝对不能等于 0，所以在数轴上，分母对应的那个根永远是“空心圆（开区间）”。
+</div>
+
+<div class="hw-section">
+    <h2>四、 课内突击作业 (Homework)</h2>
+    <p>以下为针对本课两大知识点专门设计的 20 道 CSCA 仿真选择题，请在规定时间内完成（答案点击按钮可见）。</p>
+
+    <h3>专项突破一：集合的性质与运算（10题必须全对）</h3>
+    
+    <div class="q-block">
+        <p><strong>1. 设集合 $A = \{1, 3, 5, 7, 9\}$，下列哪一个说法是正确的？</strong></p>
+        <div class="options"><div class="opt">(A) $1 \subseteq A$</div><div class="opt">(B) $2 \in A$</div><div class="opt">(C) $\{3, 5\} \subseteq A$</div><div class="opt">(D) $\{7\} \in A$</div></div>
+        <button class="ans-btn" onclick="toggleAns('a1')">显示答案</button>
+        <div id="a1" class="ans-text">答案：(C)<br>解析：元素用 $\in$，子集用 $\subseteq$。1是元素不能用 $\subseteq$，2不在集合里，{7}是子集不能用 $\in$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>2. 设集合 $M = \{x \mid x < 2\}$，$N = \{x \mid x \ge -1\}$，则 $M \cap N =$</strong></p>
+        <div class="options"><div class="opt">(A) $\{x \mid x < 2\}$</div><div class="opt">(B) $\{x \mid -1 \le x < 2\}$</div><div class="opt">(C) $\{x \mid x \ge -1\}$</div><div class="opt">(D) $\emptyset$</div></div>
+        <button class="ans-btn" onclick="toggleAns('a2')">显示答案</button>
+        <div id="a2" class="ans-text">答案：(B)<br>解析：交集取两者的重叠部分，即大于等于-1且小于2的部分。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>3. 设集合 $P = \{x \mid 0 \le x \le 5\}$，$Q = \{x \mid x > 3\}$，则 $P \cup Q =$</strong></p>
+        <div class="options"><div class="opt">(A) $\{x \mid x \ge 0\}$</div><div class="opt">(B) $\{x \mid 3 < x \le 5\}$</div><div class="opt">(C) $\{x \mid 0 \le x < 3\}$</div><div class="opt">(D) $\{x \mid x > 5\}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('a3')">显示答案</button>
+        <div id="a3" class="ans-text">答案：(A)<br>解析：并集为两者所有元素的总和，[0, 5]与(3, +∞)合并为[0, +∞)。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>4. 已知集合 $A = \{-1, 0, 1\}$，则 $A$ 的所有子集共有几个？</strong></p>
+        <div class="options"><div class="opt">(A) 3</div><div class="opt">(B) 6</div><div class="opt">(C) 7</div><div class="opt">(D) 8</div></div>
+        <button class="ans-btn" onclick="toggleAns('a4')">显示答案</button>
+        <div id="a4" class="ans-text">答案：(D)<br>解析：含有 n 个元素的集合子集数为 $2^n$，$2^3 = 8$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>5. 若集合 $A=\{x \mid x^2=4\}$，则下列说法正确的是：</strong></p>
+        <div class="options"><div class="opt">(A) $A = \{2\}$</div><div class="opt">(B) $A = \{-2, 2\}$</div><div class="opt">(C) $A = \{-2\}$</div><div class="opt">(D) $-2 \notin A$</div></div>
+        <button class="ans-btn" onclick="toggleAns('a5')">显示答案</button>
+        <div id="a5" class="ans-text">答案：(B)<br>解析：方程解为 x = 2 或 -2。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>6. 有理数集通常用哪个字母表示？</strong></p>
+        <div class="options"><div class="opt">(A) Z</div><div class="opt">(B) N</div><div class="opt">(C) Q</div><div class="opt">(D) R</div></div>
+        <button class="ans-btn" onclick="toggleAns('a6')">显示答案</button>
+        <div id="a6" class="ans-text">答案：(C)<br>解析：Z为整数，N为自然数，R为实数，Q为有理数。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>7. 设集合 $A=\{1, 2\}$, $B=\{2, 3\}$, $C=\{3, 4\}$。则 $A \cup (B \cap C) =$</strong></p>
+        <div class="options"><div class="opt">(A) $\{1, 2, 3\}$</div><div class="opt">(B) $\{2, 3\}$</div><div class="opt">(C) $\{1, 2\}$</div><div class="opt">(D) $\{1, 3\}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('a7')">显示答案</button>
+        <div id="a7" class="ans-text">答案：(A)<br>解析：$B \cap C = \{3\}$，再与 $A$ 求并集得 $\{1, 2, 3\}$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>8. 设空集为 $\Phi$，下列说法不正确的是：</strong></p>
+        <div class="options"><div class="opt">(A) $\Phi \subseteq \{1\}$</div><div class="opt">(B) $\Phi \cup \{1\} = \{1\}$</div><div class="opt">(C) $\Phi \cap \{1\} = \Phi$</div><div class="opt">(D) $\Phi \in \{1\}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('a8')">显示答案</button>
+        <div id="a8" class="ans-text">答案：(D)<br>解析：空集是任何集合的子集，但不一定是元素。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>9. 设 $A=\{x \mid x > 5\}$，$B=\{x \mid x \leq 5\}$，则 $A \cap B =$</strong></p>
+        <div class="options"><div class="opt">(A) $R$</div><div class="opt">(B) $\{5\}$</div><div class="opt">(C) $\Phi$</div><div class="opt">(D) $\{x \mid x \neq 5\}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('a9')">显示答案</button>
+        <div id="a9" class="ans-text">答案：(C)<br>解析：互斥，没有公共元素，交集为空。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>10. 下列选项中表示空集的是：</strong></p>
+        <div class="options"><div class="opt">(A) $\{0\}$</div><div class="opt">(B) $\{x \mid x^2 + 1 = 0, x \in R\}$</div><div class="opt">(C) $\{\Phi\}$</div><div class="opt">(D) $\{x \mid x > 0\}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('a10')">显示答案</button>
+        <div id="a10" class="ans-text">答案：(B)<br>解析：实数域内 $x^2+1=0$ 无解，故为空集。</div>
+    </div>
+
+    <br>
+    <h3>专项突破二：基础不等式解集（10题盲选训练）</h3>
+
+    <div class="q-block">
+        <p><strong>1. 不等式 $x^2 - 4 > 0$ 的解集是：</strong></p>
+        <div class="options"><div class="opt">(A) $\{x \mid -2 < x < 2\}$</div><div class="opt">(B) $\{x \mid x < -2$ 或 $x > 2\}$</div><div class="opt">(C) $\{x \mid x > 2\}$</div><div class="opt">(D) $\{x \mid x < 2\}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('b1')">显示答案</button>
+        <div id="b1" class="ans-text">答案：(B)<br>解析：$(x-2)(x+2)>0$，大于取两边。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>2. 不等式 $x^2 - 5x + 6 \leq 0$ 的解集是：</strong></p>
+        <div class="options"><div class="opt">(A) $\{x \mid 2 \leq x \leq 3\}$</div><div class="opt">(B) $\{x \mid x \leq 2$ 或 $x \geq 3\}$</div><div class="opt">(C) $\{x \mid -3 \leq x \leq -2\}$</div><div class="opt">(D) $\{x \mid -2 \leq x \leq 3\}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('b2')">显示答案</button>
+        <div id="b2" class="ans-text">答案：(A)<br>解析：$(x-2)(x-3)\leq0$，小于取中间。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>3. 有理不等式 $\frac{x-1}{x+2} > 0$ 的解集是：</strong></p>
+        <div class="options"><div class="opt">(A) $\{x \mid -2 < x < 1\}$</div><div class="opt">(B) $\{x \mid x < -1$ 或 $x > 2\}$</div><div class="opt">(C) $\{x \mid x < -2$ 或 $x > 1\}$</div><div class="opt">(D) $\{x \mid -1 < x < 2\}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('b3')">显示答案</button>
+        <div id="b3" class="ans-text">答案：(C)<br>解析：同 $(x-1)(x+2)>0$，两根为1和-2，大于取两边。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>4. 不等式 $\frac{x}{x-3} \leq 0$ 的解集是：</strong></p>
+        <div class="options"><div class="opt">(A) $[0, 3)$</div><div class="opt">(B) $(0, 3)$</div><div class="opt">(C) $[0, 3]$</div><div class="opt">(D) $(-\infty, 0] \cup (3, +\infty)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('b4')">显示答案</button>
+        <div id="b4" class="ans-text">答案：(A)<br>解析：分母不能为3，所以3是开区间$)$；分子可以为0，所以0是闭区间$]$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>5. 不等式 $-x^2 + x + 2 > 0$ 的解集是：</strong></p>
+        <div class="options"><div class="opt">(A) $\{x \mid x < -1$ 或 $x > 2\}$</div><div class="opt">(B) $\{x \mid -2 < x < 1\}$</div><div class="opt">(C) $\{x \mid -1 < x < 2\}$</div><div class="opt">(D) $\{x \mid x < -2$ 或 $x > 1\}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('b5')">显示答案</button>
+        <div id="b5" class="ans-text">答案：(C)<br>解析：两边乘-1变号：$x^2-x-2<0 \Rightarrow (x-2)(x+1)<0 \Rightarrow -1 < x < 2$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>6. 不等式 $|x - 1| < 3$ 的解集是：</strong></p>
+        <div class="options"><div class="opt">(A) $(-2, 4)$</div><div class="opt">(B) $[-2, 4]$</div><div class="opt">(C) $(-\infty, -2) \cup (4, +\infty)$</div><div class="opt">(D) $(2, 4)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('b6')">显示答案</button>
+        <div id="b6" class="ans-text">答案：(A)<br>解析：绝对值小于取中间：$-3 < x-1 < 3 \Rightarrow -2 < x < 4$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>7. 已知实数 $a, b$，若 $a > b$，则下列一定正确的是：</strong></p>
+        <div class="options"><div class="opt">(A) $ac^2 > bc^2$</div><div class="opt">(B) $a-b > 0$</div><div class="opt">(C) $a^2 > b^2$</div><div class="opt">(D) $\frac{1}{a} < \frac{1}{b}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('b7')">显示答案</button>
+        <div id="b7" class="ans-text">答案：(B)<br>解析：基础代数法则，大的减小的必定大于0。A中c可能为0；CD条件不全。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>8. 一次不等式 $2x - 3 \ge x + 1$ 的解集为：</strong></p>
+        <div class="options"><div class="opt">(A) $x \le 4$</div><div class="opt">(B) $x \ge -2$</div><div class="opt">(C) $x \ge 4$</div><div class="opt">(D) $x \le -2$</div></div>
+        <button class="ans-btn" onclick="toggleAns('b8')">显示答案</button>
+        <div id="b8" class="ans-text">答案：(C)<br>解析：移项得 $x \ge 4$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>9. 不等式 $x^2 \ge 9$ 的解集是：</strong></p>
+        <div class="options"><div class="opt">(A) $[-3, 3]$</div><div class="opt">(B) $(-\infty, -3] \cup [3, +\infty)$</div><div class="opt">(C) $(-\infty, 3]$</div><div class="opt">(D) $[3, +\infty)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('b9')">显示答案</button>
+        <div id="b9" class="ans-text">答案：(B)<br>解析：$x^2-9 \ge 0$，大于取两边，包含带等号的闭区间。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>10. 关于 $x$ 的不等式 $\frac{x}{x^2+1} < 0$ 的解集是：</strong></p>
+        <div class="options"><div class="opt">(A) $x > 0$</div><div class="opt">(B) $x < 0$</div><div class="opt">(C) $x \ne 0$</div><div class="opt">(D) 空集</div></div>
+        <button class="ans-btn" onclick="toggleAns('b10')">显示答案</button>
+        <div id="b10" class="ans-text">答案：(B)<br>解析：分母 $x^2+1$ 恒大于0，所以整个算式要小于0，只需分子 $x < 0$ 即可。</div>
+    </div>
+</div>
+</body>
+</html>

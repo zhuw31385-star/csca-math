@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSCA数学冲刺课件 3/6: 【直线与斜率】</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+<style>
+    body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; color: #333; }
+    .header { text-align: center; border-bottom: 3px solid #2ecc71; margin-bottom: 20px; }
+    .header h1 { color: #27ae60; }
+    .box { background: #e9f7ef; padding: 15px; border-left: 5px solid #27ae60; margin-bottom: 20px; }
+    .rule { background: #fdf2e9; padding: 15px; border-left: 5px solid #d35400; margin-bottom: 20px; font-weight: bold; }
+    .hw-section { margin-top: 40px; padding-top: 20px; border-top: 2px dashed #ccc; }
+    .q-block { margin-bottom: 15px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .options { display: flex; flex-wrap: wrap; margin-top: 10px; }
+    .opt { width: 50%; margin-bottom: 8px; }
+    .ans-btn { background: #27ae60; color: white; padding: 3px 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; margin-top: 10px; }
+    .ans-text { display: none; margin-top: 10px; color: #d35400; font-weight: bold; border-left: 3px solid #d35400; padding-left: 10px; }
+</style>
+<script>
+    function toggleAns(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none" || x.style.display === "") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+</head>
+<body>
+<div class="header">
+    <h1>第三课时 (Lesson 3)：直线与斜率解析初步</h1>
+    <p>时长：60分钟 | 目标得点：4-5 题</p>
+</div>
+
+<h2>一、 本课考情指南 (Strategy)</h2>
+<p>这是俄罗斯学生的绝对强项。俄语系国家的代数方程训练极好。所以本课毫无阅读理解障碍，全部是硬核计算，必须要全分拿下！</p>
+
+<h2>二、 核心知识点与可视系统化 (Visualized Core Rules)</h2>
+<div class="box">
+    <h3>1. 系统扩展：平面直角坐标系与“四大象限”法则</h3>
+    <p>当题目出现关于点 $(x, y)$ 坐标的描述时，我们必须在脑中浮现下方的系统图谱。理解这四个区域的正负极性是本课的第一要务。</p>
+    <div style="text-align:center; margin: 15px 0;">
+        <svg width="300" height="300" viewBox="0 0 300 300">
+            <!-- Axes -->
+            <line x1="0" y1="150" x2="300" y2="150" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+            <line x1="150" y1="300" x2="150" y2="0" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+            <defs>
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#333" />
+                </marker>
+            </defs>
+            <!-- Quadrant Labels -->
+            <text x="210" y="70" font-size="16" font-weight="bold" fill="#2ecc71">第一象限 (I)</text>
+            <text x="210" y="90" font-size="14" fill="#2ecc71">x > 0 (+), y > 0 (+)</text>
+            
+            <text x="30" y="70" font-size="16" font-weight="bold" fill="#d35400">第二象限 (II)</text>
+            <text x="30" y="90" font-size="14" fill="#d35400">x < 0 (-), y > 0 (+)</text>
+            
+            <text x="30" y="220" font-size="16" font-weight="bold" fill="#2980b9">第三象限 (III)</text>
+            <text x="30" y="240" font-size="14" fill="#2980b9">x < 0 (-), y < 0 (-)</text>
+            
+            <text x="210" y="220" font-size="16" font-weight="bold" fill="#8e44ad">第四象限 (IV)</text>
+            <text x="210" y="240" font-size="14" fill="#8e44ad">x > 0 (+), y < 0 (-)</text>
+            <!-- Center -->
+            <circle cx="150" cy="150" r="4" fill="black" />
+            <text x="155" y="165" font-size="12">原点 (0,0)</text>
+            <text x="285" y="170" font-size="14">X 轴</text>
+            <text x="160" y="15" font-size="14">Y 轴</text>
+        </svg>
+    </div>
+    <ul style="border-top: 1px solid #ccc; padding-top: 10px;">
+        <li>如果点落在 <strong>X轴</strong> 上：它的纵坐标 $y$ 必定等于 $0$ (如 $(3, 0)$)。</li>
+        <li>如果点落在 <strong>Y轴</strong> 上：它的横坐标 $x$ 必定等于 $0$ (如 $(0, 5)$)。</li>
+        <li>关于 $X$ 轴对称：图形上下翻转，导致 $y$ 变负号。关于原点对称：两者全部变号！</li>
+    </ul>
+</div>
+
+<div class="rule">
+    <h3>2. 直线的斜率系统与勾股距离图形化</h3>
+    <div style="display:flex; justify-content:space-around; align-items:center;">
+        <div style="width: 45%;">
+            <svg width="200" height="200" viewBox="0 0 200 200">
+                <line x1="20" y1="180" x2="180" y2="180" stroke="#ccc" stroke-width="1" />
+                <line x1="20" y1="20" x2="20" y2="180" stroke="#ccc" stroke-width="1" />
+                <line x1="50" y1="150" x2="170" y2="30" stroke="#e74c3c" stroke-width="3" />
+                <line x1="50" y1="150" x2="170" y2="150" stroke="#3498db" stroke-width="2" stroke-dasharray="4" />
+                <line x1="170" y1="150" x2="170" y2="30" stroke="#2ecc71" stroke-width="2" stroke-dasharray="4" />
+                <text x="10" y="160" font-size="12" font-weight="bold">A(x1, y1)</text>
+                <text x="175" y="25" font-size="12" font-weight="bold">B(x2, y2)</text>
+                <text x="90" y="145" font-size="12" fill="#3498db">Δx = x2-x1</text>
+                <text x="175" y="90" font-size="12" fill="#2ecc71">Δy = y2-y1</text>
+            </svg>
+        </div>
+        <div style="width: 50%;">
+            <p>如左图直角三角形所示：</p>
+            <ul>
+                <li><strong>斜率 $k$</strong> 其实就是爬坡的陡峭程度：$k = \frac{\Delta y}{\Delta x} = \frac{y_2 - y_1}{x_2 - x_1}$</li>
+                <li><strong>距离 $d$</strong> 基于勾股定理产生（斜边的长度）：$d = \sqrt{(\Delta x)^2 + (\Delta y)^2}$</li>
+                <li><strong>直线垂直 (90度角)：</strong> 由于它们旋转了90度，斜率会倒过来并且反成负数 $\Rightarrow k_1 \cdot k_2 = -1$</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="hw-section">
+    <h2>四、 课内突击作业 (Homework)</h2>
+    <p>本课时核心考察“点与线”的坐标系基本功，下面是20道严选选择题：</p>
+
+    <h3>专项突破一：象限点与距离公式运算（10题盲选训练）</h3>
+    
+    <div class="q-block">
+        <p><strong>1. 点 $P(-2, 3)$ 位于：</strong></p>
+        <div class="options"><div class="opt">(A) 第一象限</div><div class="opt">(B) 第二象限</div><div class="opt">(C) 第三象限</div><div class="opt">(D) 第四象限</div></div>
+        <button class="ans-btn" onclick="toggleAns('e1')">显示答案</button>
+        <div id="e1" class="ans-text">答案：(B)<br>解析：横坐标负，纵坐标正，位于第二象限。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>2. 点 $Q(1, -5)$ 关于 $x$ 轴对称的点是：</strong></p>
+        <div class="options"><div class="opt">(A) $(-1, 5)$</div><div class="opt">(B) $(1, 5)$</div><div class="opt">(C) $(-1, -5)$</div><div class="opt">(D) $(5, -1)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('e2')">显示答案</button>
+        <div id="e2" class="ans-text">答案：(B)<br>解析：关于 $x$ 轴对称，$x$ 横坐标不变，$y$ 变号。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>3. 平面上两点 $A(0, 3)$ 和 $B(4, 0)$ 之间的距离是：</strong></p>
+        <div class="options"><div class="opt">(A) 3</div><div class="opt">(B) 4</div><div class="opt">(C) 5</div><div class="opt">(D) 7</div></div>
+        <button class="ans-btn" onclick="toggleAns('e3')">显示答案</button>
+        <div id="e3" class="ans-text">答案：(C)<br>解析：勾股定理 $\sqrt{4^2 + 3^2} = 5$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>4. 若点 $P(a, -1)$ 到点 $Q(2, 2)$ 的距离为 5，则 $a =$</strong></p>
+        <div class="options"><div class="opt">(A) 6 或 -2</div><div class="opt">(B) 6</div><div class="opt">(C) -2</div><div class="opt">(D) -6 或 2</div></div>
+        <button class="ans-btn" onclick="toggleAns('e4')">显示答案</button>
+        <div id="e4" class="ans-text">答案：(A)<br>解析：$\sqrt{(a-2)^2 + (-1-2)^2} = 5 \Rightarrow (a-2)^2 + 9 = 25 \Rightarrow a-2=\pm4$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>5. 点 $M(3, 4)$ 关于原点 $(0, 0)$ 的对称点坐标为：</strong></p>
+        <div class="options"><div class="opt">(A) $(-3, 4)$</div><div class="opt">(B) $(3, -4)$</div><div class="opt">(C) $(-3, -4)$</div><div class="opt">(D) $(-4, -3)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('e5')">显示答案</button>
+        <div id="e5" class="ans-text">答案：(C)<br>解析：关于原点对称，横坐标和纵坐标会跃迁到对角的象限，因此所有正负全部变号，为 $(-3, -4)$。</div>
+    </div>
+    
+    <div style="text-align:center; padding:10px; background:#f9f9f9; width: 60%; margin:0 auto 15px auto;">
+        <svg width="200" height="200" viewBox="0 0 200 200">
+           <line x1="0" y1="100" x2="200" y2="100" stroke="#999" />
+           <line x1="100" y1="0" x2="100" y2="200" stroke="#999" />
+           <circle cx="160" cy="40" r="5" fill="red" />
+           <circle cx="40" cy="160" r="5" fill="blue" />
+           <line x1="160" y1="40" x2="40" y2="160" stroke="#ccc" stroke-dasharray="4"/>
+           <text x="165" y="35" font-size="12">M(3, 4) 第一象限</text>
+           <text x="5" y="175" font-size="12">M'(-3, -4) 第三象限</text>
+        </svg>
+        <p style="font-size:12px; color:#555;">[视像解析] 对原点对称即绕原点旋转180度</p>
+    </div>
+
+    <div class="q-block">
+        <p><strong>6. 若点 $P(x, y)$ 在第三象限，那么 $x$ 轴与该点构成的斜率 $y/x$ ：</strong></p>
+        <div class="options"><div class="opt">(A) 必为正</div><div class="opt">(B) 必为负</div><div class="opt">(C) 可正可负</div><div class="opt">(D) 等于0</div></div>
+        <button class="ans-btn" onclick="toggleAns('e6')">显示答案</button>
+        <div id="e6" class="ans-text">答案：(A)<br>解析：第三象限 $x<0, y<0$，两负数相除必为正。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>7. 已知点 $A(-1, -1)$ 与点 $B(-1, 5)$，这种情况下直线的特征是：</strong></p>
+        <div class="options"><div class="opt">(A) 平行于X轴</div><div class="opt">(B) 平行于Y轴</div><div class="opt">(C) 过原点</div><div class="opt">(D) 斜率为1</div></div>
+        <button class="ans-btn" onclick="toggleAns('e7')">显示答案</button>
+        <div id="e7" class="ans-text">答案：(B)<br>解析：由于横坐标 $x$ 都是 $-1$，直线方程为 $x=-1$，故垂直于X轴、平行于Y轴。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>8. 坐标平面上点 $A(2, 5)$ 与点 $B(6, 5)$ 的中点坐标是：</strong></p>
+        <div class="options"><div class="opt">(A) $(4, 0)$</div><div class="opt">(B) $(2, 5)$</div><div class="opt">(C) $(4, 5)$</div><div class="opt">(D) $(8, 10)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('e8')">显示答案</button>
+        <div id="e8" class="ans-text">答案：(C)<br>解析：中点公式即相加除以2：$((2+6)/2, (5+5)/2) = (4, 5)$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>9. 点 $P(2, -3)$ 到 $y$ 轴的距离是：</strong></p>
+        <div class="options"><div class="opt">(A) 2</div><div class="opt">(B) -3</div><div class="opt">(C) 3</div><div class="opt">(D) $\sqrt{13}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('e9')">显示答案</button>
+        <div id="e9" class="ans-text">答案：(A)<br>解析：到y轴的距离即 $x$ 坐标的绝对值 $|x| = 2$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>10. 下列哪个点不在直线 $x - y = 0$ 上？</strong></p>
+        <div class="options"><div class="opt">(A) $(1, 1)$</div><div class="opt">(B) $(-5, -5)$</div><div class="opt">(C) $(0, 0)$</div><div class="opt">(D) $(1, -1)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('e10')">显示答案</button>
+        <div id="e10" class="ans-text">答案：(D)<br>解析：直线 $x-y=0$ 就是 $y=x$，横纵必须要一致。(1,-1)不一致。</div>
+    </div>
+
+    <br>
+    <h3>专项突破二：直线的斜率与方程公式套用（10题盲选训练）</h3>
+
+    <div class="q-block">
+        <p><strong>1. 直线 $3x - 4y + 12 = 0$ 的斜率是：</strong></p>
+        <div class="options"><div class="opt">(A) 3</div><div class="opt">(B) $3/4$</div><div class="opt">(C) $-3/4$</div><div class="opt">(D) $4/3$</div></div>
+        <button class="ans-btn" onclick="toggleAns('f1')">显示答案</button>
+        <div id="f1" class="ans-text">答案：(B)<br>解析：写成 $4y = 3x + 12 \Rightarrow y = \frac{3}{4}x + 3$。斜率是方程化简后 $x$ 的系数！</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>2. 经过点 $(1, 2)$ 和 $(3, 6)$ 的直线斜率为：</strong></p>
+        <div class="options"><div class="opt">(A) 1</div><div class="opt">(B) 2</div><div class="opt">(C) $1/2$</div><div class="opt">(D) -2</div></div>
+        <button class="ans-btn" onclick="toggleAns('f2')">显示答案</button>
+        <div id="f2" class="ans-text">答案：(B)<br>解析：$k = (y_2 - y_1)/(x_2 - x_1) = (6-2)/(3-1) = 4/2 = 2$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>3. 直线的倾斜角 $\theta = 45^\circ$，这意味着其斜率为：</strong></p>
+        <div class="options"><div class="opt">(A) 0</div><div class="opt">(B) $1/2$</div><div class="opt">(C) 1</div><div class="opt">(D) $\sqrt{3}$</div></div>
+        <button class="ans-btn" onclick="toggleAns('f3')">显示答案</button>
+        <div id="f3" class="ans-text">答案：(C)<br>解析：$\tan 45^\circ = 1$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>4. 下列哪条直线与 $y = 2x - 1$ 平行？</strong></p>
+        <div class="options"><div class="opt">(A) $y = -2x - 1$</div><div class="opt">(B) $y = 0.5x + 3$</div><div class="opt">(C) $4x - 2y + 3 = 0$</div><div class="opt">(D) $2x + y = 0$</div></div>
+        <button class="ans-btn" onclick="toggleAns('f4')">显示答案</button>
+        <div id="f4" class="ans-text">答案：(C)<br>解析：斜率必须等于 2。C化简后为 $2y = 4x + 3 \Rightarrow y = 2x + 1.5$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>5. 下列哪条直线与 $y = 3x$ 互相垂直？</strong></p>
+        <div class="options"><div class="opt">(A) $y = 3x + 1$</div><div class="opt">(B) $y = -3x$</div><div class="opt">(C) $y = \frac{1}{3}x$</div><div class="opt">(D) $y = -\frac{1}{3}x$</div></div>
+        <button class="ans-btn" onclick="toggleAns('f5')">显示答案</button>
+        <div id="f5" class="ans-text">答案：(D)<br>解析：由于 $3 \times (-1/3) = -1$，负倒数就是垂直！</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>6. 直线 $x + 2y - 4 = 0$ 与 $2x - y + 1 = 0$ 的交点坐标是：</strong></p>
+        <div class="options"><div class="opt">(A) $(1, 1)$</div><div class="opt">(B) $(0, 2)$</div><div class="opt">(C) $(2/5, 9/5)$</div><div class="opt">(D) 不存在</div></div>
+        <button class="ans-btn" onclick="toggleAns('f6')">显示答案</button>
+        <div id="f6" class="ans-text">答案：(C)<br>解析：联解方程式。$x = 4-2y$ 代入 $2(4-2y)-y+1=0 \Rightarrow 8-4y-y+1=0 \Rightarrow 5y=9 \Rightarrow y=9/5$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>7. 过点 $P(-1, 3)$ 且平行于直线 $2x - y + 1 = 0$ 的方程为：</strong></p>
+        <div class="options"><div class="opt">(A) $y = 2x + 5$</div><div class="opt">(B) $y = 2x$</div><div class="opt">(C) $y = -0.5x + 3.5$</div><div class="opt">(D) $2x - y - 1 = 0$</div></div>
+        <button class="ans-btn" onclick="toggleAns('f7')">显示答案</button>
+        <div id="f7" class="ans-text">答案：(A)<br>解析：斜率必须是 2。写为 $y - 3 = 2(x + 1) \Rightarrow y = 2x + 5$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>8. 如果直线方程 $kx - y + 2 = 0$ 与 $x + ky - 3 = 0$ 垂直，那么 $k$ 能取：</strong></p>
+        <div class="options"><div class="opt">(A) 1</div><div class="opt">(B) 0</div><div class="opt">(C) 任何实数</div><div class="opt">(D) 不可能垂直</div></div>
+        <button class="ans-btn" onclick="toggleAns('f8')">显示答案</button>
+        <div id="f8" class="ans-text">答案：(C)<br>解析：系数查验模式：$A_1A_2 + B_1B_2 = k(1) + (-1)(k) = 0$。永远恒等于0。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>9. 截距式测验：直线 $x/2 + y/3 = 1$ 与坐标轴围成的三角形面积是：</strong></p>
+        <div class="options"><div class="opt">(A) 6</div><div class="opt">(B) 3</div><div class="opt">(C) 5</div><div class="opt">(D) 2</div></div>
+        <button class="ans-btn" onclick="toggleAns('f9')">显示答案</button>
+        <div id="f9" class="ans-text">答案：(B)<br>解析：与x轴交点为 $2$，与y轴交点为 $3$。面积为直角三角形 $0.5 \times 2 \times 3 = 3$。</div>
+    </div>
+
+    <div class="q-block">
+        <p><strong>10. 直线 $x=4$ 是一条：</strong></p>
+        <div class="options"><div class="opt">(A) 水平的线</div><div class="opt">(B) 过原点的斜线</div><div class="opt">(C) 垂直于 X 轴的竖直直线</div><div class="opt">(D) 抛物线的准线</div></div>
+        <button class="ans-btn" onclick="toggleAns('f10')">显示答案</button>
+        <div id="f10" class="ans-text">答案：(C)<br>解析：$x=$常数 的特征即为笔直向下穿透x轴的垂直线，没有通常意义的斜率 $k$。</div>
+    </div>
+</div>
+</body>
+</html>

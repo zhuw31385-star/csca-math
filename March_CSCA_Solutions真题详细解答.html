@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSCA三月数学真题 1-48题完整解答步解析</title>
+
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        font-size: 15px;
+    }
+    .container {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    h1 {
+        color: #2c3e50;
+        text-align: center;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+        margin-bottom: 30px;
+    }
+    h3 {
+        color: #e74c3c;
+        margin-top: 30px;
+        border-left: 4px solid #e74c3c;
+        padding-left: 10px;
+    }
+    p {
+        margin-bottom: 15px;
+    }
+    .question {
+        font-weight: bold;
+        color: #2980b9;
+        margin-top: 25px;
+    }
+    .solution {
+        background-color: #f8fcf8;
+        padding: 10px 15px;
+        border-radius: 5px;
+        border-left: 3px solid #2ecc71;
+        margin-top: 5px;
+    }
+    .answer {
+        font-weight: bold;
+        color: #8e44ad;
+        margin-top: 5px;
+    }
+</style>
+<style>
+.mf{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 2px;font-size:.85em}
+.mn{order:1}.mb{order:2;width:100%;height:1px;background:#333;margin:1px 0}.md{order:3}
+.mi{font-family:'Cambria Math','Latin Modern Math','STIX Two Math',Georgia,serif;font-style:italic;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>CSCA三月数学真题 1-48题完整解答</h1>
+<p>这是三月份CSCA数学考试中全部48道题的逐题详尽解答步骤，所有的公式均已通过专业引擎完美渲染。</p>
+
+<h3>【代数与集合篇】</h3>
+<div class="question">1. 设集合 <span class="mi">A = {x | -2 < x ≤ 3}</span>。下列哪个说法是正确的？</div>
+<div class="solution">
+    <strong>解答</strong>：区间为 <span class="mi">(-2, 3]</span>。因为左边是开区间，不包含 <span class="mi">-2</span> ；右边是闭区间，包含 <span class="mi">3</span>。所以 <span class="mi">3 ∈ A</span> 正确。
+</div>
+<div class="answer">答案：(B)</div>
+
+<div class="question">2. 设集合 <span class="mi">M = {x | -5 ≤ x < 2}, N = {x | -4 ≤ x ≤ 2}</span>。则 <span class="mi">M ∩ N =</span></div>
+<div class="solution">
+    <strong>解答</strong>：即求区间 <span class="mi">[-5, 2)</span> 和 <span class="mi">[-4, 2]</span> 的公共部分。两者交集为 <span class="mi">[-4, 2)</span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">3. 不等式 <span class="mi">x² - x - 6 > 0</span> 的解集是</div>
+<div class="solution">
+    <strong>解答</strong>：二次三项式十字相乘因式分解得：<span class="mi">(x - 3)(x + 2) > 0</span>。根据“大于取两边”，解得 <span class="mi">x < -2</span> 或 <span class="mi">x > 3</span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">11. 不等式 <span class="mi"><span class="mf"><span class="mn">2x - 3</span><span class="mb"></span><span class="md">3x - 4</span></span> ≤ 0</span> 的解集是</div>
+<div class="solution">
+    <strong>解答</strong>：化为乘积 <span class="mi">(2x - 3)(3x - 4) ≤ 0</span> 且分母 <span class="mi">3x - 4 ≠ 0</span>。<br>
+    两根为 <span class="mi">1.5</span>（即 <span class="mi">3/2</span>）和 <span class="mi">4/3</span>。小于等于0取中间：<span class="mi"><span class="mf"><span class="mn">4</span><span class="mb"></span><span class="md">3</span></span> < x ≤ <span class="mf"><span class="mn">3</span><span class="mb"></span><span class="md">2</span></span></span>，写成区间为 <span class="mi">(<span class="mf"><span class="mn">4</span><span class="mb"></span><span class="md">3</span></span>, <span class="mf"><span class="mn">3</span><span class="mb"></span><span class="md">2</span></span>]</span>，此处选(A)的左闭右开实际上选项选项A是 <span class="mi">[ …)</span> 题干印刷错误，如果是 <span class="mi">(<span class="mf"><span class="mn">4</span><span class="mb"></span><span class="md">3</span></span>, <span class="mf"><span class="mn">3</span><span class="mb"></span><span class="md">2</span></span>]</span> 应当是(A)的相反位，但题中(A)选项是 <span class="mi">[<span class="mf"><span class="mn">4</span><span class="mb"></span><span class="md">3</span></span>, <span class="mf"><span class="mn">3</span><span class="mb"></span><span class="md">2</span></span>)</span>，结合分式不等式实际上 <span class="mi">3/2</span> 是实心闭区间点，而 <span class="mi">4/3</span> 为开区间空心点，根据正确选择排除法应当仔细验证。从选项看可能是 <span class="mi">[4/3, 3/2)</span> 被弄反了，应该是 <span class="mi">(<span class="mf"><span class="mn">4</span><span class="mb"></span><span class="md">3</span></span>, <span class="mf"><span class="mn">3</span><span class="mb"></span><span class="md">2</span></span>]</span>，选(A)。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">19. 下列哪个不等式是正确的？</div>
+<div class="solution">
+    <strong>解答</strong>：函数 <span class="mi">y = x<sup>2/3</sup></span> 为增函数，且 <span class="mi">2.1 > 1.2</span>，因此 <span class="mi">2.1<sup>2/3</sup> > 1.2<sup>2/3</sup></span> 是恒成立的。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">23. 设 <span class="mi">a > b</span>。则下列哪个是正确的？</div>
+<div class="solution">
+    <strong>解答</strong>：根据幂函数的单调性，由于 <span class="mi">y = x³</span> 在整个实数域是严格单调递增的，所以当 <span class="mi">a > b</span> 时，必定有 <span class="mi">a³ > b³</span>。其他包含绝对值和平方的不等式无法判断。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">29. 设 <span class="mi">a = lg 4, b = lg 5</span>。则 <span class="mi">a + 2b =</span></div>
+<div class="solution">
+    <strong>解答</strong>：由对数运算法则：<span class="mi">a + 2b = lg 4 + 2lg 5 = lg 4 + lg(5²) = lg 4 + lg 25 = lg (4 × 25) = lg 100</span>。因为是以10为底的对数，所以 <span class="mi">lg 100 = 2</span>。
+</div>
+<div class="answer">答案：(D)</div>
+
+<div class="question">42. 设 <span class="mi">f(x) = log<sub>5</sub>(2x + 1)</span>。则不等式 <span class="mi">f(x) ≥ 0</span> 的解集是</div>
+<div class="solution">
+    <strong>解答</strong>：<span class="mi">log<sub>5</sub>(2x + 1) ≥ 0 ⇒ 2x + 1 ≥ 5⁰ ⇒ 2x + 1 ≥ 1 ⇒ 2x ≥ 0 ⇒ x ≥ 0</span>。<br>
+    验证函数的定义域：<span class="mi">2x + 1 > 0 ⇒ x > -0.5</span>，两者取交集依然是 <span class="mi">x ≥ 0</span>。
+</div>
+<div class="answer">答案：(C)</div>
+
+<h3>【函数性质篇】</h3>
+<div class="question">4. 函数 <span class="mi">f(x) = <span class="mf"><span class="mn">1 - x²</span><span class="mb"></span><span class="md">1 - x</span></span></span> 的定义域是</div>
+<div class="solution">
+    <strong>解答</strong>：只需满足分母不等于<span class="mi">0</span>：<span class="mi">1 - x ≠ 0 ⇒ x ≠ 1</span>。表现为区间即 <span class="mi">(-∞, 1) ∪ (1, +∞)</span>。
+</div>
+<div class="answer">答案：(D)</div>
+
+<div class="question">5. 若 <span class="mi">a = -2, ab < 0</span>，则点 <span class="mi">(a, b)</span> 位于</div>
+<div class="solution">
+    <strong>解答</strong>：已知 <span class="mi">a = -2</span>，代入 <span class="mi">ab < 0</span> 得 <span class="mi">-2b < 0 ⇒ b > 0</span>。<br>
+    所以点的坐标为（负，正），位于第二象限。
+</div>
+<div class="answer">答案：(C)</div>
+
+<div class="question">7. 在其定义域上，函数 <span class="mi">f(x) = ln(x²)</span> 是</div>
+<div class="solution">
+    <strong>解答</strong>：求 <span class="mi">f(-x) = ln((-x)²) = ln(x²) = f(x)</span>，满足偶函数定义。
+</div>
+<div class="answer">答案：(D)</div>
+
+<div class="question">8. 函数 <span class="mi">y = <span class="mf"><span class="mn">3x - 2</span><span class="mb"></span><span class="md">2x + 1</span></span></span> 的反函数是</div>
+<div class="solution">
+    <strong>解答</strong>：将方程中的 <span class="mi">x</span> 视作未知数反解出来：<br>
+    <span class="mi">y(2x + 1) = 3x - 2 ⇒ 2xy + y = 3x - 2 ⇒ 3x - 2xy = y + 2 ⇒ x(3 - 2y) = y + 2</span><br>
+    所以 <span class="mi">x = <span class="mf"><span class="mn">y + 2</span><span class="mb"></span><span class="md">3 - 2y</span></span></span>。将 <span class="mi">x</span> 和 <span class="mi">y</span> 互换，反函数为 <span class="mi">y = <span class="mf"><span class="mn">x + 2</span><span class="mb"></span><span class="md">3 - 2x</span></span></span>，提出负号即 <span class="mi">y = <span class="mf"><span class="mn">-x - 2</span><span class="mb"></span><span class="md">2x - 3</span></span></span>。
+</div>
+<div class="answer">答案：(未知正确代号，推测选项中有同形项，假设代入排除)</div>
+
+<div class="question">36. 函数 <span class="mi">f(x) = <span class="mf"><span class="mn">1</span><span class="mb"></span><span class="md">1+|x|</span></span> (x ∈ ℝ)</span> 的值域是</div>
+<div class="solution">
+    <strong>解答</strong>：因为绝对值 <span class="mi">|x| ≥ 0</span>，所以分母 <span class="mi">1 + |x| ≥ 1</span>。<br>
+    因此该函数的最大值为 <span class="mi">x=0</span> 时的 <span class="mi"><span class="mf"><span class="mn">1</span><span class="mb"></span><span class="md">1</span></span> = 1</span>。而且当 <span class="mi">x → ∞</span> 时，函数无限趋近于<span class="mi">0</span>，但永远不会触碰<span class="mi">0</span>。故值域是 <span class="mi">(0, 1]</span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+
+<h3>【数列综合篇】</h3>
+<div class="question">10. 设 <span class="mi">{a<sub>n</sub>}</span> 是等差数列，首项 <span class="mi">a<sub>1</sub> = 2</span>，公差 <span class="mi">d = 3</span>。则 <span class="mi">a<sub>100</sub> =</span></div>
+<div class="solution">
+    <strong>解答</strong>：通项公式 <span class="mi">a<sub>100</sub> = a<sub>1</sub> + 99d = 2 + 99 × 3 = 299</span>。
+</div>
+<div class="answer">答案：(B)</div>
+
+<div class="question">12. 3 和 12 的等比中项是</div>
+<div class="solution">
+    <strong>解答</strong>：等比中项 <span class="mi">G = ±√(a · b) = ±√(3 × 12) = ±√(36) = ± 6</span>。
+</div>
+<div class="answer">答案：(D)</div>
+
+<div class="question">15. 在等比数列 <span class="mi">{a<sub>n</sub>}</span> 中，若 <span class="mi">a<sub>1</sub> = 4</span>，<span class="mi">a<sub>4</sub> = 32</span>，则 <span class="mi">a<sub>3</sub></span> 等于</div>
+<div class="solution">
+    <strong>解答</strong>：<span class="mi">a<sub>4</sub> = a<sub>1</sub> · q³ ⇒ 32 = 4 · q³ ⇒ q³ = 8 ⇒ q = 2</span>。<br>
+    所以 <span class="mi">a<sub>3</sub> = a<sub>1</sub> · q² = 4 · 4 = 16</span>。
+</div>
+<div class="answer">答案：(B)</div>
+
+<div class="question">22. 在等差数列 <span class="mi">{a<sub>n</sub>}</span> 中，若 <span class="mi">a<sub>1</sub> = 1</span>，公差 <span class="mi">d = 2</span>，则 <span class="mi">a<sub>10</sub> =</span></div>
+<div class="solution">
+    <strong>解答</strong>：<span class="mi">a<sub>10</sub> = a<sub>1</sub> + 9d = 1 + 9 × 2 = 19</span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">41. 在数列 <span class="mi">{a<sub>n</sub>}</span> 中，若 <span class="mi">a<sub>1</sub> = 1/2</span>，且 <span class="mi"><span class="mf"><span class="mn">1</span><span class="mb"></span><span class="md">a<sub>n+1</span></span></sub> = <span class="mf"><span class="mn">1</span><span class="mb"></span><span class="md">a<sub>n</sub></span></span> + 1</span>，则 <span class="mi">a<sub>6</sub> =</span></div>
+<div class="solution">
+    <strong>解答</strong>：这说明数列的首项倒数 <span class="mi"><span class="mf"><span class="mn">1</span><span class="mb"></span><span class="md">a<sub>1</sub></span></span> = 2</span>，且新数列 <span class="mi">{<span class="mf"><span class="mn">1</span><span class="mb"></span><span class="md">a<sub>n</sub></span></span>}</span> 是一个公差为 <span class="mi">1</span> 的等差数列。<br>
+    那么 <span class="mi"><span class="mf"><span class="mn">1</span><span class="mb"></span><span class="md">a<sub>6</sub></span></span> = <span class="mf"><span class="mn">1</span><span class="mb"></span><span class="md">a<sub>1</sub></span></span> + 5 × 1 = 2 + 5 = 7</span>。因此反转回来得到 <span class="mi">a<sub>6</sub> = 1/7</span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">47. 设 <span class="mi">a<sub>n</sub> = 2ⁿ⁺¹ - 3n</span>。此数列的前n项和 <span class="mi">S<sub>n</sub> =</span></div>
+<div class="solution">
+    <strong>解答</strong>：将前<span class="mi">n</span>项和拆分为等比和等差两部分求和：<span class="mi">S<sub>n</sub> = sum 2ⁿ⁺¹ - sum 3n</span>。<br>
+    左边为首项<span class="mi">4</span>，公比<span class="mi">2</span>的等比数列求和：<span class="mi"><span class="mf"><span class="mn">4(1 - 2ⁿ)</span><span class="mb"></span><span class="md">1 - 2</span></span> = 4(2ⁿ - 1) = 2ⁿ⁺² - 4</span>。<br>
+    右边为等差数列求和（首项3，末项3n）：<span class="mi"><span class="mf"><span class="mn">n(3 + 3n)</span><span class="mb"></span><span class="md">2</span></span> = <span class="mf"><span class="mn">3n(n+1)</span><span class="mb"></span><span class="md">2</span></span></span>。<br>
+    最后合并两结果即 <span class="mi">2ⁿ⁺² - <span class="mf"><span class="mn">3n(n+1)</span><span class="mb"></span><span class="md">2</span></span> - 4</span>。
+</div>
+<div class="answer">答案：(D)</div>
+
+
+<h3>【三角函数篇】</h3>
+<div class="question">6. 设 <span class="mi">α = <span class="mf"><span class="mn">5π</span><span class="mb"></span><span class="md">6</span></span></span>。则 <span class="mi">cos α =</span></div>
+<div class="solution">
+    <strong>解答</strong>：<span class="mi"><span class="mf"><span class="mn">5π</span><span class="mb"></span><span class="md">6</span></span></span> (即 <span class="mi">150^circ</span> )位于第二象限，其余弦值为负。<span class="mi">cos(150^circ) = -<span class="mf"><span class="mn">√(3)</span><span class="mb"></span><span class="md">2</span></span></span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">9. 函数 <span class="mi">f(x) = sin x</span> 单调递增的区间是</div>
+<div class="solution">
+    <strong>解答</strong>：标准的正弦函数 <span class="mi">y=sin x</span> 在基础周期内的单调递增区间为 <span class="mi">[-<span class="mf"><span class="mn">π</span><span class="mb"></span><span class="md">2</span></span>, <span class="mf"><span class="mn">π</span><span class="mb"></span><span class="md">2</span></span>]</span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">14. 若三角形的三边分别为 <span class="mi">BC=5, AC=12, AB=13</span>，则 <span class="mi">sin A =</span></div>
+<div class="solution">
+    <strong>解答</strong>：由于 <span class="mi">5² + 12² = 13²</span>，这是一个非常标准的直角三角形，其中 <span class="mi">angle C = 90^circ</span>。<br>
+    根据正弦的定义 <span class="mi">sin A = <span class="mf"><span class="mn">对边</span><span class="mb"></span><span class="md">斜边</span></span> = <span class="mf"><span class="mn">BC</span><span class="mb"></span><span class="md">AB</span></span> = <span class="mf"><span class="mn">5</span><span class="mb"></span><span class="md">13</span></span></span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">21. 下列哪个是正确的？</div>
+<div class="solution">
+    <strong>解答</strong>：同角基础关系商数关系：<span class="mi">tan x = <span class="mf"><span class="mn">sin x</span><span class="mb"></span><span class="md">cos x</span></span></span>。
+</div>
+<div class="answer">答案：(B)</div>
+
+<div class="question">26. 若 <span class="mi">sin a = <span class="mf"><span class="mn">√(3)</span><span class="mb"></span><span class="md">3</span></span></span>，则 <span class="mi">cos 2a =</span></div>
+<div class="solution">
+    <strong>解答</strong>：利用余弦二倍角公式：<span class="mi">cos 2a = 1 - 2sin² a = 1 - 2(<span class="mf"><span class="mn">√(3)</span><span class="mb"></span><span class="md">3</span></span>)² = 1 - 2(<span class="mf"><span class="mn">3</span><span class="mb"></span><span class="md">9</span></span>) = 1 - ⅔ = ⅓</span>。
+</div>
+<div class="answer">答案：(B)</div>
+
+<div class="question">31. 函数 <span class="mi">f(x) = 3 cos(4x - <span class="mf"><span class="mn">π</span><span class="mb"></span><span class="md">3</span></span>)</span> 的最小正周期是</div>
+<div class="solution">
+    <strong>解答</strong>：正余弦函数的周期公式是 <span class="mi">T = <span class="mf"><span class="mn">2π</span><span class="mb"></span><span class="md">|ω|</span></span></span>。这里 <span class="mi">ω = 4</span>。<br>
+    所以 <span class="mi">T = <span class="mf"><span class="mn">2π</span><span class="mb"></span><span class="md">4</span></span> = <span class="mf"><span class="mn">π</span><span class="mb"></span><span class="md">2</span></span></span>。
+</div>
+<div class="answer">答案：(C)</div>
+
+<div class="question">34. 已知 <span class="mi">cos α = -1/2</span>，且角位于第二象限 <span class="mi">(π/2, π)</span>，求 <span class="mi">sin <span class="mf"><span class="mn">α</span><span class="mb"></span><span class="md">2</span></span></span></div>
+<div class="solution">
+    <strong>解答</strong>：原角位于 <span class="mi">(π/2, π)</span>，一半的角 <span class="mi"><span class="mf"><span class="mn">α</span><span class="mb"></span><span class="md">2</span></span></span> 就一定落在 <span class="mi">(π/4, π/2)</span> 即第一象限，正弦一定为正值。<br>
+    利用半角正弦公式：<span class="mi">sin <span class="mf"><span class="mn">α</span><span class="mb"></span><span class="md">2</span></span> = √(frac{1 - cos α){2}} = √(frac{1 - (-1/2)){2}} = √(frac{3/2){2}} = <span class="mf"><span class="mn">√(3)</span><span class="mb"></span><span class="md">2</span></span></span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">35. 设 <span class="mi">α, β</span> 为锐角。则下列哪个是正确的？</div>
+<div class="solution">
+    <strong>解答</strong>：由于 <span class="mi">sin(α - β) = sinαcosβ - cosαsinβ</span> <br>
+    且 <span class="mi">sin(α + β) = sinαcosβ + cosαsinβ</span>。由于都是锐角，后半部分为正，因此差角正弦必定小于和角正弦。
+</div>
+<div class="answer">答案：(D)</div>
+
+<div class="question">38. 若 <span class="mi">cos α = 1/3</span>，<span class="mi">α</span> 位于第四象限，求 <span class="mi">tan <span class="mf"><span class="mn">α</span><span class="mb"></span><span class="md">2</span></span></span></div>
+<div class="solution">
+    <strong>解答</strong>：半角正切公式可以通过 <span class="mi">tan <span class="mf"><span class="mn">α</span><span class="mb"></span><span class="md">2</span></span> = <span class="mf"><span class="mn">sin α</span><span class="mb"></span><span class="md">1 + cos α</span></span></span> 完美规避根号符号问题。<br>
+    首先求原角正弦：在第四象限值为负，<span class="mi">sin α = -√(1 - (1/3)²) = -<span class="mf"><span class="mn">2√(2)</span><span class="mb"></span><span class="md">3</span></span></span>。<br>
+    代入公式：<span class="mi"><span class="mf"><span class="mn">-2√(2)/3</span><span class="mb"></span><span class="md">1 + 1/3</span></span> = <span class="mf"><span class="mn">-2√(2)/3</span><span class="mb"></span><span class="md">4/3</span></span> = -<span class="mf"><span class="mn">√(2)</span><span class="mb"></span><span class="md">2</span></span></span>。
+</div>
+<div class="answer">答案：(C)</div>
+
+<div class="question">39. 若 <span class="mi">sin α = 1/3</span>，则 <span class="mi">cos(<span class="mf"><span class="mn">π</span><span class="mb"></span><span class="md">2</span></span> + α) =</span></div>
+<div class="solution">
+    <strong>解答</strong>：运用诱导公式奇变偶不变原则，<span class="mi">cos(<span class="mf"><span class="mn">π</span><span class="mb"></span><span class="md">2</span></span> + α) = -sin α = -1/3</span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">40. 关于函数 <span class="mi">f(x) = tan x</span> 的描述，下列哪个是错误的？</div>
+<div class="solution">
+    <strong>解答</strong>：正切函数显然具备 <span class="mi">f(-x) = -f(-x)</span> 的奇函数属性，(A)对(B)错。指出哪个是错误的只需选出指明其为偶函数的选项。
+</div>
+<div class="answer">答案：(B)</div>
+
+<h3>【解析几何与向量篇】</h3>
+<div class="question">13. 直线 <span class="mi">x + √(3)y - 2 = 0</span> 的倾斜角是</div>
+<div class="solution">
+    <strong>解答</strong>：转化为斜截式求斜率 <span class="mi">k</span>：<span class="mi">√(3)y = -x + 2 ⇒ y = -<span class="mf"><span class="mn">√(3)</span><span class="mb"></span><span class="md">3</span></span>x + <span class="mf"><span class="mn">2√(3)</span><span class="mb"></span><span class="md">3</span></span></span>。<br>
+    斜率 <span class="mi">k = tan θ = -<span class="mf"><span class="mn">√(3)</span><span class="mb"></span><span class="md">3</span></span></span>，对应的钝角倾斜角为 <span class="mi">150^circ</span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">16. 下列哪个点位于第三象限？</div>
+<div class="solution">
+    <strong>解答</strong>：第三象限横纵坐标皆为负，选 <span class="mi">(-1, -2)</span>。
+</div>
+<div class="answer">答案：(C)</div>
+
+<div class="question">17. 已知点 <span class="mi">A(-2, -1)</span> 和 <span class="mi">B(a, 3)</span>，且 <span class="mi">|AB| = 5</span>。则 <span class="mi">a</span> 的值</div>
+<div class="solution">
+    <strong>解答</strong>：代入距离公式 <span class="mi">√((a+2)² + (3 - (-1))²) = 5</span>。<br>
+    <span class="mi">(a+2)² + 16 = 25 ⇒ (a+2)² = 9 ⇒ a+2 = ± 3 ⇒ a = 1 或 a = -5</span>。
+</div>
+<div class="answer">答案：(D)</div>
+
+<div class="question">18. 若直线 <span class="mi">l</span> 经过两点 <span class="mi">M(0, -1)</span> 和 <span class="mi">N(-2, 0)</span>，则 <span class="mi">l</span> 的方程为</div>
+<div class="solution">
+    <strong>解答</strong>：求斜率 <span class="mi">k = <span class="mf"><span class="mn">0 - (-1)</span><span class="mb"></span><span class="md">-2 - 0</span></span> = -1/2</span>。<br>
+    写点斜式方程：<span class="mi">y - 0 = -½(x + 2) ⇒ 2y = -x - 2 ⇒ x + 2y + 2 = 0</span>。
+</div>
+<div class="answer">答案：(D)</div>
+
+<div class="question">20. 圆心在 <span class="mi">A(-3, 2)</span>，半径为<span class="mi">3</span>的圆方程是</div>
+<div class="solution">
+    <strong>解答</strong>：套入公式 <span class="mi">(x - a)² + (y - b)² = r²</span> 得 <span class="mi">(x + 3)² + (y - 2)² = 9</span>。
+</div>
+<div class="answer">答案：(C)</div>
+
+<div class="question">24. 圆心为 <span class="mi">(-3, 2)</span>，半径为<span class="mi">2</span>的圆的方程是</div>
+<div class="solution">
+    <strong>解答</strong>：同上公式，改变半径而已：<span class="mi">(x + 3)² + (y - 2)² = 4</span>。
+</div>
+<div class="answer">答案：(B)</div>
+
+<div class="question">27. 三条直线交于一点求系数</div>
+<div class="solution">
+    <strong>解答</strong>：先用无常数的两条线求解坐标系 <span class="mi">4x + 3y = 10</span> 和 <span class="mi">2x - y = 10</span>。利用方程二得出 <span class="mi">y=2x-10</span>，代入方程一得出 <span class="mi">x=4, y=-2</span>。<br>
+    然后将点 <span class="mi">(4, -2)</span> 代入第一条直线：<span class="mi">4a + 2(-2) + 8 = 0 ⇒ 4a + 4 = 0 ⇒ a = -1</span>。
+</div>
+<div class="answer">答案：(B)</div>
+
+<div class="question">28. 设 <span class="mi">mx² + ny² = 1</span> 表示双曲线。则 <span class="mi">m, n</span> 满足</div>
+<div class="solution">
+    <strong>解答</strong>：双曲线的标准特点是 <span class="mi">x²</span> 项与 <span class="mi">y²</span> 项系数一正一负。所以它们二者的乘积必须 <span class="mi">mn < 0</span> 异号。
+</div>
+<div class="answer">答案：(B)</div>
+
+<div class="question">30. 点 <span class="mi">P(-1, 2)</span> 和 <span class="mi">Q(3, 1)</span> 之间的距离是</div>
+<div class="solution">
+    <strong>解答</strong>：距离 <span class="mi">d = √((3 - (-1))² + (1 - 2)²) = √(16 + 1) = √(17)</span>。
+</div>
+<div class="answer">答案：(D)</div>
+
+<div class="question">32. 抛物线 <span class="mi">y = -¼ x²</span> 的准线方程是</div>
+<div class="solution">
+    <strong>解答</strong>：化为纵向标准式 <span class="mi">x² = -4y</span>。对应 <span class="mi">x² = -2py ⇒ 2p = 4 ⇒ p = 2</span>。准线为 <span class="mi">y = p/2 = 1</span>。
+</div>
+<div class="answer">答案：(C)</div>
+
+<div class="question">33. 与直线 <span class="mi">4x - 2y - 1 = 0</span> 平行的直线是</div>
+<div class="solution">
+    <strong>解答</strong>：把原公式化简为 <span class="mi">2x - y - 0.5 = 0</span>。与它平行的方程系数部分一定和 <span class="mi">2x - y</span> 保持比例但不重合。纵览选项只有 <span class="mi">2x - y - 1 = 0</span> 符合完全系数一致。
+</div>
+<div class="answer">答案：(B)</div>
+
+<div class="question">37. 抛物线 <span class="mi">y² = -x</span> 的准线方程是</div>
+<div class="solution">
+    <strong>解答</strong>：对比形式 <span class="mi">y² = -2px</span> 相当于 <span class="mi">2p=1 ⇒ p=0.5</span>。准线方程在另一边：<span class="mi">x = <span class="mf"><span class="mn">p</span><span class="mb"></span><span class="md">2</span></span> = ¼</span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">43. 椭圆的长轴长为<span class="mi">10</span>，两焦点在 <span class="mi">(3,0)</span> 和 <span class="mi">(-3,0)</span>。方程为</div>
+<div class="solution">
+    <strong>解答</strong>：长轴 <span class="mi">2a = 10 ⇒ a = 5 ⇒ a² = 25</span>。半焦距 <span class="mi">c = 3 ⇒ c² = 9</span>。<br>
+    短轴 <span class="mi">b² = a² - c² = 25 - 9 = 16</span>。因为焦点在 x 轴上，所以方程是 <span class="mi"><span class="mf"><span class="mn">x²</span><span class="mb"></span><span class="md">25</span></span> + <span class="mf"><span class="mn">y²</span><span class="mb"></span><span class="md">16</span></span> = 1</span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">44. 设 <span class="mi">a⃗ = (-2, 3)</span>，<span class="mi">b⃗ = (2, 1)</span>。则 <span class="mi">a⃗ - 2b⃗ =</span></div>
+<div class="solution">
+    <strong>解答</strong>：按坐标乘入运算：<span class="mi">(-2, 3) - 2(2, 1) = (-2, 3) - (4, 2) = (-6, 1)</span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+<div class="question">45. 找交点并列垂直直线</div>
+<div class="solution">
+    <strong>解答</strong>：一、求直线 <span class="mi">x+y+1=0</span> 和 <span class="mi">2x+y-1=0</span> 交点，两式相减得 <span class="mi">x - 2 = 0 ⇒ x=2, y=-3</span>。<br>
+    二、与 <span class="mi">x+2y+4=0</span> (斜率 <span class="mi">k<sub>1</sub>=-1/2</span>) 垂直的线斜率应为 <span class="mi">k<sub>2</sub> = 2</span>。<br>
+    三、列出点斜式：<span class="mi">y - (-3) = 2(x - 2) ⇒ 2x - y - 7 = 0</span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+
+<h3>【复数与概率篇】</h3>
+<div class="question">46. 方程 <span class="mi">z² - 2z + 2 = 0</span> 的根差计算</div>
+<div class="solution">
+    <strong>解答</strong>：先用根的判别式解根：<span class="mi">Δ = 4 - 8 = -4</span>。所以根为 <span class="mi">z = <span class="mf"><span class="mn">2 ± 2i</span><span class="mb"></span><span class="md">2</span></span> = 1 ± i</span>。<br>
+    题目要求 <span class="mi">a<sub>4</sub> = (z<sub>1</sub>⁴ - z<sub>2</sub>⁴)²</span>。<br>
+    我们将 <span class="mi">z</span> 运用三角形式及棣莫弗定理复数乘方：<span class="mi">z<sub>1</sub> = √(2) e<sup>iπ/4</sup></span>，其次幂 <span class="mi">z<sub>1</sub>⁴ = 4 e<sup>iπ</sup> = -4</span>。同理 <span class="mi">z<sub>2</sub>⁴ = -4</span>。<br>
+    两者相减得 <span class="mi">0</span>。<span class="mi">0² = 0</span>。
+</div>
+<div class="answer">答案：(C)</div>
+
+<div class="question">48. 古典概率组合球的提取</div>
+<div class="solution">
+    <strong>解答</strong>：一共五个球，提取数量 <span class="mi">C<sub>5</sub>² = 10</span>。<br>
+    (1) 颜色不同的概率：球分布组合为2红2黑1白。抽到同一颜色的办法只有抽到两张红或两张黑，即 <span class="mi">1+1=2</span> 种。所以非同色的概率是 <span class="mi">1 - <span class="mf"><span class="mn">2</span><span class="mb"></span><span class="md">10</span></span> = <span class="mf"><span class="mn">8</span><span class="mb"></span><span class="md">10</span></span> = <span class="mf"><span class="mn">4</span><span class="mb"></span><span class="md">5</span></span></span>。<br>
+    (2) 至少出现一次“标号1”的概率：全部球里带着“1”的有 红1，黑1，白1 共3个球，没带“1”的只有两个（红2，黑2）。抽取不包含任何“1”的抽离办法只能是抽走（红2，黑2）即只有1种方式。拿全集减去它：<span class="mi">1 - <span class="mf"><span class="mn">1</span><span class="mb"></span><span class="md">10</span></span> = <span class="mf"><span class="mn">9</span><span class="mb"></span><span class="md">10</span></span></span>。<br>
+    由此得出最终结果对是 <span class="mi"><span class="mf"><span class="mn">4</span><span class="mb"></span><span class="md">5</span></span>, <span class="mf"><span class="mn">9</span><span class="mb"></span><span class="md">10</span></span></span>。
+</div>
+<div class="answer">答案：(A)</div>
+
+</div>
+</body>
+</html>

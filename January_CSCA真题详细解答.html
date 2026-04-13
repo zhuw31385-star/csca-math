@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSCA一月数学真题 1-48题完整解答步解析</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']]
+  }
+};
+</script>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
+    .container {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    h1 {
+        color: #2c3e50;
+        text-align: center;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+        margin-bottom: 30px;
+    }
+    h3 {
+        color: #2980b9;
+        margin-top: 30px;
+        border-left: 4px solid #2980b9;
+        padding-left: 10px;
+    }
+    p {
+        margin-bottom: 15px;
+    }
+    .question {
+        font-weight: bold;
+        color: #e74c3c;
+        margin-top: 25px;
+    }
+    .solution {
+        background-color: #f8fcf8;
+        padding: 10px 15px;
+        border-radius: 5px;
+        border-left: 3px solid #2ecc71;
+        margin-top: 5px;
+    }
+    .answer {
+        font-weight: bold;
+        color: #8e44ad;
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>CSCA一月数学真题 1-48题完整解答</h1>
+<p>这是一月份CSCA数学考试中全部48道题的逐题详尽解答步骤，可直接作为教学参考和标准答案发给学生。</p>
+
+<h3>【代数与集合篇】</h3>
+<div class="question">1. 设集合 $A = \{6, 7, 8, 9, 10\}$，下列哪一个说法正确？</div>
+<div class="solution">
+    <strong>解答</strong>：因为 9 包含于集合 $A$ 中，所以 $9 \in A$。元素与集合的关系用“$\in$”，集合与集合的关系用“$\subseteq$”。空集不是元素，$\{6\}$ 是子集（应写为 $\{6\} \subseteq A$）。
+</div>
+<div class="answer">答案：(a)</div>
+
+<div class="question">2. 设 $A = \{x \mid -2 \leq x \leq 2\}, B = \{x \mid x > 0\}$，则 $A \cup B =$</div>
+<div class="solution">
+    <strong>解答</strong>：$A$ 包含从 $-2$ 到 $2$ 的所有数，$B$ 包含所有大于 $0$ 的数。取并集即把两区间合并，覆盖了大于等于 $-2$ 的一切实数区域，故 $A \cup B = \{x \mid x \ge -2\}$。
+</div>
+<div class="answer">答案：(c)</div>
+
+<div class="question">3. 不等式 $x^2 - x - 2 > 0$ 的解集是</div>
+<div class="solution">
+    <strong>解答</strong>：对其进行十字相乘因式分解：$(x - 2)(x + 1) > 0$。根据“大于取两边”的二次不等式口诀，根分别为 $2$ 和 $-1$，所以 $x < -1$ 或 $x > 2$。 
+</div>
+<div class="answer">答案：(b)</div>
+
+<div class="question">4. 数列 $\{a_n\}$ 为等差数列，首项 $a_1 = 2$，公差 $d = 3$，则 $a_{100} =$</div>
+<div class="solution">
+    <strong>解答</strong>：使用等差数列通项公式 $a_n = a_1 + (n - 1)d$。<br>
+    代入得 $a_{100} = 2 + (100 - 1) \times 3 = 2 + 99 \times 3 = 2 + 297 = 299$。
+</div>
+<div class="answer">答案：(d)</div>
+
+<div class="question">5. 函数 $f(x) = \frac{1}{x} + \sqrt{1 - x}$ 的定义域是</div>
+<div class="solution">
+    <strong>解答</strong>：定义域需要满足两个条件：① 分母 $x \neq 0$；② 偶次根式内的表达式大于等于$0$，即 $1 - x \ge 0 \Rightarrow x \le 1$。<br>
+    结合两者，定义域为 $x \le 1$ 且 $x \neq 0$，写成区间形式即 $(-\infty, 0) \cup (0, 1]$。
+</div>
+<div class="answer">答案：(a)</div>
+
+<div class="question">12. 有理不等式 $\frac{2x+1}{x-2} \le 0$ 的解集是</div>
+<div class="solution">
+    <strong>解答</strong>：对于分式不等式，将其化为乘积形式 $(2x+1)(x-2) \le 0$ 的同时需限制分母 $x - 2 \neq 0$ 即 $x \neq 2$。<br>
+    求解得两根为 $-1/2$ 和 $2$，根据“小于取中间”，有 $-1/2 \le x < 2$。即 $[-1/2, 2)$。
+</div>
+<div class="answer">答案：(c)</div>
+
+<div class="question">13. 已知 $a = 2-\sqrt{3}, b = 2+\sqrt{3}$，则 $a$ 与 $b$ 的算术平均数为</div>
+<div class="solution">
+    <strong>解答</strong>：算术平均式定义为 $\frac{a+b}{2}$。<br>
+    代入得：$\frac{2-\sqrt{3} + 2+\sqrt{3}}{2} = \frac{4}{2} = 2$。
+</div>
+<div class="answer">答案：(d)</div>
+
+<div class="question">16. 在下面四个数列中，等差数列的个数是</div>
+<div class="solution">
+    <strong>解答</strong>：<br>
+    (1) 7, 13, 19, 25（公差为6，是等差数列）<br>
+    (2) 2, 4, 7, 11（差值为2, 3, 4，非等差数列）<br>
+    (3) -1, -3, -5, -7（公差为-2，是等差数列）<br>
+    (4) 2, 4, 8, 16（这是等比数列，非等差数列）<br>
+    所以有2个。
+</div>
+<div class="answer">答案：(a)</div>
+
+<div class="question">21. 等差数列中，若 $a_2 = 1, a_4 = 5$，则 $a_1$ 与 $d$ 分别为</div>
+<div class="solution">
+    <strong>解答</strong>：依据等差公式，$a_4 - a_2 = 2d \Rightarrow 5 - 1 = 2d \Rightarrow d = 2$。<br>
+    则 $a_1 = a_2 - d = 1 - 2 = -1$。
+</div>
+<div class="answer">答案：(b)</div>
+
+<div class="question">22. 设 $a, b, c$ 为三个实数，下列说法中正确的是</div>
+<div class="solution">
+    <strong>解答</strong>：不等式基本性质中，$a > b \Rightarrow a \pm c > b \pm c$ 永远成立。而乘法(a,c选项)和平方(d选项)由于不知符号，无法判断是否成立。
+</div>
+<div class="answer">答案：(b)</div>
+
+<div class="question">40. 数列 $-\frac{1}{5}, \frac{1}{7}, -\frac{1}{9}, \frac{1}{11},\dots$ 的通项公式为</div>
+<div class="solution">
+    <strong>解答</strong>：观察符号交替为 $-, +, -, +$，说明分子包含 $(-1)^n$。<br>
+    分母为 $5, 7, 9, 11$，这是一个首项为$5$、公差为$2$的等差数列，通项为 $2n+3$。<br>
+    所以 $a_n = \frac{(-1)^n}{2n+3}$。
+</div>
+<div class="answer">答案：(d)</div>
+
+<div class="question">47. 数列递推 $\frac{1}{a_n} + \frac{2}{a_{n+1}} = 0$ 和 $S_n$ 的求法</div>
+<div class="solution">
+    <strong>解答</strong>：移项得到 $\frac{2}{a_{n+1}} = -\frac{1}{a_n} \Rightarrow a_{n+1} = -2a_n$。<br>
+    说明 $\{a_n\}$ 是公比为 $-2$ 的等比数列。由于 $a_1 = 1$，<br>
+    新数列 $b_n = |a_n|$ 就是一个公比取绝对值为 $q=2$ 的新几何等比数列，首项为$1$。<br>
+    前$n$项和 $S_n = \frac{1(1 - 2^n)}{1 - 2} = 2^n - 1$。
+</div>
+<div class="answer">答案：(a)</div>
+
+<h3>【函数性质与指对数篇】</h3>
+<div class="question">8. 关于函数 $f(x) = x^4 + 3$，说法中正确的是</div>
+<div class="solution">
+    <strong>解答</strong>：求 $f(-x) = (-x)^4 + 3 = x^4 + 3 = f(x)$，满足偶函数的定义。
+</div>
+<div class="answer">答案：(a)</div>
+
+<div class="question">9. 函数 $y = x^3 + 3, x \in \mathbb{R}$ 的反函数是</div>
+<div class="solution">
+    <strong>解答</strong>：解关于 $x$ 的方程：$x^3 = y - 3 \Rightarrow x = \sqrt[3]{y-3}$。将 $x$ 和 $y$ 互换，反函数为 $y = \sqrt[3]{x-3}$。因为立方根定义域不受限，所以 $x \in \mathbb{R}$。
+</div>
+<div class="answer">答案：(b)</div>
+
+<div class="question">11. 已知 $y = |x|$，下列结论正确的是</div>
+<div class="solution">
+    <strong>解答</strong>：绝对值函数呈“V”字形，当 $x>0$ 时函数图像为 $y=x$，单调递增；当 $x<0$ 时为 $y=-x$ 单调递减。
+</div>
+<div class="answer">答案：(a)</div>
+
+<div class="question">23. 关于指数函数 $y = a^x (a>0, a\neq1)$，错误的是</div>
+<div class="solution">
+    <strong>解答</strong>：指数函数的定义域是实数集(a正确)，值域是恒正(b正确)，恒过点(0,1)(c正确)。它的单调性取决于底数：当 $a>1$ 时递增，当 $0<a<1$ 时递减。故说它一定递增是(d)错误的。
+</div>
+<div class="answer">答案：(d)</div>
+
+<div class="question">27. 下列不等式中正确的是</div>
+<div class="solution">
+    <strong>解答</strong>：由幂函数的单调性，由于 $x^{2/3}$ 为增函数且 $2.1 > 1.2$，所以 $2.1^{2/3} > 1.2^{2/3}$ 是正确的。
+</div>
+<div class="answer">答案：(b)</div>
+
+<div class="question">29. $a>0, b>0$，关于对数说法错误的是</div>
+<div class="solution">
+    <strong>解答</strong>：基本对数运算法则：乘积内变对数外相加：$\ln(ab) = \ln(a) + \ln(b)$。选项(a)说 $\ln(ab) = b\ln a$ 是混淆了 $\ln(a^b) = b\ln a$，故(a)错。
+</div>
+<div class="answer">答案：(a)</div>
+
+<div class="question">35. 下列说法中正确的是</div>
+<div class="solution">
+    <strong>解答</strong>：判断函数相等必须定义域和对应法则都一致。<br>
+    (a) $y = \frac{x^4-1}{x^2+1} = \frac{(x^2-1)(x^2+1)}{x^2+1} = x^2-1$。分母始终正因此没有任何限制，与 $y = x^2-1$ 定义域且形式一模一样，是同一个函数。
+</div>
+<div class="answer">答案：(a)</div>
+
+<div class="question">41. 若函数 $f(x) = 2 + \log_a(x-3)$ 经过固定点</div>
+<div class="solution">
+    <strong>解答</strong>：无论对数底数 $a$ 是什么，真数为$1$时对数必为$0$。<br>
+    令 $x - 3 = 1 \Rightarrow x = 4$。此时 $f(4) = 2 + 0 = 2$。所以定点为 $(4, 2)$。
+</div>
+<div class="answer">答案：(a)</div>
+
+<h3>【三角函数篇】</h3>
+<div class="question">7. 已知角 $\alpha = 30^\circ$，下列说法正确的是</div>
+<div class="solution">
+    <strong>解答</strong>：熟记特殊角：$\sin30^\circ = 1/2, \cos30^\circ = \sqrt{3}/2, \tan30^\circ = \sqrt{3}/3$。故选项(a) 正确。
+</div>
+<div class="answer">答案：(a)</div>
+
+<div class="question">20. $\sin\alpha = 4/5$，且位于第二象限</div>
+<div class="solution">
+    <strong>解答</strong>：第二象限余弦值为负。$\cos\alpha = -\sqrt{1 - \sin^2\alpha} = -3/5$。正切 $\tan\alpha = -4/3$。正确。
+</div>
+<div class="answer">答案：(d)</div>
+
+<div class="question">24. $\sin\alpha = 3/5$，且处于第一象限，求 $\sin 2\alpha$</div>
+<div class="solution">
+    <strong>解答</strong>：第一象限正弦和余弦皆正。由勾股定理 $\cos\alpha = 4/5$。<br>
+    倍角公式 $\sin 2\alpha = 2\sin\alpha\cos\alpha = 2(3/5)(4/5) = 24/25$。
+</div>
+<div class="answer">答案：(a)</div>
+
+<div class="question">30. 关于 $y = \sin x$，说法错误的是</div>
+<div class="solution">
+    <strong>解答</strong>：正弦是奇函数（$f(-x) = -f(x)$），而非偶函数。
+</div>
+<div class="answer">答案：(d)</div>
+
+<div class="question">34. 若 $\cos\alpha = -\frac{\sqrt{5}}{5}$, $\alpha \in (\frac{\pi}{2}, \pi)$, 求 $\sin(\frac{\pi}{6} + \alpha)$</div>
+<div class="solution">
+    <strong>解答</strong>：$\alpha$ 在第二象限，正弦为正。$\sin\alpha = \sqrt{1 - (-1/\sqrt{5})^2} = \frac{2}{\sqrt{5}} = \frac{2\sqrt{5}}{5}$。<br>
+    和差公式：$\sin(\frac{\pi}{6} + \alpha) = \sin(\frac{\pi}{6})\cos\alpha + \cos(\frac{\pi}{6})\sin\alpha = \frac{1}{2} \cdot (-\frac{\sqrt{5}}{5}) + \frac{\sqrt{3}}{2} \cdot \frac{2\sqrt{5}}{5} = \frac{2\sqrt{15} - \sqrt{5}}{10}$。
+</div>
+<div class="answer">答案：(c)</div>
+
+<div class="question">36. 若 $\sin\alpha = -12/13$，且在第三象限，求 $\cos(\alpha/2)$</div>
+<div class="solution">
+    <strong>解答</strong>：$\alpha \in (\pi, \frac{3\pi}{2})$，那么半角 $\alpha/2$ 必定在第二象限 $(\frac{\pi}{2}, \frac{3\pi}{4})$，该象限余弦必定为负！<br>
+    原角余弦 $\cos\alpha = -5/13$。<br>
+    半角公式：$\cos(\alpha/2) = -\sqrt{\frac{1+\cos\alpha}{2}} = -\sqrt{\frac{1-5/13}{2}} = -\sqrt{\frac{4}{13}} = -\frac{2\sqrt{13}}{13}$。
+</div>
+<div class="answer">答案：(c)</div>
+
+<div class="question">37. 若 $\cos\alpha = -1/2$，$\alpha \in (\frac{\pi}{2}, \pi)$，求 $\sin(\alpha/2)$</div>
+<div class="solution">
+    <strong>解答</strong>：$\alpha \in (\pi/2, \pi)$，那么半角 $\alpha/2$ 在第一象限，正弦必定正。<br>
+    $\sin(\alpha/2) = \sqrt{\frac{1-\cos\alpha}{2}} = \sqrt{\frac{1+1/2}{2}} = \sqrt{3/4} = \frac{\sqrt{3}}{2}$。
+</div>
+<div class="answer">答案：(a)</div>
+
+<div class="question">38. 下列恒等式中正确的是</div>
+<div class="solution">
+    <strong>解答</strong>：根据诱导公式偶变奇不变的特性。$\cos(-\alpha) = \cos\alpha$ 正确。
+</div>
+<div class="answer">答案：(c)</div>
+
+<div class="question">39. $y = \tan x$，说法正确的是</div>
+<div class="solution">
+    <strong>解答</strong>：正切函数的最小正周期是 $\pi$。
+</div>
+<div class="answer">答案：(a)</div>
+
+<h3>【解析几何与向量篇】</h3>
+<div class="question">6. 点 $P(1,2)$ 关于 x 轴对称的点</div>
+<div class="solution">
+    <strong>解答</strong>：关于x轴对称，x坐标不变，y坐标变号，得 $(1, -2)$。
+</div>
+<div class="answer">答案：(d)</div>
+
+<div class="question">10. 点在第三象限</div>
+<div class="solution">
+    <strong>解答</strong>：第三象限的特征是横纵坐标均小于$0$。故选 $(-1, -2)$。
+</div>
+<div class="answer">答案：(c)</div>
+
+<div class="question">14. 两点 $A(-2, 3)$ 和 $B(3, 1)$，直线斜率</div>
+<div class="solution">
+    <strong>解答</strong>：斜率公式 $k = \frac{y_2 - y_1}{x_2 - x_1} = \frac{1 - 3}{3 - (-2)} = -\frac{2}{5}$。
+</div>
+<div class="answer">答案：(b)</div>
+
+<div class="question">15. $\alpha$ 为 $x$ 轴与过点 $P(1, 3)$ 及原点构成的直线的夹角，求 $\sin\alpha$</div>
+<div class="solution">
+    <strong>解答</strong>：原点和 $P(1,3)$ 的夹角 $\tan\alpha = y/x = 3/1 = 3$。利用直角三角形可知 $\sin\alpha = \frac{3}{\sqrt{10}} = \frac{3\sqrt{10}}{10}$。
+</div>
+<div class="answer">答案：(a)</div>
+
+<div class="question">17. 两点间距离 $A(3, -2), B(-5, -1)$</div>
+<div class="solution">
+    <strong>解答</strong>：距离公式 $d = \sqrt{(x_2-x_1)^2+(y_2-y_1)^2} = \sqrt{(-5-3)^2+(-1-(-2))^2} = \sqrt{(-8)^2 + 1^2} = \sqrt{65}$。
+</div>
+<div class="answer">答案：(c)</div>
+
+<div class="question">18. 直线倾斜角 $45^\circ$, 经过 $(0, 2)$</div>
+<div class="solution">
+    <strong>解答</strong>：斜率 $k = \tan 45^\circ = 1$。点斜式方程：$y - 2 = 1(x - 0) \Rightarrow y = x + 2$。
+</div>
+<div class="answer">答案：(b)</div>
+
+<div class="question">19. 圆的方程 $x^2 + y^2 - 4x - 3 = 0$</div>
+<div class="solution">
+    <strong>解答</strong>：配方：$(x^2 - 4x + 4) + y^2 = 3 + 4 = 7$。得 $(x-2)^2 + y^2 = 7$。<br>
+    圆心为 $(2, 0)$，半径 $r = \sqrt{7}$。
+</div>
+<div class="answer">答案：(d)</div>
+
+<div class="question">25. $l_1: 3x-y+8=0$ 与 $l_2: x+2y-9=0$ 交点</div>
+<div class="solution">
+    <strong>解答</strong>：联立方程组。从$2$式得 $x = 9 - 2y$，代入$1$式：$3(9-2y) - y + 8 = 0 \Rightarrow 27 - 6y - y + 8 = 0 \Rightarrow 7y = 35 \Rightarrow y = 5$。然后求出 $x = 9 - 10 = -1$。交点坐标为 $(-1, 5)$。
+</div>
+<div class="answer">答案：(d)</div>
+
+<div class="question">26. 双曲线 $\frac{x^2}{64} - \frac{y^2}{16} = 1$ 性质</div>
+<div class="solution">
+    <strong>解答</strong>：已知 $a^2=64, b^2=16$，因此 $c^2 = a^2+b^2 = 80$。半焦距 $c=\sqrt{80}=4\sqrt{5}$。所以焦距 $2c = 8\sqrt{5}$。
+</div>
+<div class="answer">答案：(d)</div>
+
+<div class="question">28. 圆心为 $(-3, 2)$，半径为$4$的方程</div>
+<div class="solution">
+    <strong>解答</strong>：套入圆的标准方程 $(x-a)^2+(y-b)^2 = r^2$，即 $(x+3)^2 + (y-2)^2 = 16$。
+</div>
+<div class="answer">答案：(d)</div>
+
+<div class="question">31. 抛物线 $y^2 = 4x$，点 $P$ 的 $x$ 坐标为$4$</div>
+<div class="solution">
+    <strong>解答</strong>：抛物线 $2p = 4 \Rightarrow p = 2$。其准线方程是 $x = -p/2 = -1$。根据定义，点到焦点的距离等于点到准线的距离，因此 $d = |x_P - (-1)| = 4 + 1 = 5$。
+</div>
+<div class="answer">答案：(c)</div>
+
+<div class="question">32. $l_1 \perp l_2$, 两条直线系数关系</div>
+<div class="solution">
+    <strong>解答</strong>：一般式 $A_1x+B_1y+C_1=0 \perp A_2x+B_2y+C_2=0$ 条件为 $A_1A_2 + B_1B_2 = 0$。<br>
+    $a(2) + (a-1)a = 0 \Rightarrow 2a + a^2 - a = 0 \Rightarrow a^2 + a = 0$。求解得 $a = 0$ 或 $a = -1$。
+</div>
+<div class="answer">答案：(c)</div>
+
+<div class="question">33. $P(-1, 2), Q(3, 1)$ 的距离</div>
+<div class="solution">
+    <strong>解答</strong>：$d = \sqrt{(3-(-1))^2 + (1-2)^2} = \sqrt{16+1} = \sqrt{17}$。
+</div>
+<div class="answer">答案：(b)</div>
+
+<div class="question">42. 抛物线 $y^2 = -x$ 的准线方程</div>
+<div class="solution">
+    <strong>解答</strong>：对比形式 $y^2 = 2px$，有 $2p = -1 \Rightarrow p = -1/2$。准线为 $x = -p/2 = 1/4$。
+</div>
+<div class="answer">答案：(a)</div>
+
+<div class="question">43. 椭圆 $\frac{x^2}{4} + \frac{y^2}{2} = 1$，求 $|PF_1| + |PF_2|$</div>
+<div class="solution">
+    <strong>解答</strong>：椭圆定义：椭圆上任何一点到两焦点的距离之和恒等于长轴长度 $2a$。在此题中 $a^2 = 4 \Rightarrow a = 2$。因此总和为 $2 \times 2 = 4$。
+</div>
+<div class="answer">答案：(d)</div>
+
+<div class="question">44. 平面向量三点共线</div>
+<div class="solution">
+    <strong>解答</strong>：设向量。已知 $\vec{AB} = \vec{a}+5\vec{b}$。<br>
+    求 $\vec{BD} = \vec{BC} + \vec{CD} = (-2\vec{a}+8\vec{b}) + (3\vec{a}-3\vec{b}) = \vec{a}+5\vec{b}$。<br>
+    因为 $\vec{AB} = \vec{BD}$，这证实 $\vec{AB}$ 和 $\vec{BD}$ 共线且有公共点 $B$。所以 $A, B, D$ 三点共线。
+</div>
+<div class="answer">答案：(d)</div>
+
+<div class="question">45. 交点与垂直</div>
+<div class="solution">
+    <strong>解答</strong>：第一步：求 $x+y+1=0$ 和 $2x+y-1=0$ 的交点。两者相减得 $x-2=0 \Rightarrow x=2, y=-3$。交点 $(2, -3)$。<br>
+    第二步：$l_1$ 是 $x+2y+4=0$，斜率是 $-1/2$。所求直线垂直于它，所以新线斜率为 $2$。<br>
+    方程使用点斜式：$y - (-3) = 2(x - 2) \Rightarrow y+3 = 2x - 4 \Rightarrow 2x - y - 7 = 0$。
+</div>
+<div class="answer">答案：(c)</div>
+
+<h3>【复杂计算与其他篇】</h3>
+<div class="question">46. 复数根韦达定理</div>
+<div class="solution">
+    <strong>解答</strong>：若复数 $z$ 落在 $x=y$ 则其实部虚部相等，可设一根为 $z = a + ai$。一元二次方程若是实数系数，那么另一根必定是共轭复数 $z^* = a - ai$。<br>
+    利用韦达定理：双根相乘 $z \cdot z^* = a^2 + a^2 = 2a^2 = c/A = 4 \Rightarrow a^2 = 2 \Rightarrow a = \pm\sqrt{2}$。<br>
+    双根相加：$z + z^* = 2a = -m/A = -m \Rightarrow m = -2a = \mp2\sqrt{2}$。
+</div>
+<div class="answer">答案：(a)</div>
+
+<div class="question">48. 独立事件概率</div>
+<div class="solution">
+    <strong>解答</strong>：高中生总人数 $200$，各APP概率为 $P_1(A)=0.4, P_1(B)=0.2, P_1(C)=0.3, P_1(D)=0.1$。<br>
+    大学生总人数 $80$，各APP概率为 $P_2(A)=3/8, P_2(B)=1/4, P_2(C)=1/4, P_2(D)=1/8$。<br>
+    抽到同样软件的概率就是两路分支独立事件分别相乘并累加：<br>
+    $P_{same} = (0.4 \times \frac{3}{8}) + (0.2 \times \frac{1}{4}) + (0.3 \times \frac{1}{4}) + (0.1 \times \frac{1}{8}) $<br>
+    $ = \frac{3}{20} + \frac{1}{20} + \frac{3}{40} + \frac{1}{80} = \frac{12}{80} + \frac{4}{80} + \frac{6}{80} + \frac{1}{80} = \frac{23}{80}$。<br>
+    题目问的是“软件**不同**的概率”，所以用反面减法：$P_{dif} = 1 - \frac{23}{80} = \frac{57}{80}$。
+</div>
+<div class="answer">答案：(a)</div>
+
+</div>
+</body>
+</html>

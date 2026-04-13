@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSCA 三月份真题 - 240道同源仿真模拟卷</title>
+    <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: 'Microsoft YaHei', sans-serif; background: #fdfaf6; color: #2c3e50; line-height: 1.6; padding: 20px;}
+        .container { max-width: 1000px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #8e44ad; border-bottom: 2px solid #9b59b6; padding-bottom: 15px; }
+        .summary { background: #f5eef8; padding: 15px; border-left: 4px solid #9b59b6; margin-bottom: 30px; font-weight: 500; }
+        .question-block { border: 1px solid #dcdde1; border-radius: 6px; padding: 20px; margin-bottom: 20px; background: #fcfcfc;}
+        .q-title { font-weight: bold; color: #e67e22; margin-bottom: 10px; font-size: 16px; display: flex; justify-content: space-between;}
+        .q-text { font-size: 16px; margin-bottom: 15px; }
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .opt { background: #fff; padding: 10px; border: 1px solid #dcdde1; border-radius: 4px; }
+        .ans-btn { background: #8e44ad; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: bold;}
+        .ans-btn:hover { background: #732d91; }
+        .ans-text { display: none; margin-left: 15px; font-weight: normal; color: #d35400; background: #fdebd0; padding: 5px 10px; border-radius: 4px; }
+        .ans-text.show { display: inline-block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>三月份 CSCA 数学真题：240道题库</h1>
+    <div class="summary">
+        教研说明：本测试卷基于三月份的核心真题大纲，全面包含了 48 个知识点槽位。所有 960 个选项（48*5*4）均为标准的数学式，以训练严密的逻辑推理。<br>
+        <strong>使用方法：</strong> 点击每道题左下角可即刻出答案与解析。
+    </div>
+    <div id="questions-container"></div>
+</div>
+
+<script>
+    const U = {
+        r: (min, max) => Math.floor(Math.random() * (max - min + 1)) + min,
+        c: (arr) => arr[Math.floor(Math.random() * arr.length)],
+        shuffle: (array) => {
+            let a = [...array];
+            for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+            return a;
+        }
+    };
+
+    const G = [
+        (c) => { let a=U.r(1,9); return { t:'集合基础', q: c? `已知元素 $x=${a}$ 及集合 $A=\\{${a},${a+1}\\}$，下列式子正确的是：` : `已知集合 $A=\\{${a},${a+1},${a+2}\\}$，下列选项成立的是：`, o: ['$'+a+' \\in A$', '$'+a+' \\subseteq A$', '$\\emptyset \\in A$', '$\\{'+a+'\\} \\in A$'], a: 0, e: '个体元素与集合之间采用“属于”号（$\\in$）。' } },
+        (c) => { let a=U.r(1,9); return { t:'子集判定', q: `给定集合 $B=\\{${a},${a+2},${a+4}\\}$，下列命题正确的是：`, o: ['$\\{'+a+'\\} \\subseteq B$', '$'+a+' \\subset B$', '$\\{'+a+'\\} \\in B$', '$\\emptyset = B$'], a:0, e:'单元素集合属于子集，故采用包含关系（$\\subseteq$）。' } },
+        (c) => { let a=U.r(1,5); return { t:'并集计算', q: `设集合 A=[-${a}, ${a}], B=(0, ${a+3}]，求 $A \\cup B$ 的范围：`, o: ['$-'+a+' \\le x \\le '+ (a+3)+'$', '$0 < x \\le '+a+'$', '$x > -'+a+'$', '$x < '+ (a+3)+'$'], a:0, e:'并集即合并两个区间的所有区域，采用 $\\cup$。' } },
+        (c) => { let a=U.r(1,5); return { t:'交集计算', q: `若 A=[-${a}, ${a}], B=(0, ${a+3}]，求 $A \\cap B$ 的值：`, o: ['$0 < x \\le '+a+'$', '$-'+a+' \\le x \\le '+ (a+3)+'$', '$x > 0$', '$x \\le '+a+'$'], a:0, e:'交集即取两区间共同覆盖的部分，采用 $\\cap$。' } },
+        (c) => { let a=U.r(1,9); return { t:'分式定义域', q: c? `若分式 $\\frac{x^2+1}{x-${a}}$ 有确切实数值，x应满足：` : `求函数 $y=\\frac{1}{x-${a}}$ 的定义域区间：`, o: ['$x \\neq '+a+'$', '$x = '+a+'$', '$x > '+a+'$', '$x < '+a+'$'], a:0, e:'代数运算中分母不能为$0$。' } },
+        (c) => { let a=U.r(1,9); return { t:'根式定义域', q: `求函数 $y=\\sqrt{${a}-x}$ 的定义域范围：`, o: ['$x \\le '+a+'$', '$x \\ge '+a+'$', '$x < '+a+'$', '$x \\neq '+a+'$'], a:0, e:'偶次根号内表达式必须大于或等于$0$。' } },
+        (c) => { let a=U.r(1,4), b=-U.r(1,4); let sum=a+b, pr=a*b; return { t:'二次不等式(大于)', q: `解不等式 $x^2 - (${sum})x + (${pr}) > 0$：`, o: [`$x<${Math.min(a,b)}$ 或 $x>${Math.max(a,b)}$`, `$${Math.min(a,b)} < x < ${Math.max(a,b)}$`, `$x>${Math.max(a,b)}$`, `$x<${Math.min(a,b)}$`], a:0, e:'二次项系数为正，大于$0$时取两边外侧。' } },
+        (c) => { let a=U.r(1,4), b=-U.r(1,4); let sum=a+b, pr=a*b; return { t:'二次不等式(小于)', q: `求不等式 $x^2 - (${sum})x + (${pr}) < 0$ 的解集：`, o: [`$${Math.min(a,b)} < x < ${Math.max(a,b)}$`, `$x<${Math.min(a,b)}$ 或 $x>${Math.max(a,b)}$`, `$x>${Math.max(a,b)}$`, `$x<${Math.min(a,b)}$`], a:0, e:'二次项系数为正，小于$0$时取两根之间。' } },
+        (c) => { let a=U.r(1,4); return { t:'复合型定义域', q: `求函数 $y=\\frac{1}{x}+\\sqrt{${a}-x}$ 的定义域要求：`, o: [`$x \\le ${a}$ 且 $x \\neq 0$`, `$x < ${a}$`, `$x \\ge ${a}$`, `$x \\neq 0$`], a:0, e:'结合分母不为0与根号内部非负的原则。' } },
+        (c) => { let a=U.r(1,4); return { t:'绝对值图像', q: `关于函数 $y=|x-${a}|$，下列叙述正确的是：`, o: [`在 $x>${a}$ 时单调递增`, `在 $x>${a}$ 时单调递减`, `其为奇函数`, `有全局最大值`], a:0, e:'绝对值函数的图像呈现经典的V字折线。' } },
+        (c) => { let a=U.r(1,9); return { t:'奇偶性(偶)', q: `试判断幂函数 $y=x^4+${a}$ 属于：`, o: [`偶函数 (Even)`, `奇函数 (Odd)`, `非奇非偶函数`, `有界函数`], a:0, e:'因仅含偶数次幂，故满足 $$f(-x)=f(x)$$。' } },
+        (c) => { let a=U.r(1,9); return { t:'奇偶性(奇)', q: `分析函数 $y=x^3+${a}x$ 的奇偶对称性：`, o: [`奇函数 (Odd)`, `偶函数 (Even)`, `无对称性`, `单调递减`], a:0, e:'全为奇数次幂，故满足 $$f(-x)=-f(x)$$。' } },
+        (c) => { let a=U.r(2,4), x=U.r(1,3); let v=Math.pow(a,x); return { t:'指数方程', q: c? `求使等式 $${a}^x - ${v} = 0$ 成立的实数解：` : `方程 $${a}^x = ${v}$ 的解为：`, o: [`$x=${x}$`, `$x=${x+1}$`, `$x=${v}$`, `$x=${a}$`], a:0, e:'可将选项代入原方程进行直接验证。' } },
+        (c) => { let a=U.r(2,5), b=U.r(2,5); return { t:'对数法则', q: `根据基本对数法则，$\\log( ${a} \\times ${b} )$ 可以展开为：`, o: [`$\\log ${a} + \\log ${b}$`, `$\\log ${a} \\times \\log ${b}$`, `$${a} \\log ${b}$`, `$\\log(${a}+${b})$`], a:0, e:'真数的乘积可化为对数的相加。' } },
+        (c) => { let a=U.c(['2','e','3']); return { t:'指数单调性', q: `观察指数函数 $y=${a}^x$，其基本属性为：`, o: [`在实数集上始终单调递增`, `在实数集上始终单调递减`, `在 $x>0$ 时单调递减`, `存在极大值`], a:0, e:'当底数大于$1$时，指数函数在全域单调递增。' } },
+        (c) => { let a=U.r(1,5); return { t:'反函数计算', q: `若存在原函数 $y=x^3 - ${a}$，求其对应的反函数表达式：`, o: [`$y=\\sqrt[3]{x+${a}}$`, `$y=\\sqrt[3]{x-${a}}$`, `$y=x^3+${a}$`, `$y=(x+${a})^3$`], a:0, e:'通过原方程解出$x$，最终将X与$y$对调。' } },
+        (c) => { let a=U.r(2,5); return { t:'对数定点', q: `对于任意大于$0$且不为1的底数a，曲线 $y=\\log_a (x-${a})$ 恒过定点：`, o: [`$(${a+1}, 0)$`, `$(${a}, 0)$`, `$(1, ${a})$`, `$(0, ${a+1})$`], a:0, e:'令真数部分 (x-a) 为1，解得定点坐标。' } },
+        (c) => { let a1=U.r(1,5), d=U.r(2,5), n=U.r(10,20); let an=a1+(n-1)*d; return { t:'等差通项计算', q: `已知等差数列首项 $a_1=${a1}$，公差 $d=${d}$，求该数列由于递推得出的第 ${n} 项 $a_{${n}}=$：`, o: [`$${an}$`, `$${an-d}$`, `$${an+d}$`, `$${a1+n*d}$`], a:0, e:'直接代入等差数列通项公式：$$a_n = a_1 + (n-1)d$$。' } },
+        (c) => { let a1=U.r(1,5), d=U.r(2,4); let a3=a1+2*d; return { t:'求等差公差', q: `在等差数列中，已知首项 $a_1 = ${a1}$，第三项 $a_3 = ${a3}$，则公差 $d=$：`, o: [`$${d}$`, `$${d+1}$`, `$${d-1}$`, `$${a3-a1}$`], a:0, e:'从第一项到第三项经过了2个公差，作差除以2即可。' } },
+        (c) => { let a=U.r(1,3); return { t:'交替数列结构', q: c? `对于数列 $\\frac{-1}{${a}}, \\frac{1}{${a+2}}, \\frac{-1}{${a+4}}\\dots$ 的分子震荡规律应当表示为：` : `数列前几项分子为 $-1, 1, -1 \\dots$ 其规律因式应为：`, o: [`$$$(-1)^n$$$`, `$(-1)^{n-1}$`, `$n$`, `$-n$`], a:0, e:'由于第一项为负，第二项为正，且交替，必然是 $$(-1)^n$$。' } },
+        (c) => { let q=2; return { t:'等比求和', q: `已知等比数列首项为1，公比 $q=${q}$，求前n项的和 $S_n=$：`, o: [`$2^n - 1$`, `$2^{n-1}$`, `$2n$`, `$2^n + 1$`], a:0, e:'运用等比数列求和公式：$S_n = \frac{a_1(1-q^n)}{1-q}$。' } },
+        (c) => { let a=U.r(2,5); return { t:'算术平均值', q: c? `请计算实数 $x=${a}-\\sqrt{2}$ 与实数 $y=${a}+\\sqrt{2}$ 的算术平均值：` : `对于数值 $a=${a}-\\sqrt{2}, b=${a}+\\sqrt{2}$ 计算其算术平均数：`, o: [`$${a}$`, `$${a*2}$`, `$${a*a-2}$`, `$\\sqrt{2}$`], a:0, e:'将两者相加后除以2即可。' } },
+        (c) => { let x=-U.r(1,5), y=U.r(1,5); return { t:'象限判定', q: `在二维平面坐标系中，点 $P(${x}, ${y})$ 位于：`, o: [`第二象限`, `第一象限`, `第三象限`, `第四象限`], a:0, e:'横坐标为负且纵坐标为正的落点，位于第二象限。' } },
+        (c) => { let x=U.r(1,5), y=U.r(1,5); return { t:'轴对称变换', q: `求点 $A(${x}, ${y})$ 关于横轴(x轴)的对称点坐标是：`, o: [`$(${x}, -${y})$`, `$(-${x}, ${y})$`, `$(-${x}, -${y})$`, `$(${y}, ${x})$`], a:0, e:'关于x轴对称，横坐标保持不变，纵坐标互为相反数。' } },
+        (c) => { let x=U.r(1,5), y=U.r(1,5); return { t:'中心对称变换', q: `点 $A(${x}, ${y})$ 关于坐标原点(0,0)的对称点位置在：`, o: [`$(-${x}, -${y})$`, `$(${x}, -${y})$`, `$(-${x}, ${y})$`, `$(0, 0)$`], a:0, e:'关于原点中心对称，横纵坐标全部更换为相反数。' } },
+        (c) => { let x1=0, y1=U.r(1,5), x2=U.r(1,4), y2=y1+U.r(1,4)*x2; let k=(y2-y1)/x2; return { t:'直线斜率', q: `已知直线经过点 $(0,${y1})$ 与 $(${x2},${y2})$ 两端，求斜率k：`, o: [`$${k}$`, `$${-k}$`, `$1/${k}$`, `$0$`], a:0, e:'坐标纵向差除以坐标横向差 $\frac{\Delta y}{\Delta x}$。' } },
+        (c) => { let k=1; return { t:'倾角与斜率转换', q: c? `若一直线的倾斜角设定为 $45^\\circ$，求该条直线的实际斜率：` : `倾斜角为 $45^\\circ$ 的直线的斜率等于：`, o: [`$1$`, `$\\frac{\\sqrt{2}}{2}$`, `$\\sqrt{3}$`, `$0$`], a:0, e:'由定义可知，斜率是该射线倾斜角的正切函数 $\tan(45^\circ)$。' } },
+        (c) => { let x=0, y=U.r(1,5), k=U.r(1,3); return { t:'点斜式应用', q: `过y轴截点 $(0,${y})$ 且已知斜率为 $${k}$ 的解析几何方程是：`, o: [`$y=${k}x+${y}$`, `$y=${k}x-${y}$`, `$y=-${k}x+${y}$`, `$y=${k}x$`], a:0, e:'结合经典斜截式 $$y = kx + b$$ 代入参数求解。' } },
+        (c) => { let k1=U.r(2,4); return { t:'两直线垂直条件', q: `当直线 $y=${k1}x$ 与直线 $y=kx$ 满足相互垂直关系时，斜率 k 为：`, o: [`$-1/${k1}$`, `$${k1}$`, `$1/${k1}$`, `$-${k1}$`], a:0, e:'当两直线完全垂直时，其两线斜率的乘积约束为 -1。' } },
+        (c) => { let x=U.r(1,3), y=U.r(1,3); return { t:'方程组的解点', q: `求解直线系方程 $x+y=${x+y}$ 与 $x-y=${x-y}$ 所相交的唯一点：`, o: [`$(${x}, ${y})$`, `$(${x+1}, ${y-1})$`, `$(${y}, ${x})$`, `$(-${x}, -${y})$`], a:0, e:'列式后运用加减消元操作法可立即算得X与Y变量。' } },
+        (c) => { let x=U.r(1,3); return { t:'简单间标距离', q: `在标准坐标维度上，点 $(0,0)$ 至点 $(${x},0)$ 的度量距离为：`, o: [`$${x}$`, `$${x*x}$`, `$\\sqrt{${x}}$`, `$0$`], a:0, e:'两点位于同一直线轴向上，其距离不需勾股定理。' } },
+        (c) => { let a=3, b=4; return { t:'勾股距离定论', q: c? `在平面上测算，点 $(3, 4)$ 至坐标原点之间的距离为：` : `测算坐标系基点 $(3, 4)$ 与坐标原点构造的线段长度：`, o: [`$5$`, `$7$`, `$25$`, `$1$`], a:0, e:'这是常用的 3-4-5 勾股数定律。' } },
+        (c) => { let x=U.r(1,5), y=U.r(1,5); return { t:'圆的几何中心', q: `给出圆系方程 $(x-${x})^2 + (y+${y})^2 = 4$，其圆心坐标位于：`, o: [`$(${x}, -${y})$`, `$(-${x}, ${y})$`, `$(${x}, ${y})$`, `$(-${x}, -${y})$`], a:0, e:'提取圆心时，需要将方程内部横纵参数的符号取相反数。' } },
+        (c) => { let r=U.r(3,6); return { t:'提取圆的半径', q: `判断等式表达的圆定式 $x^2 + y^2 = ${r*r}$，其真实半径值应为：`, o: [`$${r}$`, `$${r*r}$`, `$${r*2}$`, `$${r/2}$`], a:0, e:'圆方程等式右侧表示为半径距离的平方值 (r²)。' } },
+        (c) => { let p=U.r(2,8); return { t:'抛物线准线法则', q: `已知抛物线方程为 $y^2 = ${2*p}x$，其准线的直线方程是：`, o: [`$x=-${p/2}$`, `$x=${p/2}$`, `$y=-${p/2}$`, `$x=-${p}$`], a:0, e:'抛物线准线方程在标准几何中设定为 $$x = -p/2$$。' } },
+        (c) => { let a=U.r(4,6), b=U.r(2,3); return { t:'椭圆固定距离法', q: `对于给定的椭圆方程 $\\frac{x^2}{${a*a}} + \\frac{y^2}{${b*b}} = 1$，其外围点到两焦点的距离之和为：`, o: [`$${2*a}$`, `$${a}$`, `$${2*b}$`, `$${a*a}$`], a:0, e:'根据椭圆的几何定义，距离之和即为其长轴线长 (2a)。' } },
+        (c) => { let a=3, b=4, c2=25; return { t:'双曲线理论换算', q: `已知双曲线方程为 $\\frac{x^2}{9} - \\frac{y^2}{16} = 1$，求其半焦距c的数据值：`, o: [`$5$`, `$25$`, `$7$`, `$1$`], a:0, e:'双曲线体系需满足等式 $c^2 = a^2 + b^2$。' } },
+        (c) => { let x1=1, y1=2, x2=3, y2=4; return { t:'平面向量加法', q: `若有平面几何向量 $\\vec{a}=(1,2), \\vec{b}=(3,4)$，将它们进行向量加法，求 $\\vec{a}+\\vec{b}$ 的结果：`, o: [`$(4,6)$`, `$(2,2)$`, `$(3,8)$`, `$(4,8)$`], a:0, e:'平面向量的相加必须对横向坐标和纵向坐标分别进行求和。' } },
+        (c) => { let k=U.r(2,4); return { t:'向量共线法则', q: `若已知向量 $\\vec{a}=(1,2)$ 与 $\\vec{b}=(2,y)$ 相互平行（共线），求参数y：`, o: [`$4$`, `$2$`, `$0$`, `$1$`], a:0, e:'向量共线成立的标准算法条件是坐标乘积相等：$1 \times y = 2 \times 2$。' } },
+        (c) => { return { t:'特殊角三角值', q: `求解特殊三角角 $\\sin 30^\\circ$ 的对应值：`, o: [`$1/2$`, `$\\sqrt{3}/2$`, `$1$`, `$\\sqrt{2}/2$`], a:0, e:'基本初等三角函数的固定值。' } },
+        (c) => { return { t:'ASTC象限判定', q: `已知角处于第二象限，以下哪个三角函数的值为正数：`, o: [`$\\sin\\alpha$`, `$\\cos\\alpha$`, `$\\tan\\alpha$`, `均不正确`], a:0, e:'利用基础象限性质：在第二象限内只有正弦函数恒正。' } },
+        (c) => { return { t:'推导角所在象限', q: `若满足条件 $\\sin\\alpha < 0$ 且 $\\cos\\alpha > 0$，则该角最终归属于哪个象限：`, o: [`第四象限`, `第三象限`, `第一象限`, `第二象限`], a:0, e:'由于余弦占为正值而正弦为负，其必然落在第四象限。' } },
+        (c) => { let v=3; return { t:'同角平方式转化', q: `已知角在第二象限当中，若 $\\sin\\alpha=4/5$，求 $\\cos\\alpha=$：`, o: [`$-3/5$`, `$3/5$`, `$-4/5$`, `$\\pm 3/5$`], a:0, e:'利用正余弦平方求和为1的原则，结合第二象限余弦为负进行判断。' } },
+        (c) => { return { t:'倍角公式', q: `以下展开式中哪一个是 $\\sin 2\\alpha$ 等效等式：`, o: [`$2\\sin\\alpha\\cos\\alpha$`, `$\\cos^2\\alpha-\\sin^2\\alpha$`, `$\\sin\\dots$`, `$1$`], a:0, e:'二倍角的固有经典等式展开。' } },
+        (c) => { return { t:'诱导公式化简', q: `运用诱导公式，将特殊表达式 $\\cos(-\\alpha)$ 化简为：`, o: [`$\\cos\\alpha$`, `$-\\cos\\alpha$`, `$\\sin\\alpha$`, `$-\\sin\\alpha$`], a:0, e:'余弦函数属于典型的偶函数图象对称特性，故内部负号被消去。' } },
+        (c) => { let s=U.r(3,6); return { t:'韦达定理', q: `对于一元二次方程 $x^2-${s}x+2=0$，两根 $x_1+x_2$ 之和为：`, o: [`$${s}$`, `$-${s}$`, `$2$`, `$-2$`], a:0, e:'凭借韦达定理知识：两根之和严格对应一次项系数的相反数。' } },
+        (c) => { return { t:'独立事件概率推导', q: `若A类事件和B类事件相互独立，$P(A)=0.5, P(B)=0.2$，求其同时成立状况下的概率：`, o: [`$0.1$`, `$0.7$`, `$0.3$`, `$0$`], a:0, e:'对独立的先期事件直接使用概率连乘法。' } },
+        (c) => { let a=U.r(2,5); return { t:'万能代入法', q: `请尝试求解，哪一个实数满足 $(x-${a})^2 = 0$ 的表达式等价：`, o: [`$${a}$`, `$0$`, `$-${a}$`, `$1$`], a:0, e:'验证性质等式的最快做法是直接将选项数字代入化解验证。' } }
+    ];
+
+    let globalCount = 0;
+    const container = document.getElementById('questions-container');
+
+    G.forEach((genLogic, groupIdx) => {
+        let tempQ = genLogic(false);
+        let rootHtml = `<h2 style="color:#8e44ad; margin-top:40px; padding-bottom:5px; border-bottom: 2px dashed #9b59b6;">题型考点 #${groupIdx+1}: ${tempQ.t}</h2>`;
+        
+        for(let i=0; i<5; i++) {
+            globalCount++;
+            let isComp = i >= 3;
+            let qData = genLogic(isComp);
+            let optLetters = ['A', 'B', 'C', 'D'];
+            let mappedOpts = qData.o.map((str, idx) => ({s: str, isAns: idx === qData.a}));
+            let shuffled = U.shuffle(mappedOpts);
+            let correctLetter = "";
+            let optsHtml = shuffled.map((obj, i) => {
+                if(obj.isAns) correctLetter = optLetters[i];
+                return `<div class="opt">(${optLetters[i]}) ${obj.s}</div>`;
+            }).join('');
+            
+            rootHtml += `
+            <div class="question-block">
+                <div class="q-title"><span>#${globalCount} - 第${groupIdx+1}.${i+1}题 (${isComp?'情境变式':'同构替换'})</span></div>
+                <div class="q-text">${qData.q}</div>
+                <div class="options">${optsHtml}</div>
+                <div>
+                    <button class="ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">点击核对答案</button>
+                    <span class="ans-text">正确答案：${correctLetter}。 解析：${qData.e}</span>
+                </div>
+            </div>`;
+        }
+        container.innerHTML += rootHtml;
+    });
+
+    window.onload = function() {
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+    }
+</script>
+
+</body>
+</html>

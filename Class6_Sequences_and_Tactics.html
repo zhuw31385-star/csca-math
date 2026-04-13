@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSCA数学冲刺课件 6/6: 【数列与极限冲刺大招】</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+<style>
+    body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; color: #333; }
+    .header { text-align: center; border-bottom: 3px solid #34495e; margin-bottom: 20px; }
+    .header h1 { color: #2c3e50; }
+    .box { background: #fdf2e9; padding: 15px; border-left: 5px solid #d35400; margin-bottom: 20px; }
+    .rule { background: #eaeded; padding: 15px; border-left: 5px solid #e74c3c; margin-bottom: 20px; font-weight: bold;}
+    .hw-section { margin-top: 40px; padding-top: 20px; border-top: 2px dashed #ccc; }
+    .q-block { margin-bottom: 15px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .options { display: flex; flex-wrap: wrap; margin-top: 10px; }
+    .opt { width: 50%; margin-bottom: 8px; }
+    .ans-btn { background: #34495e; color: white; padding: 3px 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; margin-top: 10px; }
+    .ans-text { display: none; margin-top: 10px; color: #d35400; font-weight: bold; border-left: 3px solid #d35400; padding-left: 10px; }
+</style>
+<script>
+    function toggleAns(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none" || x.style.display === "") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+</head>
+<body>
+<div class="header">
+    <h1>第六课时 (Lesson 6)：基础数列与终极应试刺客</h1>
+    <p>时长：60分钟 | 目标得点：4 题，并防止丢失无谓分数</p>
+</div>
+
+<h2>一、 本课考情指南 (Strategy)</h2>
+<p>作为最后一课，我们的重心只有一半在讲数列推导。另一半绝对要给学生灌输名为“带入选项无耻测算法”的考场神技。目标是将很多复杂理解题变成小学的代数尝试题。</p>
+
+<h2>二、 核心知识点与可视系统化 (Visualized Core Rules)</h2>
+<div class="box">
+    <h3>1. 系统扩展：序列跳跃图谱 (Progression Steps)</h3>
+    <div style="display:flex; justify-content:space-around; text-align:center; margin-bottom: 15px;">
+        <!-- Arithmetic -->
+        <div style="width: 48%; background: #fff; padding: 10px; border-radius: 8px;">
+            <svg width="180" height="100" viewBox="0 0 180 100">
+                <circle cx="20" cy="80" r="5" fill="#3498db"/>
+                <circle cx="60" cy="65" r="5" fill="#3498db"/>
+                <circle cx="100" cy="50" r="5" fill="#3498db"/>
+                <circle cx="140" cy="35" r="5" fill="#3498db"/>
+                <path d="M20,80 L60,65 L100,50 L140,35" stroke="#ccc" fill="none" stroke-dasharray="4"/>
+                <text x="35" y="65" font-size="12" fill="#e74c3c">+ d</text>
+                <text x="75" y="50" font-size="12" fill="#e74c3c">+ d</text>
+                <text x="115" y="35" font-size="12" fill="#e74c3c">+ d</text>
+            </svg>
+            <p style="margin:0; font-size:14px; font-weight:bold; color: #2980b9;">等差数列 (加法阶梯)</p>
+        </div>
+        <!-- Geometric -->
+        <div style="width: 48%; background: #fff; padding: 10px; border-radius: 8px;">
+            <svg width="180" height="100" viewBox="0 0 180 100">
+                <circle cx="20" cy="90" r="5" fill="#2ecc71"/>
+                <circle cx="60" cy="70" r="5" fill="#2ecc71"/>
+                <circle cx="100" cy="40" r="5" fill="#2ecc71"/>
+                <circle cx="140" cy="10" r="5" fill="#2ecc71"/>
+                <path d="M20,90 Q60,90 60,70 Q100,70 100,40 Q140,40 140,10" stroke="#ccc" fill="none" stroke-dasharray="4"/>
+                <text x="40" y="80" font-size="12" fill="#e74c3c">× q</text>
+                <text x="80" y="55" font-size="12" fill="#e74c3c">× q</text>
+                <text x="120" y="25" font-size="12" fill="#e74c3c">× q</text>
+            </svg>
+            <p style="margin:0; font-size:14px; font-weight:bold; color: #27ae60;">等比数列 (乘法爆破)</p>
+        </div>
+    </div>
+    <ul>
+        <li><strong>等差通项 (Arithmetic) :</strong> $a_n = a_1 + (n-1)d$ (加法公差)</li>
+        <li><strong>等比通项 (Geometric) :</strong> $a_n = a_1 q^{n-1}$ (乘法公比)</li>
+    </ul>
+    (复杂组合高阶数列求和，不学、跳过！)
+</div>
+
+<div class="rule">
+    <h3>2. 考场绝技：反杀代入法 (The Plug-in Method)</h3>
+    <p>数学题看不懂题意怎么办？不会证明怎么办？<br>
+    对于所有的选择题：<strong>把选项 A B C D 给出的数字，扔回题干里验证。能成立的那个就是答案！无需解全过程。</strong><br>
+    特别是对于问解集的题，挑 $0$ 或者 $1$ 这样简单的代表数字代进去测验，极其安全有效！</p>
+</div>
+
+<div class="hw-section">
+    <h2>四、 课内突击作业 (Homework)</h2>
+    <p>这是CSCA防崩坏最后两项绝学。前10题练死基本功，后10题纯用“选项代入法/排除法”实战走捷径破题，禁止老老实实算！</p>
+
+    <h3>专项突破一：等比数列与等差基本计算（10题盲选训练）</h3>
+
+    <div class="q-block">
+        <p><strong>1. 在等差数列中，首项 $a_1=5$，公差 $d=2$。求 $a_{10}$ ：</strong></p>
+        <div class="options"><div class="opt">(A) 25</div><div class="opt">(B) 23</div><div class="opt">(C) 27</div><div class="opt">(D) 20</div></div>
+        <button class="ans-btn" onclick="toggleAns('k1')">显示答案</button>
+        <div id="k1" class="ans-text">答案：(B)<br>解析：$a_{10} = 5 + 9 \times 2 = 23$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>2. 等比数列中，首项 $a_1=3$，公比 $q=-2$，求 $a_3$ ：</strong></p>
+        <div class="options"><div class="opt">(A) -6</div><div class="opt">(B) 12</div><div class="opt">(C) -12</div><div class="opt">(D) 9</div></div>
+        <button class="ans-btn" onclick="toggleAns('k2')">显示答案</button>
+        <div id="k2" class="ans-text">答案：(B)<br>解析：可以直接写出来：$3, -6, 12$。第三个数字就是 $12$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>3. 数列 $2, x, 8$ 构成等差数列，则 $x$ 是：</strong></p>
+        <div class="options"><div class="opt">(A) 4</div><div class="opt">(B) 5</div><div class="opt">(C) 6</div><div class="opt">(D) 10</div></div>
+        <button class="ans-btn" onclick="toggleAns('k3')">显示答案</button>
+        <div id="k3" class="ans-text">答案：(B)<br>解析：等差中项 $x = (2+8)/2 = 5$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>4. 数列 $4, x, 16$ 构成正各项的等比数列，则 $x$ 是：</strong></p>
+        <div class="options"><div class="opt">(A) 8</div><div class="opt">(B) 10</div><div class="opt">(C) -8</div><div class="opt">(D) 12</div></div>
+        <button class="ans-btn" onclick="toggleAns('k4')">显示答案</button>
+        <div id="k4" class="ans-text">答案：(A)<br>解析：等比中项 $x^2 = 4 \times 16 = 64$。所以 $x=8$ (必须为正向各项)。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>5. 若等差数列的前3项为：$-1, 2, 5$，其公差是：</strong></p>
+        <div class="options"><div class="opt">(A) -3</div><div class="opt">(B) 3</div><div class="opt">(C) 2</div><div class="opt">(D) 1</div></div>
+        <button class="ans-btn" onclick="toggleAns('k5')">显示答案</button>
+        <div id="k5" class="ans-text">答案：(B)<br>解析：后一项减去前一项：$2 - (-1) = 3$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>6. 等比数列包含：$2, 2\sqrt{2}, 4 \ldots$，则其公比 $q$ 为：</strong></p>
+        <div class="options"><div class="opt">(A) $\sqrt{2}$</div><div class="opt">(B) 2</div><div class="opt">(C) $\sqrt{2}/2$</div><div class="opt">(D) 4</div></div>
+        <button class="ans-btn" onclick="toggleAns('k6')">显示答案</button>
+        <div id="k6" class="ans-text">答案：(A)<br>解析：后一项整除前一项：$2\sqrt{2} / 2 = \sqrt{2}$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>7. 已知数列 $\{a_n\}$ 满足 $a_1=1$, 代数递推且 $a_{n+1} = a_n + n$。求 $a_3$ ：</strong></p>
+        <div class="options"><div class="opt">(A) 3</div><div class="opt">(B) 4</div><div class="opt">(C) 6</div><div class="opt">(D) 2</div></div>
+        <button class="ans-btn" onclick="toggleAns('k7')">显示答案</button>
+        <div id="k7" class="ans-text">答案：(B)<br>解析：硬算即可。$a_2 = 1 + 1 = 2$；$a_3 = a_2 + 2 = 2 + 2 = 4$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>8. 已知等差数列 $a_3 = 10, a_5=16$。那么公差 $d$ 为：</strong></p>
+        <div class="options"><div class="opt">(A) 2</div><div class="opt">(B) 3</div><div class="opt">(C) 4</div><div class="opt">(D) 6</div></div>
+        <button class="ans-btn" onclick="toggleAns('k8')">显示答案</button>
+        <div id="k8" class="ans-text">答案：(B)<br>解析：$a_5$与$a_3$隔了2个项，增加了 $16-10=6$。所以跨步为 $d=3$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>9. 若数列 $1, x, y, 7$ 为等差数列，求横向间距 $x+y=$</strong></p>
+        <div class="options"><div class="opt">(A) 8</div><div class="opt">(B) 10</div><div class="opt">(C) 6</div><div class="opt">(D) 14</div></div>
+        <button class="ans-btn" onclick="toggleAns('k9')">显示答案</button>
+        <div id="k9" class="ans-text">答案：(A)<br>解析：等差定律中两头数字加和等于中间两位数加和，故 $x+y = 1+7 = 8$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>10. 首项为 $1$，公差为 $-2$ 的等差数列，第50项的值是正数还是负数？</strong></p>
+        <div class="options"><div class="opt">(A) 奇正数</div><div class="opt">(B) 偶正数</div><div class="opt">(C) 无数</div><div class="opt">(D) 必然是负数</div></div>
+        <button class="ans-btn" onclick="toggleAns('k10')">显示答案</button>
+        <div id="k10" class="ans-text">答案：(D)<br>解析：因为一直是在往下减（差为负），减到50项早就进入深渊负数区了。</div>
+    </div>
+
+    <br>
+    <h3>专项突破二：“选项带入与代位排除法”终极演练（10题必须倒推作弊）</h3>
+    <p><em>指令：以下题目坚决不许用正向解答推导，只许从ABCD选项带数字去碰运气！</em></p>
+
+    <div class="q-block">
+        <p><strong>1. 求方程 $x^3 - 2x^2 - x + 2 = 0$ 的一个整数根。</strong></p>
+        <div class="options"><div class="opt">(A) $-2$</div><div class="opt">(B) $0$</div><div class="opt">(C) $3$</div><div class="opt">(D) $2$</div></div>
+        <button class="ans-btn" onclick="toggleAns('l1')">显示答案</button>
+        <div id="l1" class="ans-text">答案：(D)<br>解析：带入法。代去(B)的$0$，得$2 \ne 0$错。代入(D)的$2$：$8 - 8 - 2 + 2 = 0$，精准命中通过！</div>
+    </div>
+    <div class="q-block">
+        <p><strong>2. 不等式 $x^2 - 4x + 3 > 0$ 的区间为哪项？</strong></p>
+        <div class="options"><div class="opt">(A) $1 < x < 3$</div><div class="opt">(B) $x < 1$ 或 $x > 3$</div><div class="opt">(C) $x > 0$</div><div class="opt">(D) 不存在</div></div>
+        <button class="ans-btn" onclick="toggleAns('l2')">显示答案</button>
+        <div id="l2" class="ans-text">答案：(B)<br>解析：选一个数字 $x=0$，发现原式变成 $3 > 0$，成立。这说明答案必须包裹 $0$。A不包，C不包。所以选B。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>3. 判断方程 $3^x = 9$ 中的 $x$ 的结果。</strong></p>
+        <div class="options"><div class="opt">(A) 1</div><div class="opt">(B) 2</div><div class="opt">(C) 3</div><div class="opt">(D) 0.5</div></div>
+        <button class="ans-btn" onclick="toggleAns('l3')">显示答案</button>
+        <div id="l3" class="ans-text">答案：(B)<br>解析：把2代入， $3^2=9$ 成立，选B完成。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>4. 下列哪个点是在直线 $y = 3x - 2$ 上的？</strong></p>
+        <div class="options"><div class="opt">(A) $(1, 0)$</div><div class="opt">(B) $(0, -2)$</div><div class="opt">(C) $(-1, 1)$</div><div class="opt">(D) $(2, 3)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('l4')">显示答案</button>
+        <div id="l4" class="ans-text">答案：(B)<br>解析：无需画图计算。逐个将x的值丢进公式算出y去对比。(B)里 $x=0 \Rightarrow y=-2$，完美契合。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>5. 如果要让 $\sqrt{x-5}$ 有意义，下列哪个解集对的？</strong></p>
+        <div class="options"><div class="opt">(A) $x > 0$</div><div class="opt">(B) $x \le 5$</div><div class="opt">(C) $x \ge 5$</div><div class="opt">(D) $x < 0$</div></div>
+        <button class="ans-btn" onclick="toggleAns('l5')">显示答案</button>
+        <div id="l5" class="ans-text">答案：(C)<br>解析：直接代入 4 测一测。根号下 $4-5=-1$ 不能活，说明 $4$ 不行。A里有4，B里也有4，D更离谱。排除后只剩 C。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>6. 有一不明数列前n项和 $S_n = n^2 + n$，求第2项 $a_2$？</strong></p>
+        <div class="options"><div class="opt">(A) 2</div><div class="opt">(B) 4</div><div class="opt">(C) 6</div><div class="opt">(D) 8</div></div>
+        <button class="ans-btn" onclick="toggleAns('l6')">显示答案</button>
+        <div id="l6" class="ans-text">答案：(B)<br>解析：直接用暴力反推：$S_1 = 2$ (即第一项就是2), $S_2 = 4+2=6$。由于 $S_2 = a_1+a_2$，所以 $2+a_2 = 6, \Rightarrow a_2=4$。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>7. 问含有未知数 $x$ 的等式： $\log_2 (x) = 4$，选项中哪个是对的？</strong></p>
+        <div class="options"><div class="opt">(A) 4</div><div class="opt">(B) 8</div><div class="opt">(C) 16</div><div class="opt">(D) 2</div></div>
+        <button class="ans-btn" onclick="toggleAns('l7')">显示答案</button>
+        <div id="l7" class="ans-text">答案：(C)<br>解析：带入16：$\log_2 16 = \log_2 (2^4) = 4$。命中！</div>
+    </div>
+    <div class="q-block">
+        <p><strong>8. 不等式组中，问下面哪个点满足 $y > x$ 组合区间的？</strong></p>
+        <div class="options"><div class="opt">(A) $(2, 1)$</div><div class="opt">(B) $(0, -1)$</div><div class="opt">(C) $(-2, 0)$</div><div class="opt">(D) $(4, 4)$</div></div>
+        <button class="ans-btn" onclick="toggleAns('l8')">显示答案</button>
+        <div id="l8" class="ans-text">答案：(C)<br>解析：完全不需画图。查哪个选项的右边数字 $y$ 大于左边横坐标 $x$ 即可。$-2$ 与 $0$ 的比拼，$0 > -2$ 故C符合。</div>
+    </div>
+    <div class="q-block">
+        <p><strong>9. 猜想方程 $\cos x = 1$ 的解包含了哪个选项？</strong></p>
+        <div class="options"><div class="opt">(A) $\pi/2$</div><div class="opt">(B) $\pi$</div><div class="opt">(C) $0$</div><div class="opt">(D) $-\pi/2$</div></div>
+        <button class="ans-btn" onclick="toggleAns('l9')">显示答案</button>
+        <div id="l9" class="ans-text">答案：(C)<br>解析：代入特殊值测试：$0$度角余弦恰好为 $1$。选C！</div>
+    </div>
+    <div class="q-block">
+        <p><strong>10. 这是真题： $y = 3\sin(2x+\pi)$。不要求推导，下面哪个选项可能是这个函数的最大值？</strong></p>
+        <div class="options"><div class="opt">(A) 1</div><div class="opt">(B) 2</div><div class="opt">(C) 3</div><div class="opt">(D) $\pi$</div></div>
+        <button class="ans-btn" onclick="toggleAns('l10')">显示答案</button>
+        <div id="l10" class="ans-text">答案：(C)<br>解析：连想都不用想，不管里面符号怎么变变变，Sine出来的框框值必在 $-1$ 到 $1$ 间游离，乘以它前面的绝对常数乘子 $3$，故最大必然是 $3 \times 1 = 3$！选项排除走人。</div>
+    </div>
+</div>
+</body>
+</html>
